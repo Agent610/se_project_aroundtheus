@@ -45,9 +45,3 @@
   height: 18px;
   width: 21px;
 }
-
-@media screen (max-width: 775px) {
-  .card__list {
-    padding: 15px 0 18px;
-  }
-}
