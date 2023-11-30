@@ -1,3 +1,9 @@
 .header {
   margin-top: 45px;
 }
+
+.header__line {
+  width: 880px;
+  border-radius: 1px;
+  color: #545454;
+}

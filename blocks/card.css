@@ -3,6 +3,7 @@
   flex-direction: column;
   list-style: none;
   border-radius: 10px;
+  overflow: hidden;
 }
 .card__list {
   display: grid;
@@ -44,4 +45,10 @@
   background: transparent url(../images/like-inactive.svg) center no-repeat;
   height: 18px;
   width: 21px;
+}
+
+@media screen and (max-width: 568px) {
+  .card__list {
+    padding: 15px 0 18px;
+  }
 }
