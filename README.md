@@ -19,11 +19,9 @@ This project is made so all the elements are displayed correctly on popular scre
 The way you'll do this at work is by exporting images directly from Figma — we recommend doing that to practice more. Don't forget to optimize them [here](https://tinypng.com/), so your project loads faster.
 
 Good luck and have fun!
-https://github.com/Agent610/se_project_aroundtheus
 
 Title : Around The US
 Notes: Introduction to the use of Figma
 Description: Use of Figma creating own page from the beginning
 Project features: Use of images from Figma and learning how to change image format for example .jpg to .png
 Improvements: Although this project is made to help students understand the real world of a Software Engineer a brief would help students better.
-https://github.com/
