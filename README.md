@@ -26,3 +26,4 @@ Notes: Introduction to the use of Figma
 Description: Use of Figma creating own page from the beginning
 Project features: Use of images from Figma and learning how to change image format for example .jpg to .png
 Improvements: Although this project is made to help students understand the real world of a Software Engineer a brief would help students better.
+https://github.com/
