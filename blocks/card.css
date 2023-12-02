@@ -37,6 +37,11 @@
   background: transparent url(../images/like-inactive.svg) center no-repeat;
   height: 18px;
   width: 21px;
+  border: none;
+}
+
+.card__like-button:hover {
+  color: #c1c1c1;
 }
 
 @media screen and (max-width: 568px) {

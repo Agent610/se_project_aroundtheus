@@ -20,8 +20,5 @@ The way you'll do this at work is by exporting images directly from Figma — we
 
 Good luck and have fun!
 
-Title : Around The US
-Notes: Introduction to the use of Figma
-Description: Use of Figma creating own page from the beginning
-Project features: Use of images from Figma and learning how to change image format for example .jpg to .png
 Improvements: Although this project is made to help students understand the real world of a Software Engineer a brief would help students better.
+github.com:Agent610/se_project_aroundtheus

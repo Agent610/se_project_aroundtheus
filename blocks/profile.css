@@ -17,6 +17,13 @@
   height: 24px;
   width: 24px;
   grid-area: button;
+  color: #fff;
+  border-width: 1px;
+  border-style: solid;
+}
+
+.profile__edit-button:hover {
+  color: #c1c1c1;
 }
 
 .profile__add-button {
@@ -24,8 +31,17 @@
   height: 50px;
   width: 150px;
   margin-left: auto;
+  color: #fff;
+  border-width: 2px;
+  border-style: solid;
+  border-left: 930px;
+  border-top: 194px;
+  border-radius: 2px;
 }
 
+.profile__add-button:hover {
+  color: #c1c1c1;
+}
 .profile__title {
   font-size: 42px;
   font-weight: 500;
