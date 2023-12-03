@@ -20,5 +20,7 @@ The way you'll do this at work is by exporting images directly from Figma — we
 
 Good luck and have fun!
 
+Project Name: Around the US
+Project Description: This project is designed to help you as future Software Enginners to understand how to build a website from scratch along with the introduction of how developers make a desktop version and a mobile version.
 Improvements: Although this project is made to help students understand the real world of a Software Engineer a brief would help students better.
-github.com:Agent610/se_project_aroundtheus
+https://agent610.github.io/se_project_aroundtheus/

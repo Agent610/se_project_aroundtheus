@@ -41,7 +41,11 @@
 }
 
 .card__like-button:hover {
-  color: #c1c1c1;
+  opacity: #c1c1c1;
+}
+
+.card__like-button:pointer {
+  cursor: pointer;
 }
 
 @media screen and (max-width: 568px) {

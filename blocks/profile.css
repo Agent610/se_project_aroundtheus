@@ -13,17 +13,20 @@
 
 .profile__edit-button {
   background: transparent url(../images/Edit-Button.svg) center no-repeat;
-  background-image: transparent url(../images/Rectangle.svg) center no-repeat;
   height: 24px;
   width: 24px;
   grid-area: button;
-  color: #fff;
+  border-color: #fff;
   border-width: 1px;
   border-style: solid;
 }
 
 .profile__edit-button:hover {
-  color: #c1c1c1;
+  opacity: #c1c1c1;
+}
+
+.profile__edit-button:pointer {
+  cursor: pointer;
 }
 
 .profile__add-button {
@@ -31,7 +34,7 @@
   height: 50px;
   width: 150px;
   margin-left: auto;
-  color: #fff;
+  border-color: #fff;
   border-width: 2px;
   border-style: solid;
   border-left: 930px;
@@ -40,14 +43,20 @@
 }
 
 .profile__add-button:hover {
-  color: #c1c1c1;
+  opacity: #c1c1c1;
 }
+
+.profile__add-button:pointer {
+  cursor: pointer;
+}
+
 .profile__title {
   font-size: 42px;
   font-weight: 500;
   line-height: 48px;
   grid-area: title;
   margin: 0;
+  text-overflow: ellipsis;
 }
 
 .profile__description {

@@ -13,6 +13,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.page__logo {
+  width: 173px;
+  height: 33px;
+  margin-top: 45px;
+}
+
 .page__section {
   max-width: 880px;
   width: 100%;
