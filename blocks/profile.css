@@ -22,31 +22,23 @@
 }
 
 .profile__edit-button:hover {
-  opacity: #c1c1c1;
-}
-
-.profile__edit-button:pointer {
+  opacity: 0.6;
   cursor: pointer;
 }
 
 .profile__add-button {
-  background: transparent url(../images/Add\ Button.svg) center no-repeat;
+  background: url(../images/Add\ Button.svg) center no-repeat;
   height: 50px;
   width: 150px;
   margin-left: auto;
   border-color: #fff;
   border-width: 2px;
   border-style: solid;
-  border-left: 930px;
-  border-top: 194px;
   border-radius: 2px;
 }
 
 .profile__add-button:hover {
-  opacity: #c1c1c1;
-}
-
-.profile__add-button:pointer {
+  opacity: 0.6;
   cursor: pointer;
 }
 

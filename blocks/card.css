@@ -41,14 +41,11 @@
 }
 
 .card__like-button:hover {
-  opacity: #c1c1c1;
-}
-
-.card__like-button:pointer {
+  opacity: 0.5;
   cursor: pointer;
 }
 
-@media screen and (max-width: 568px) {
+@media screen and (max-width: 320px) {
   .card__list {
     padding: 15px 0 18px;
   }

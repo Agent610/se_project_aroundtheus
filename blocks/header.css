@@ -1,6 +1,4 @@
 .header {
   margin-top: 45px;
-  border-bottom: 0, 7;
-  opacity: (84 84 84 / 0.7);
-  background-image: url(../images/Line.svg) center no-repeat;
+  border-bottom: solid 1px rgb (84 84 84/ 0.7);
 }
