@@ -7,7 +7,7 @@
 .profile__info {
   display: grid;
   grid-template-areas: "title button" "description description";
-  grid-template-columns: minmax(auto, 373px) auto;
+  grid-template-columns: minmax(auto, auto);
   grid-gap: 9px 17px;
 }
 
@@ -68,14 +68,12 @@
   margin-right: 24px;
 }
 
-@media screen and (max-width: 1280px) {
+@media screen and (max-width: 768px) {
   .profile {
     background-color: black;
     flex-direction: column;
   }
-
   .profile__info {
-    display: flex;
     flex-wrap: wrap;
     width: 100%;
     justify-content: center;
@@ -88,6 +86,5 @@
 
   .profile__add-button {
     margin: 0;
-    width: 100%;
   }
 }
