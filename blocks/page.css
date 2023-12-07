@@ -32,4 +32,10 @@
     margin: 0 20px;
     max-width: calc(100% - 40px);
   }
+
+  .page__logo {
+    width: 126px;
+    height: 24px;
+    margin-left: 27px;
+  }
 }
