@@ -1,4 +1,6 @@
 .page {
+  max-width: 100%;
+  overflow-x: hidden;
   font-family: Inter, Arial, Helvetica, sans-serif;
   background-color: black;
   color: white;
@@ -17,6 +19,7 @@
   width: 173px;
   height: 33px;
   margin-top: 45px;
+  margin-bottom: 41px;
 }
 
 .page__section {
@@ -37,5 +40,6 @@
     width: 126px;
     height: 24px;
     margin-left: 27px;
+    margin-right: 167px;
   }
 }
