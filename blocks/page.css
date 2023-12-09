@@ -1,6 +1,5 @@
 .page {
   max-width: 100%;
-  overflow-x: hidden;
   font-family: Inter, Arial, Helvetica, sans-serif;
   background-color: black;
   color: white;
@@ -32,14 +31,14 @@
 
 @media screen and (max-width: 320px) {
   .page__section {
-    margin: 0 20px;
-    max-width: calc(100% - 40px);
+    max-width: 100%;
+    margin-top: 36px;
   }
 
   .page__logo {
     width: 126px;
     height: 24px;
     margin-left: 27px;
-    margin-right: 167px;
+    margin-top: 32px;
   }
 }
