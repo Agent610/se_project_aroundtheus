@@ -1,8 +1,7 @@
 .profile {
   display: flex;
   align-items: center;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 47.25px;
 }
 
 .profile__info {
@@ -21,6 +20,8 @@
   border-style: solid;
   height: 24px;
   width: 24px;
+  margin-bottom: 15px;
+  margin: 0;
 }
 
 .profile__edit-button:hover {
@@ -33,10 +34,10 @@
   height: 50px;
   width: 150px;
   border-color: #fff;
-  border-width: 2px;
   border-style: solid;
   border-radius: 2px;
-  margin-left: auto;
+  margin-left: 165px;
+  margin-bottom: 35px;
 }
 
 .profile__add-button:hover {
@@ -47,25 +48,29 @@
 .profile__title {
   font-weight: 500;
   grid-area: title;
-  margin: 0;
-  text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
   max-width: 100%;
   font-size: 42px;
+  margin-bottom: 25.75px;
+  width: 373px;
+  height: 48px;
+  margin: 0;
 }
 
 .profile__description {
-  font-family: "Inter" Arial, Helvetica, sans-serif;
+  font-family: "Inter", Arial, Helvetica, sans-serif;
   font-size: 18px;
   font-weight: 400;
-  line-height: 21.87px;
+  line-height: 21.78px;
   grid-area: description;
   margin-top: 7px;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
   max-width: 100%;
+  width: 415px;
+  height: 22px;
 }
 
 .profile__image {
@@ -74,6 +79,7 @@
   object-fit: cover;
   background-position: center;
   margin-right: 24px;
+  margin-bottom: 36.25px;
 }
 
 @media screen and (max-width: 320px) {
@@ -81,13 +87,14 @@
     background-color: black;
     flex-direction: column;
     margin-top: auto;
+    margin: 0;
   }
   .profile__info {
     flex-wrap: wrap;
     width: 100%;
     justify-content: center;
     display: flex;
-    margin: 29px 0 33px 0;
+    margin-bottom: 26.25px;
     max-width: 320px;
     gap: 14px;
   }
@@ -101,6 +108,7 @@
     line-height: 16.94px;
     margin-bottom: 36px;
     margin-top: 14px;
+    margin: 0;
   }
 
   .profile__add-button {
@@ -113,19 +121,21 @@
   }
 
   .profile__edit-button {
+    display: flex;
     width: 18px;
     height: 18px;
-    margin-bottom: -26px;
-    margin-left: -10px;
+    margin-bottom: -6px;
+    margin-left: -12px;
   }
 
   .profile__title {
     font-size: 22px;
     line-height: 26.63px;
     align-items: center;
-    margin-top: 26.25px;
-    margin-right: 10.75px;
     margin-left: 16.5px;
+    width: 196px;
+    height: 22px;
+    margin-right: 10.75px;
   }
 
   .profile__image {
@@ -133,5 +143,6 @@
     margin-right: 72.75px;
     height: 127.5px;
     margin-top: 38.25px;
+    margin-bottom: 26.25px;
   }
 }
