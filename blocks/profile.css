@@ -1,13 +1,12 @@
 .profile {
   display: flex;
   align-items: center;
-  margin-bottom: 47.25px;
 }
 
 .profile__info {
   display: grid;
   grid-template-areas: "title button" "description description";
-  grid-template-columns: minmax(auto, auto);
+  grid-template-columns: minmax(auto, 375px) auto;
   column-gap: 18px;
   align-items: center;
 }
@@ -88,17 +87,17 @@
     margin: 0;
   }
   .profile__info {
-    flex-wrap: wrap;
     width: 100%;
     justify-content: center;
-    display: flex;
     margin-bottom: 26.25px;
-    max-width: 320px;
+    max-width: 282px;
     gap: 14px;
+    display: flex;
+    flex-wrap: wrap;
   }
 
   .profile__description {
-    width: 282px;
+    max-width: 282px;
     text-align: center;
     border-top: 312px;
     border-left: 19px;
