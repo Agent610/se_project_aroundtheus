@@ -40,8 +40,6 @@
   cursor: pointer;
   padding: 0;
   margin: 0;
-  transform: rotate(98deg);
-  transition: 0.3s;
 }
 
 .modal__close:hover {
@@ -51,7 +49,6 @@
 .modal__form {
   width: 430px;
   height: 330px;
-  border-radius: 10px;
 }
 
 .modal__heading {
@@ -70,27 +67,29 @@
 .modal__button {
   width: 358px;
   height: 50.15px;
-  color: black;
+  background-color: black;
+  color: white;
   border-radius: 2px;
-  margin-left: 36px;
   margin-right: 36px;
   margin-bottom: 36.51px;
+  margin-top: 48px;
+  cursor: pointer;
 }
 
 .modal__input {
   width: 358px;
-  height: 14px;
-  margin-bottom: 10px;
-  border: 0;
+  height: 27.26px;
+  margin-right: 36px;
+  margin-bottom: 13.26px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   font-family: "Inter", Arial, Helvetica, sans-serif;
   font-weight: 400;
   font-size: 14px;
   line-height: 16.94px;
-  box-sizing: border-box;
   padding: 10px 0 0;
 }
 
 .modal__input:last-of-type {
-  margin-bottom: 0;
+  margin-bottom: 13.34px;
+  margin-top: 29.74px;
 }
