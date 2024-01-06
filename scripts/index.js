@@ -63,10 +63,14 @@ function closePopup() {
 
 function getCardElement(cardData) {
   const cardElement = cardTemplate.cloneNode(true);
-  const cardImageEl = cardElement.querySelector(".card__image");
+  let cardImageEl = cardElement.querySelector(".card__image");
   const cardTitleEl = cardElement.querySelector(".card__title");
-  const cardDescription = cardElement.querySelector(".card__description");
+  let cardDescription = cardElement.querySelector(".card__description");
   cardTitleEl.textContent = cardData.name;
+  cardImageEl = cardElement.querySelector(".card__image").src = cardData.link;
+  cardDescription = cardElement.querySelector(
+    ".card__description"
+  ).textContent = cardData.name;
   return cardElement;
 }
 initialCards.forEach((cardData) => {
