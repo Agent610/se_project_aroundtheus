@@ -37,8 +37,9 @@ const profileDescriptionInput = document.querySelector(
 
 const profileEditForm = profileEditModal.querySelector(".modal__form");
 const cardListEl = document.querySelector(".cards__list");
-const cardTemplate =
-  document.querySelector("#card-template").content.firstElementChild;
+const cardTemplate = document
+  .querySelector("#card-template")
+  .content.querySelector(".card");
 
 profileEditButton.addEventListener("click", () => {
   profileTitleInput.value = profileTitle.textContent;
@@ -63,14 +64,12 @@ function closePopup() {
 
 function getCardElement(cardData) {
   const cardElement = cardTemplate.cloneNode(true);
-  let cardImageEl = cardElement.querySelector(".card__image");
+  const cardImageEl = cardElement.querySelector(".card__image");
   const cardTitleEl = cardElement.querySelector(".card__title");
-  let cardDescription = cardElement.querySelector(".card__description");
+
   cardTitleEl.textContent = cardData.name;
-  cardImageEl = cardElement.querySelector(".card__image").src = cardData.link;
-  cardDescription = cardElement.querySelector(
-    ".card__description"
-  ).textContent = cardData.name;
+  cardImageEl.src = cardData.link;
+  cardImageEl.alt = cardData.name;
   return cardElement;
 }
 initialCards.forEach((cardData) => {
