@@ -11,6 +11,7 @@
 .card__image {
   height: 282px;
   width: 282px;
+  cursor: pointer;
 }
 
 .card__description {
@@ -42,8 +43,30 @@
   border: none;
 }
 
+.card__like-button_active {
+  background-image: url(../images/Like-active.svg);
+}
+
 .card__like-button:hover {
   opacity: 0.5;
+  cursor: pointer;
+}
+
+.card__delete-button {
+  height: 19.3px;
+  width: 18px;
+  background: url(../images/Trash.svg) center no-repeat;
+  position: absolute;
+  margin-bottom: 585px;
+  margin-left: 222px;
+}
+
+.card__delete-button_toggle {
+  background-image: url(../images/Trash-toggle.svg);
+}
+
+.card__delete-button:hover {
+  opacity: 60%;
   cursor: pointer;
 }
 
