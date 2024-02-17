@@ -21,16 +21,31 @@
 .modal__image {
   max-width: 75vw;
   max-height: 75vh;
+  width: 433px;
+  height: 540px;
 }
 
 .modal__container {
-  background-color: white;
+  background: white;
   margin: auto;
   padding: 34px 36px;
   border-radius: 10px;
   position: relative;
   min-height: 330px;
   box-sizing: border-box;
+}
+
+.modal__container_image {
+  padding: 0;
+}
+
+.modal__caption {
+  position: absolute;
+  font-family: Inter;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 14.52px;
+  color: #ffffff;
 }
 
 .modal__close {
@@ -72,7 +87,7 @@
 }
 
 .modal__button {
-  width: 358px;
+  width: 430px;
   height: 50.15px;
   background-color: black;
   color: white;
@@ -84,8 +99,12 @@
   cursor: pointer;
 }
 
+.modal__button:hover {
+  opacity: 0.6;
+}
+
 .modal__input {
-  width: 358px;
+  width: 430px;
   height: 27.26px;
   margin: 0;
   margin-right: 36px;
