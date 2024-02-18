@@ -70,7 +70,6 @@
 
 .modal__form {
   width: 430px;
-  height: 330px;
 }
 
 .modal__heading {
@@ -87,7 +86,7 @@
 }
 
 .modal__button {
-  width: 430px;
+  width: 358px;
   height: 50.15px;
   background-color: black;
   color: white;
@@ -97,6 +96,7 @@
   margin-bottom: 36.51px;
   margin-top: 48px;
   cursor: pointer;
+  border-radius: 2px;
 }
 
 .modal__button:hover {
@@ -104,7 +104,7 @@
 }
 
 .modal__input {
-  width: 430px;
+  width: 358px;
   height: 27.26px;
   margin: 0;
   margin-right: 36px;
@@ -170,7 +170,6 @@
 
   .modal__button {
     max-width: 100%;
-    width: 210px;
     height: 46px;
     padding: 0;
     border-radius: 2px;

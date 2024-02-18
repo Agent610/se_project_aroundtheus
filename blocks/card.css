@@ -63,6 +63,7 @@
   position: absolute;
   margin-bottom: 585px;
   margin-left: 222px;
+  border: none;
 }
 
 .card__delete-button_toggle {
