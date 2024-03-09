@@ -104,7 +104,11 @@
 }
 
 .modal__button_disabled:hover {
-  opacity: 0.2;
+  opacity: 0.3;
+}
+
+.modal__button_enabled:hover {
+  opacity: 0.8;
 }
 
 .modal__input {
@@ -137,6 +141,7 @@
 
 .modal__error_visible {
   visibility: visible;
+  border-bottom: red;
 }
 
 @media screen and (max-width: 320px) {

@@ -62,12 +62,24 @@ function closeModal() {
 }
 
 function openModal(modal) {
-  modal.classList.add("modal_opened");
-  document.addEventListener("keyup", (event) => {
+  //When opened
+  document.addEventListener("keydown", closeWithEsc);
+
+  //When closed
+  document.addEventListener("keydown", closeWithEsc);
+
+  function closeWithEsc(event) {
     if (event.key === "Escape") {
-      closeModal();
+      const openedModel = document.querySelector("modal_opened");
+      closeModelWindow("modal_opened");
     }
-  });
+  }
+  // modal.classList.add("modal_opened");
+  //document.addEventListener("keyup", (event) => {
+  //if (event.key === "Escape") {
+  //closeModal();
+  //}
+  //});
 
   //function closeModalByEscape(event) {
   //if (event.key === "Escape") {
@@ -77,11 +89,19 @@ function openModal(modal) {
 
   //document.removeEventListener("keydown", closeModalByEscape);
 
-  modal.addEventListener("click", (event) => {
-    if (Array.from(event.target.classList).includes("modal")) {
-      closeModal();
+  // modal.addEventListener("click", (event) => {
+  function closeModalonRemoteClick(evt) {
+    if (evt.target === evt.currentTarget) {
+      closeModal(evt.currentTarget);
     }
-  });
+  }
+
+  modal.addEventListener("mousedown", closeModalonRemoteClick);
+  modal.removeEventListener("mousedown", closeModalonRemoteClick);
+
+  if (Array.from(evt.target.classList.contains)("modal")) {
+    closeModal();
+  }
 }
 
 function renderCard(cardData, wrapper) {
