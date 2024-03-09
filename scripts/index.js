@@ -69,6 +69,14 @@ function openModal(modal) {
     }
   });
 
+  //function closeModalByEscape(event) {
+  //if (event.key === "Escape") {
+  //}
+
+  //document.addEventListener("keydown", closeModalByEscape);
+
+  //document.removeEventListener("keydown", closeModalByEscape);
+
   modal.addEventListener("click", (event) => {
     if (Array.from(event.target.classList).includes("modal")) {
       closeModal();
