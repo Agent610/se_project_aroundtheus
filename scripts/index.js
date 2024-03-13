@@ -57,53 +57,30 @@ const cardTitleInput = addCardFormElement.querySelector(
 );
 const cardURLInput = addCardFormElement.querySelector(".modal__input_type_url");
 
-function closeModal() {
-  document.querySelector(".modal_opened").classList.remove("modal_opened");
+function closeWithEsc(event) {
+  if (event.key === "Escape") {
+    const modal = document.querySelector(".modal_opened");
+    closeModal(modal);
+  }
 }
 
 function openModal(modal) {
-  function closeWithEsc(event) {
-    if (event.key === "Escape") {
-      const openedModel = document.querySelector("modal_opened");
-      closeModal("modal_opened");
-    }
-  }
-
-  //When opened
+  // add class to modal
   document.addEventListener("keydown", closeWithEsc);
-
-  //When closed
-  document.removeEventListener("keydown", closeWithEsc);
-
   modal.classList.add("modal_opened");
-  //document.addEventListener("keyup", (event) => {
-  //if (event.key === "Escape") {
-  //closeModal();
-  //}
-  //});
-
-  //function closeModalByEscape(event) {
-  //if (event.key === "Escape") {
-  //}
-
-  //document.addEventListener("keydown", closeModalByEscape);
-
-  //document.removeEventListener("keydown", closeModalByEscape);
 }
 
-modal.addEventListener("click"),
-  (event) => {
-    function closemodalonremoteclick(evt) {
-      if (evt.target === evt.currentTarget) {
-        closeModal(evt.currentTarget);
-      }
-    }
+function closeModal(modal) {
+  //remove class from modal
+  document.removeEventListener("keydown", closeWithEsc);
+  modal.classList.remove("modal_opened");
+}
 
-    modal.addEventListener("mousedown", closemodalonremoteclick);
-    modal.removeEventListener("mousedown", closemodalonremoteclick);
-
-    if (Array.from(evt.classList.contains("modal"))) closeModal();
-  };
+function closeModalOnRemoteClick(evt) {
+  if (evt.target === evt.currentTarget) {
+    closeModal(evt.currentTarget);
+  }
+}
 
 function renderCard(cardData, wrapper) {
   const cardElement = getCardElement(cardData);
@@ -155,7 +132,7 @@ function getCardElement(data) {
 }
 
 previewImageModalCloseButton.addEventListener("click", () => {
-  closeModal();
+  closeModal(previewImageModal);
 });
 
 //EventListeners
@@ -168,13 +145,17 @@ profileEditButton.addEventListener("click", () => {
   openModal(editProfileModal);
 });
 
-profileModalCloseButton.addEventListener("click", () => closeModal());
+profileModalCloseButton.addEventListener("click", () =>
+  closeModal(editProfileModal)
+);
 
 addCardButton.addEventListener("click", () => {
   openModal(addCardModal);
 });
 
-addCardModalCloseButton.addEventListener("click", () => closeModal());
+addCardModalCloseButton.addEventListener("click", () =>
+  closeModal(addCardModal)
+);
 
 //Rendering Cards
 initialCards.forEach((cardData) => {
