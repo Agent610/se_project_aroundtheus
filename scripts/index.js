@@ -64,22 +64,24 @@ function closeWithEsc(event) {
   }
 }
 
+function closeModalOnRemoteClick(event) {
+  if (event.target === event.currentTarget) {
+    closeModal(event.currentTarget);
+  }
+}
+
 function openModal(modal) {
   // add class to modal
   document.addEventListener("keydown", closeWithEsc);
+  document.addEventListener("keydown", closeModalOnRemoteClick);
   modal.classList.add("modal_opened");
 }
 
 function closeModal(modal) {
   //remove class from modal
   document.removeEventListener("keydown", closeWithEsc);
+  document.removeEventListener("keydown", closeModalOnRemoteClick);
   modal.classList.remove("modal_opened");
-}
-
-function closeModalOnRemoteClick(evt) {
-  if (evt.target === evt.currentTarget) {
-    closeModal(evt.currentTarget);
-  }
 }
 
 function renderCard(cardData, wrapper) {
