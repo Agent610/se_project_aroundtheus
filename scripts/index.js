@@ -80,6 +80,7 @@ function openModal(modal) {
 function closeModal(modal) {
   //remove class from modal
   document.removeEventListener("keydown", closeWithEsc);
+  modal.removeEventListener("mousedown", closeModalOnRemoteClick);
   modal.classList.remove("modal_opened");
 }
 

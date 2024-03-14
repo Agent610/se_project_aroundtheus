@@ -105,12 +105,12 @@
   cursor: default;
 }
 
-.modal__button_disabled:hover {
-  opacity: 0.3;
+.modal__button:hover {
+  opacity: 0.8;
 }
 
-.modal__button_enabled:hover {
-  opacity: 0.8;
+.modal__button_disabled:hover {
+  opacity: 0.3;
 }
 
 .modal__input {
