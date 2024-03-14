@@ -93,7 +93,7 @@ function handleProfileFormSubmit(e) {
   e.preventDefault();
   profileTitle.textContent = nameInput.value;
   profileDescription.textContent = jobInput.value;
-  closeModal();
+  closeModal(editProfileModal);
 }
 
 function handleAddCardFormSubmit(e) {
@@ -101,7 +101,7 @@ function handleAddCardFormSubmit(e) {
   const name = cardTitleInput.value;
   const link = cardURLInput.value;
   renderCard({ name, link }, cardsWrap);
-  closeModal();
+  closeModal(addCardModal);
 }
 
 function getCardElement(data) {
@@ -134,7 +134,7 @@ function getCardElement(data) {
 }
 
 previewImageModalCloseButton.addEventListener("click", () => {
-  closeModal(previewImageModal);
+  closeModal(previewModal);
 });
 
 //EventListeners
