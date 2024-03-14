@@ -73,7 +73,7 @@ function closeModalOnRemoteClick(event) {
 function openModal(modal) {
   // add class to modal
   document.addEventListener("keydown", closeWithEsc);
-  document.addEventListener("keydown", closeModalOnRemoteClick);
+  modal.addEventListener("mousedown", closeModalOnRemoteClick);
   modal.classList.add("modal_opened");
 }
 
