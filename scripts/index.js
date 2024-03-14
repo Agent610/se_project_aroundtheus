@@ -80,13 +80,12 @@ function openModal(modal) {
 function closeModal(modal) {
   //remove class from modal
   document.removeEventListener("keydown", closeWithEsc);
-  document.removeEventListener("keydown", closeModalOnRemoteClick);
   modal.classList.remove("modal_opened");
 }
 
 function renderCard(cardData, wrapper) {
   const cardElement = getCardElement(cardData);
-  wrapper.append(cardElement);
+  wrapper.prepend(cardElement);
 }
 
 function handleProfileFormSubmit(e) {

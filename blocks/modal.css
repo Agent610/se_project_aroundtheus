@@ -11,12 +11,13 @@
   visibility: hidden;
   opacity: 0;
   border-bottom: red;
+  transition: visibility 0.5, opacity 0.5s linear;
 }
 
 .modal_opened {
   visibility: visible;
   opacity: 1;
-  transition: all 0.5s ease;
+  transition: visibility 0s, opacity 0.5s linear;
 }
 
 .modal__image {
