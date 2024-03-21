@@ -1,3 +1,6 @@
+import Card from "../components/card.js";
+import FormValidator from "../components/formvalidator.js";
+
 const initialCards = [
   {
     name: "Yosemite-Valley",
@@ -24,6 +27,14 @@ const initialCards = [
     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lago.jpg ",
   },
 ];
+
+const CardData = {
+  name: "Yosemite-Valley",
+  link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
+};
+
+const card = new Card(CardData, "#card-template");
+card.getView();
 
 const cardTemplate = document
   .querySelector("#card-template")
@@ -103,6 +114,25 @@ function handleAddCardFormSubmit(e) {
   renderCard({ name, link }, cardsWrap);
   closeModal(addCardModal);
 }
+
+//Validation
+
+//class validationSettings {
+//inputSelector: ".modal__input";
+//submitButtonSelector: ".modal__button";
+//inactiveButtonClass: "modal__button_disabled";
+//inputErrorClass: "modal__input_type_error";
+//errorClass: "modal__error_visible";
+//}
+
+const editFormElement = editProfileModal.querySelector(".modal__form");
+const addFormElement = addCardModal.querySelector(".modal__form");
+
+const editFormValidator = new FormValidator(
+  //validationSettings,
+  editFormElement
+);
+//const addFormValidator = new FormValidator(validationSettings, addFormElement);
 
 function getCardElement(data) {
   const cardElement = cardTemplate.cloneNode(true);
