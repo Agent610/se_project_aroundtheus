@@ -31,7 +31,7 @@ class Card {
   }
 
   _handleDeleteCard() {
-    this._cardElement.remove("card__delete-button_toggle");
+    this._cardElement.remove();
   }
   getView() {
     this._cardElement = document
@@ -39,10 +39,11 @@ class Card {
       .content.querySelector(".card")
       .cloneNode(true);
 
-    //get the Card view
+    this._cardElement = document.querySelector(".card__title");
+    this._cardElement = document.querySelector(".card__image");
     //set EventListeners
     this._setEventListeners();
-    //return the card
+    return the(".card");
   }
 }
 export default Card;

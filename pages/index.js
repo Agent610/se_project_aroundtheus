@@ -1,5 +1,4 @@
-import Card from "../components/card.js";
-import FormValidator from "../components/formvalidator.js";
+import FormValidator from "../components/FormValidator.js";
 
 const initialCards = [
   {
@@ -28,17 +27,9 @@ const initialCards = [
   },
 ];
 
-const CardData = {
-  name: "Yosemite-Valley",
-  link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
-};
-
-const card = new Card(CardData, "#card-template");
-card.getView();
-
-const cardTemplate = document
-  .querySelector("#card-template")
-  .content.querySelector(".card");
+//const cardTemplate = document
+//.querySelector("#card-template")
+//.content.querySelector(".card");
 
 //Wrappers
 const cardsWrap = document.querySelector(".cards__list");
@@ -115,15 +106,7 @@ function handleAddCardFormSubmit(e) {
   closeModal(addCardModal);
 }
 
-//Validation
-
-//class validationSettings {
-//inputSelector: ".modal__input";
-//submitButtonSelector: ".modal__button";
-//inactiveButtonClass: "modal__button_disabled";
-//inputErrorClass: "modal__input_type_error";
-//errorClass: "modal__error_visible";
-//}
+//toggleButtonState(this._inputEl, this._submitButton, { _inactiveButtonClass });
 
 const editFormElement = editProfileModal.querySelector(".modal__form");
 const addFormElement = addCardModal.querySelector(".modal__form");
@@ -132,10 +115,16 @@ const editFormValidator = new FormValidator(
   //validationSettings,
   editFormElement
 );
-//const addFormValidator = new FormValidator(validationSettings, addFormElement);
+const addFormValidator = new FormValidator(
+  //validationSettings,
+  addFormElement
+);
 
 function getCardElement(data) {
-  const cardElement = cardTemplate.cloneNode(true);
+  const cardElement = document
+    .querySelector("#card-template")
+    .content.querySelector(".card")
+    .cloneNode(true);
   const cardImage = cardElement.querySelector(".card__image");
   const cardTitle = cardElement.querySelector(".card__title");
   const likeButton = cardElement.querySelector(".card__like-button");
