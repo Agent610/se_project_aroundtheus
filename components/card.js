@@ -41,9 +41,8 @@ class Card {
 
     this._cardElement = document.querySelector(".card__title");
     this._cardElement = document.querySelector(".card__image");
-    //set EventListeners
     this._setEventListeners();
-    return the(".card");
+    return this._cardElement;
   }
 }
 export default Card;

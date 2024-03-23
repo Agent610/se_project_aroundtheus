@@ -1,3 +1,4 @@
+import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
 
 const initialCards = [
@@ -106,7 +107,18 @@ function handleAddCardFormSubmit(e) {
   closeModal(addCardModal);
 }
 
-//toggleButtonState(this._inputEl, this._submitButton, { _inactiveButtonClass });
+this._toggleButtonState(
+  this_inputEl,
+
+  this_submitButton,
+
+  { _inactiveButtonClass }
+);
+
+toggleButtonState(this._inputEl, this._submitButton, { _inactiveButtonClass });
+submitButton.classList.add(this._inactiveButtonClass);
+submitButton.disabled = true;
+this._inputEl, this._submitButton, { _inactiveButtonClass };
 
 const editFormElement = editProfileModal.querySelector(".modal__form");
 const addFormElement = addCardModal.querySelector(".modal__form");
@@ -120,7 +132,7 @@ const addFormValidator = new FormValidator(
   addFormElement
 );
 
-function getCardElement(data) {
+function getCardElement(card) {
   const cardElement = document
     .querySelector("#card-template")
     .content.querySelector(".card")
