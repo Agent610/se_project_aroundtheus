@@ -41,8 +41,18 @@ class Card {
 
     this._cardElement = document.querySelector(".card__title");
     this._cardElement = document.querySelector(".card__image");
+    this._cardElement.textContent = document.querySelector(".card__title");
+    this._cardElement.textContent =
+      document.querySelector(".card__description");
+
     this._setEventListeners();
+
     return this._cardElement;
+  }
+
+  _cardElement() {
+    this._cardElement = document.querySelector(".card__title");
+    this._cardElement = document.querySelector(".card__image");
   }
 }
 export default Card;

@@ -107,33 +107,30 @@ function handleAddCardFormSubmit(e) {
   closeModal(addCardModal);
 }
 
-this._toggleButtonState(
-  this_inputEl,
-
-  this_submitButton,
-
-  { _inactiveButtonClass }
-);
-
-toggleButtonState(this._inputEl, this._submitButton, { _inactiveButtonClass });
-submitButton.classList.add(this._inactiveButtonClass);
-submitButton.disabled = true;
-this._inputEl, this._submitButton, { _inactiveButtonClass };
+function addFormValidator toggleButtonState(e) {
+  if (hasInvalidInput(this._inputEl)) {
+    submitButton.classList.add(this._inactiveButtonClass);
+    submitButton.disabled = true;
+    return;
+  }
+  submitButton.classList.remove(this._inactiveButtonClass);
+  submitButton.disabled = false;
+}
 
 const editFormElement = editProfileModal.querySelector(".modal__form");
 const addFormElement = addCardModal.querySelector(".modal__form");
 
 const editFormValidator = new FormValidator(
-  //validationSettings,
+  validationSettings,
   editFormElement
 );
 const addFormValidator = new FormValidator(
-  //validationSettings,
+  validationSettings,
   addFormElement
 );
 
 function getCardElement(card) {
-  const cardElement = document
+  const cardElement = card
     .querySelector("#card-template")
     .content.querySelector(".card")
     .cloneNode(true);
