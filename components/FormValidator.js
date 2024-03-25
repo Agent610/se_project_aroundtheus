@@ -32,7 +32,7 @@ class FormValidator {
   }
 
   _checkInputValidity() {
-    if (!inputEl.validity.valid) {
+    if (!inputEl) {
       return showInputError(formEl, inputEl, options);
     }
     hideInputError(formEl, inputEl, options);
@@ -43,7 +43,7 @@ class FormValidator {
 
     inputEls.forEach((inputEl) => {
       inputEl.addEventListener("input", (e) => {
-        this._checkInputValidity();
+        this._checkInputValidity(inputEl);
         this._toggleButtonState();
       });
     });
