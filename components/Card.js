@@ -44,11 +44,11 @@ class Card {
       .content.querySelector(".card")
       .cloneNode(true);
 
-    const cardTitle = ".card__title";
-    const cardImage = ".card__image";
-    this._cardElement.textContent =
-      document.querySelector(".card__description");
-    this._cardElement.textContent = document.querySelector(".card__title");
+    const cardTitleElement = this._cardElement.querySelector(".card__title");
+    const cardImageElement = this._cardElement.querySelector(".card__image");
+    const cardDescriptionElement =
+      textContent.querySelector(".card__description");
+
     this._setEventListeners();
     return this._cardElement;
   }
