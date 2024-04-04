@@ -24,16 +24,6 @@ class Card {
     this._cardImage.addEventListener("click", () => {
       this._handleImageClick(this);
     });
-
-    //"previewModal, Open"
-    const previewModal = document.querySelector(".modal_preview");
-
-    //previewModal, Close
-    const closeModal = document
-      .querySelector(".modal_preview")
-      .addEventListener("click", () => {
-        this._handleDeleteButton();
-      });
   }
 
   _handleLikeButton() {
@@ -43,7 +33,7 @@ class Card {
   }
 
   _handleDeleteButton() {
-    //this._cardElement.remove();
+    this._cardElement.remove();
   }
 
   _handleImageClick() {
@@ -55,32 +45,6 @@ class Card {
       .querySelector(this._cardSelector)
       .content.querySelector(".card")
       .cloneNode(true);
-  }
-
-  getView() {
-    this._cardElement = document
-      .querySelector(this._cardSelector)
-      .content.querySelector(".card")
-      .cloneNode(true);
-    this._element = this._getTemplate();
-    this._link = this._element.querySelector(".card__image");
-    this._name = this._element.querySelector(".card__title").textContent;
-
-    const cardTemplate = document
-      .querySelector(this._cardSelector)
-      .content.querySelector(".card");
-    const cardElement = cardTemplate.cloneNode(true);
-    this._cardImage = cardElement.querySelector(".card__image");
-    const cardTitle = cardElement.querySelector(".card__title");
-    const likeButton = cardElement.querySelector(".card__like-button");
-    const deleteButton = cardElement.querySelector(".card__delete-button");
-
-    //cardImage.addEventListener("click", () => {
-    //document.querySelector("#preview-modal-image").src = data.link;
-    //document.querySelector("#preview-modal-image").alt = data.name;
-    //document.querySelector("#preview-modal-title").textContent = data.name;
-    //openModal(document.querySelector("#preview-modal"));
-    //});
 
     likeButton.addEventListener("click", () => {
       likeButton.classList.toggle("card__like-button_active");
@@ -89,6 +53,16 @@ class Card {
     deleteButton.addEventListener("click", () => {
       cardElement.remove("card__delete-button_toggle");
     });
+  }
+
+  getView() {
+    this._element = this._getTemplate();
+    this._name = this._element.querySelector(".card__title").textContent;
+
+    this._cardImage = cardElement.querySelector(".card__image");
+    const cardTitle = cardElement.querySelector(".card__title");
+    const likeButton = cardElement.querySelector(".card__like-button");
+    const deleteButton = cardElement.querySelector(".card__delete-button");
 
     this._cardImage.src = this._link;
     this._cardImage.alt = this._name;

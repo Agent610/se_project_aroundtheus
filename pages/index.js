@@ -33,9 +33,6 @@ const cardData = {
   link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
 };
 
-const card = new Card(cardData, "#card-template");
-card.getView();
-
 const cardTemplate = document
   .querySelector("#card-template")
   .content.querySelector(".card");
@@ -115,6 +112,10 @@ function handleAddCardFormSubmit(e) {
   closeModal(addCardModal);
 }
 
+//Reset form
+document.getElementById("add-card-form").reset();
+document.getElementById("profile-edit-form").reset();
+
 const cardSelector = "#card-template";
 
 //Validation
@@ -138,32 +139,6 @@ const addCardValidator = new FormValidator(validationSettings, addCardElement);
 
 //editFormValidator.validationSettings();
 //addCardElement.validationSettings();
-
-// function getCardElement(cardData) {
-//   const getNewCardElement = cardTemplate.cloneNode(true);
-//   const cardImage = getNewCardElement.querySelector(".card__image");
-//   const cardTitle = getNewCardElement.querySelector(".card__title");
-//   const likeButton = getNewCardElement.querySelector(".card__like-button");
-//   const deleteButton = getNewCardElement.querySelector(".card__delete-button");
-
-//   cardImage.addEventListener("click", () => {
-//     document.querySelector("#preview-modal-image").src = data.link;
-//     document.querySelector("#preview-modal-image").alt = data.name;
-//     document.querySelector("#preview-modal-title").textContent = data.name;
-//     openModal(document.querySelector("#preview-modal"));
-//   });
-//   likeButton.addEventListener("click", () => {
-//     likeButton.classList.toggle("card__like-button_active");
-//   });
-//   deleteButton.addEventListener("click", () => {
-//     cardElement.remove("card__delete-button_toggle");
-//   });
-
-//   cardImage.src = data.link;
-//   cardImage.alt = data.name;
-//   cardTitle.textContent = data.name;
-//   return cardElement;
-// }
 
 previewImageModalCloseButton.addEventListener("click", () => {
   closeModal(previewModal);
