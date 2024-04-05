@@ -4,16 +4,18 @@ class Card {
     this._link = link;
     this._cardSelector = cardSelector;
     this._handleImageClick = handleImageClick;
+  }
 
+  _setEventListeners() {
     //".card__like-button"
-    const likeButton = this._element
+    this._element
       .querySelector(".card__like-button")
       .addEventListener("click", () => {
         this._handleLikeButton();
       });
 
     //".card__delete-button"
-    const deleteButton = this._element
+    this._element
       .querySelector(".card__delete-button")
       .addEventListener("click", () => {
         this._handleDeleteButton();
@@ -24,8 +26,6 @@ class Card {
     });
   }
 
-  _setEventListeners() {}
-
   _handleLikeButton() {
     this._element
       .querySelector(".card__like-button")
@@ -34,10 +34,6 @@ class Card {
 
   _handleDeleteButton() {
     this._element.remove();
-  }
-
-  _handleImageClick() {
-    this._element.querySelector(".modal_preview");
   }
 
   _getTemplate() {

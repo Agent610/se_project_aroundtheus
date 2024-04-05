@@ -112,17 +112,7 @@ function handleAddCardFormSubmit(e) {
   renderCard({ name, link }, cardsWrap);
   closeModal(addCardModal);
   addCardModal.reset();
-}
-
-toggleButtonState();
-{
-  if (hasInvalidInput(inputEls)) {
-    submitButton.classList.add(inactiveButtonClass);
-    submitButton.disabled = true;
-  }
-
-  submitButton.classList.remove(inactiveButtonClass);
-  submitButton.disabled = false;
+  addCardValidator._toggleButtonState();
 }
 
 const cardSelector = "#card-template";
