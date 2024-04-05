@@ -102,6 +102,7 @@ function handleProfileFormSubmit(e) {
   profileTitle.textContent = nameInput.value;
   profileDescription.textContent = jobInput.value;
   closeModal(editProfileModal);
+  editProfileModal.reset();
 }
 
 function handleAddCardFormSubmit(e) {
@@ -110,11 +111,19 @@ function handleAddCardFormSubmit(e) {
   const link = cardURLInput.value;
   renderCard({ name, link }, cardsWrap);
   closeModal(addCardModal);
+  addCardModal.reset();
 }
 
-//Reset form
-document.getElementById("add-card-form").reset();
-document.getElementById("profile-edit-form").reset();
+toggleButtonState();
+{
+  if (hasInvalidInput(inputEls)) {
+    submitButton.classList.add(inactiveButtonClass);
+    submitButton.disabled = true;
+  }
+
+  submitButton.classList.remove(inactiveButtonClass);
+  submitButton.disabled = false;
+}
 
 const cardSelector = "#card-template";
 
