@@ -28,14 +28,14 @@ const initialCards = [
   },
 ];
 
-const cardData = {
-  name: "Yosemite-Valley",
-  link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
-};
+//const cardData = {
+//name: "Yosemite-Valley",
+//link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
+//};
 
 const cardTemplate = document
   .querySelector("#card-template")
-  .content.querySelector(".card");
+  .content.querySelector("card");
 
 //Wrappers
 const cardsWrap = document.querySelector(".cards__list");
@@ -93,7 +93,9 @@ function closeModal(modal) {
 }
 
 function renderCard(cardData, wrapper) {
-  const card = new Card({ cardData, cardSelector });
+  const card = new Card(cardData, "#card-template", () => {
+    console.log(222);
+  });
   wrapper.prepend(card.getView());
 }
 
@@ -112,7 +114,7 @@ function handleAddCardFormSubmit(e) {
   renderCard({ name, link }, cardsWrap);
   closeModal(addCardModal);
   addCardModal.reset();
-  addCardValidator._toggleButtonState();
+  addCardValidator.toggleButtonState();
 }
 
 const cardSelector = "#card-template";

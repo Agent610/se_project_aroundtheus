@@ -32,7 +32,7 @@ class FormValidator {
     }
   }
 
-  _toggleButtonState() {
+  toggleButtonState() {
     if (hasInvalidInput(inputEls)) {
       submitButton.classList.add(inactiveButtonClass);
       submitButton.disabled = true;
@@ -66,8 +66,5 @@ class FormValidator {
     setEventListeners(formEl, options);
   }
 }
-
-//editFormValidator = new FormValidator(editFormValidator, settings);
-//FormValidator.enableValidation;
 
 export default FormValidator;

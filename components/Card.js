@@ -37,6 +37,8 @@ class Card {
   }
 
   _getTemplate() {
+    console.log(1);
+    console.log(this._cardSelector);
     return document
       .querySelector(this._cardSelector)
       .content.querySelector(".card")
