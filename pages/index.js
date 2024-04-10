@@ -54,6 +54,8 @@ const previewImageModalCloseButton =
 const profileTitle = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__description");
 const addCardButton = document.querySelector("#profile-add-button");
+const editProfileForm = document.querySelector("#profile-edit-form");
+const addCardForm = document.querySelector("#add-card-form");
 
 //Form Information
 const nameInput = profileFormElement.querySelector(".modal__input_type_name");
@@ -93,10 +95,16 @@ function closeModal(modal) {
 }
 
 function renderCard(cardData, wrapper) {
-  const card = new Card(cardData, "#card-template", () => {
-    console.log(222);
-  });
+  const card = new Card(cardData, "#card-template", handleImagePreview);
+  //const  = new Card(cardData, "#card-template", handleImagePreview);
   wrapper.prepend(card.getView());
+}
+
+function handleImagePreview(cardData) {
+  this._cardImage.src = this._link;
+  this._cardImage.alt = this._name;
+  cardTitle.textContent = this._name;
+  openModal(previewModal);
 }
 
 function handleProfileFormSubmit(e) {
@@ -104,7 +112,7 @@ function handleProfileFormSubmit(e) {
   profileTitle.textContent = nameInput.value;
   profileDescription.textContent = jobInput.value;
   closeModal(editProfileModal);
-  editProfileModal.reset();
+  editProfileForm.reset();
 }
 
 function handleAddCardFormSubmit(e) {
@@ -113,8 +121,7 @@ function handleAddCardFormSubmit(e) {
   const link = cardURLInput.value;
   renderCard({ name, link }, cardsWrap);
   closeModal(addCardModal);
-  addCardModal.reset();
-  addCardValidator.toggleButtonState();
+  addCardForm.reset();
 }
 
 const cardSelector = "#card-template";
@@ -136,10 +143,11 @@ const editFormValidator = new FormValidator(
   validationSettings,
   editFormElement
 );
+
+//editFormValidator.enableValidation();
 const addCardValidator = new FormValidator(validationSettings, addCardElement);
 
-//editFormValidator.validationSettings();
-//addCardElement.validationSettings();
+//addCardValidator.enableValidation();
 
 previewImageModalCloseButton.addEventListener("click", () => {
   closeModal(previewModal);

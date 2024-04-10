@@ -1,5 +1,5 @@
 class FormValidator {
-  constructor(editFormValidator, settings) {
+  constructor(settings) {
     this._inputSelector = settings.inputSelector;
     this._submitButtonSelector = settings.submitButtonSelector;
     this._inactiveButtonClass = settings.inactiveButtonClass;
@@ -48,18 +48,18 @@ class FormValidator {
   }
 
   _setEventListeners() {
-    this._inputEls = [...this.form.querySelectorAll(this._inputSelector)];
-    this._submitButton = this.form.querySelector(this._submitButtonSelector);
+    this._inputEls = [...this._form.querySelectorAll(this._inputSelector)];
+    this._submitButton = this._form.querySelector(this._submitButtonSelector);
 
     inputEls.forEach((inputEl) => {
       inputEl.addEventListener("input", (e) => {
-        checkInputValidity(this.form, inputEl, options);
+        checkInputValidity(this._form, inputEl, options);
         toggleButtonState(inputEls, submitButton, options);
       });
     });
   }
 
-  enableValidation(editFormValidator) {
+  enableValidation() {
     this._form.addEventListener("submit", (e) => {
       e.preventDefault();
     });

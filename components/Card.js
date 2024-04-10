@@ -26,10 +26,15 @@ class Card {
     });
   }
 
+  //_handleImageClick() {
+  //this._element.querySelector(".modal_preview");
+  // this._handleImageClick(this);
+  //}
+
   _handleLikeButton() {
     this._element
       .querySelector(".card__like-button")
-      .classList.toggle(".card__like-button_active");
+      .classList.toggle("card__like-button_active");
   }
 
   _handleDeleteButton() {
@@ -37,8 +42,6 @@ class Card {
   }
 
   _getTemplate() {
-    console.log(1);
-    console.log(this._cardSelector);
     return document
       .querySelector(this._cardSelector)
       .content.querySelector(".card")
