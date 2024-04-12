@@ -102,7 +102,6 @@
 
 .modal__button_disabled {
   opacity: 0.3;
-  background-color: black;
 }
 
 .modal__button:hover {

@@ -101,9 +101,10 @@ function renderCard(cardData, wrapper) {
 }
 
 function handleImagePreview(cardData) {
-  this._cardImage.src = this._link;
-  this._cardImage.alt = this._name;
-  cardTitle.textContent = this._name;
+  previewModal.querySelector("#preview-modal-image").src = cardData.link;
+  previewModal.querySelector("#preview-modal-title").alt = cardData.name;
+  previewModal.querySelector("#preview-modal-title").textContent =
+    cardData.name;
   openModal(previewModal);
 }
 
@@ -112,7 +113,7 @@ function handleProfileFormSubmit(e) {
   profileTitle.textContent = nameInput.value;
   profileDescription.textContent = jobInput.value;
   closeModal(editProfileModal);
-  editProfileForm.reset();
+  editProfileForm.reset("#profile-edit-form");
 }
 
 function handleAddCardFormSubmit(e) {
@@ -121,7 +122,7 @@ function handleAddCardFormSubmit(e) {
   const link = cardURLInput.value;
   renderCard({ name, link }, cardsWrap);
   closeModal(addCardModal);
-  addCardForm.reset();
+  addCardForm.reset("#add-card-form");
 }
 
 const cardSelector = "#card-template";
@@ -144,10 +145,11 @@ const editFormValidator = new FormValidator(
   editFormElement
 );
 
-//editFormValidator.enableValidation();
+editFormValidator.enableValidation();
+
 const addCardValidator = new FormValidator(validationSettings, addCardElement);
 
-//addCardValidator.enableValidation();
+addCardValidator.enableValidation();
 
 previewImageModalCloseButton.addEventListener("click", () => {
   closeModal(previewModal);

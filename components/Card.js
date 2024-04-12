@@ -22,14 +22,14 @@ class Card {
       });
 
     this._cardImage.addEventListener("click", () => {
-      this._handleImageClick(this);
+      this._handleImageClick({ name: this._name, link: this._link });
     });
   }
 
-  //_handleImageClick() {
-  //this._element.querySelector(".modal_preview");
-  // this._handleImageClick(this);
-  //}
+  _handleImageClick() {
+    this._element.querySelector(".modal_preview");
+    this._handleImageClick(this);
+  }
 
   _handleLikeButton() {
     this._element
