@@ -10,7 +10,6 @@
   display: flex;
   visibility: hidden;
   opacity: 0;
-  border-bottom: red;
   transition: visibility 0.5, opacity 0.5s linear;
 }
 
@@ -102,6 +101,7 @@
 
 .modal__button_disabled {
   opacity: 0.3;
+  cursor: default;
 }
 
 .modal__button:hover {
@@ -129,6 +129,12 @@
 .modal__input:last-of-type {
   margin-bottom: 13.34px;
   margin-top: 29.74px;
+}
+.modal__input_type_error {
+  border-bottom: 1px solid red;
+}
+.modal__input_type {
+  border-bottom: 1px solid black;
 }
 
 .modal__error {

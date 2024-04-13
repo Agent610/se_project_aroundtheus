@@ -162,6 +162,8 @@ addCardFormElement.addEventListener("submit", handleAddCardFormSubmit);
 profileEditButton.addEventListener("click", () => {
   nameInput.value = profileTitle.textContent;
   jobInput.value = profileDescription.textContent;
+  editFormValidator._hideInputError(nameInput);
+  editFormValidator._hideInputError(jobInput);
   openModal(editProfileModal);
 });
 
@@ -170,6 +172,8 @@ profileModalCloseButton.addEventListener("click", () =>
 );
 
 addCardButton.addEventListener("click", () => {
+  addCardValidator._hideInputError(cardTitleInput);
+  addCardValidator._hideInputError(cardURLInput);
   openModal(addCardModal);
 });
 
