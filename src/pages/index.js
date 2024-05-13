@@ -1,5 +1,10 @@
-import Card from "../../../components/Card.js";
-import FormValidator from "../../../components/formvalidator.js";
+import Card from "../components/Card.js";
+import FormValidator from "../components/FormValidator.js";
+import Popup from "../components/Popup.js";
+import PopupWithForm from "../components/PopupWithForm.js";
+import PopupWithImage from "../components/PopupWithImage.js";
+import section from "../components/Section.js";
+import userInfo from "../components/UserInfo.js";
 
 const initialCards = [
   {
@@ -185,3 +190,23 @@ addCardModalCloseButton.addEventListener("click", () =>
 initialCards.forEach((cardData) => {
   renderCard(cardData, cardsWrap);
 });
+
+
+//Popup 
+
+const cardList = new Section({
+  renderer:(data) => {
+    const card = new Card({
+      data,
+      handleImageClick: () => {
+        imagePopup.open(data);
+      }
+    }, cardsConfig.cardSelector);
+
+    cardList.addItem(card.getView());
+  }
+})
+const cardsConfig = placeswrap
+
+const imagePopup = new PopupWithImage(popupConfig.imageModalWindow);
+ 
