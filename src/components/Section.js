@@ -1,7 +1,7 @@
 class section {
     constructor({renderer}, items) {
         this._renderer = renderer;
-        this._items = document.querySelector('.${itemSelector}');
+        this._items = document.querySelector(`${itemSelector}`);
     }
 
     renderItems(item) {

@@ -15,7 +15,6 @@ class Popup {
     }
 
     _handlEscClose(evt) {
-        evt.preventDefault();
 
         if (evt.which === ESCAPE_KEYCODE) {
             this._close();

@@ -191,6 +191,11 @@ initialCards.forEach((cardData) => {
   renderCard(cardData, cardsWrap);
 });
 
+//Create the class instances 
+// PopupWithForm.js
+//PopupWithImage.js
+//UserInfo.js UserInfo (Selectors) inquiry return object name, descriptoin change elements 
+
 
 //Popup 
 
@@ -209,4 +214,6 @@ const cardList = new Section({
 const cardsConfig = placeswrap
 
 const imagePopup = new PopupWithImage(popupConfig.imageModalWindow);
+
+
  

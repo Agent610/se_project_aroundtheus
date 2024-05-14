@@ -18,9 +18,9 @@ class PopupWithForm extends Popup {
         }
 
         setEventListeners() {
+            evt.preventDefault();
             this._modalElement.addEventListener('submit', (evt) => {
                 if (evt.target.classList.contains("modal") || evt.target.classList.contains('modal__form')) {
-                    this.close();
                 }
             });
         }
