@@ -5,6 +5,7 @@ class PopupWithForm extends Popup {
         super({ popupSelector });
         this._popupForm = this._popupElement.querySelector('.modal__form');
         this._handleFormSubmit = handleFormSubmit;
+
         }
 
         _getInputValues() {
@@ -15,19 +16,21 @@ class PopupWithForm extends Popup {
             );
 
             return this._formValues
+
         }
 
         setEventListeners() {
             evt.preventDefault();
             this._modalElement.addEventListener('submit', (evt) => {
-                if (evt.target.classList.contains("modal") || evt.target.classList.contains('modal__form')) {
-                }
+                this._handleFormSubmit({cardData});
             });
+
         }
 
     close() {
         this._popupForm.reset()
         super.close();
+        
     }
 }
 

@@ -4,7 +4,7 @@ import Popup from "../components/Popup.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import section from "../components/Section.js";
-import userInfo from "../components/UserInfo.js";
+import UserInfo from "../components/UserInfo.js";
 
 const initialCards = [
   {
@@ -191,29 +191,11 @@ initialCards.forEach((cardData) => {
   renderCard(cardData, cardsWrap);
 });
 
-//Create the class instances 
-// PopupWithForm.js
-//PopupWithImage.js
-//UserInfo.js UserInfo (Selectors) inquiry return object name, descriptoin change elements 
 
+//Popup + Class Instances 
 
-//Popup 
-
-const cardList = new Section({
-  renderer:(data) => {
-    const card = new Card({
-      data,
-      handleImageClick: () => {
-        imagePopup.open(data);
-      }
-    }, cardsConfig.cardSelector);
-
-    cardList.addItem(card.getView());
-  }
-})
-const cardsConfig = placeswrap
 
 const imagePopup = new PopupWithImage(popupConfig.imageModalWindow);
-
-
+const formPopup = new PopupWithForm(popupConfig. formModalWindow);
+const info = new UserInfo(nameSelector, aboutMeSelector);
  

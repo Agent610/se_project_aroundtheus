@@ -1,20 +1,22 @@
-class userInfo {
-    constructor ({renderer} ) {
-      this._renderer = getUserInfo;
-      this._renderer = setUserInfo;
-    }
+class UserInfo {
+    constructor ({nameSelector, aboutMeSelector} ) {
+      this._nameElement = document.querySelector(nameSelector);
+      this._aboutMeElement = document.querySelector(aboutMeSelector);
 
+    }
 
         getUserInfo () {
-            this._formValues = {};
-            return 
+            return {
+                name: this._nameElement.textContent, 
+                about: this._aboutMeElement.textContent,
+            }
 
         }
 
-        setUserInfo () {
-            this._formValues.document.querySelector("modal__caption");
-            this._formValues.document.querySelector("modal__image");
+        setUserInfo ({name, about}) {
+            this._nameElement.textContent = name;
+            this._aboutMeElement.textContent = about;
         }
     }
 
-export default userInfo;
+export default UserInfo;
