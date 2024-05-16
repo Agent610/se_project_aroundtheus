@@ -9,7 +9,7 @@ class PopupWithForm extends Popup {
         }
 
         _getInputValues() {
-            this._inputList = this._modalElement.querySelector(".modal__form");
+            this._inputList = this._modalElement.querySelector(".modal__input");
             this._formValues = {};
             this._inputList.forEach(
                 (input) => (this._formValues(input.name) = input.value)
@@ -20,9 +20,9 @@ class PopupWithForm extends Popup {
         }
 
         setEventListeners() {
-            evt.preventDefault();
             this._modalElement.addEventListener('submit', (evt) => {
-                this._handleFormSubmit({cardData});
+                this._handleFormSubmit(this._getInputValues(".modal__input"));
+                evt.preventDefault();
             });
 
         }

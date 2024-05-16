@@ -101,8 +101,8 @@ function closeModal(modal) {
 
 function renderCard(cardData, wrapper) {
   const card = new Card(cardData, "#card-template", handleImagePreview);
-  //const  = new Card(cardData, "#card-template", handleImagePreview);
   wrapper.prepend(card.getView());
+  
 }
 
 function handleImagePreview(cardData) {
@@ -194,8 +194,18 @@ initialCards.forEach((cardData) => {
 
 //Popup + Class Instances 
 
+const cardSection = new section({renderer:renderCard},initialCards,".cards__list");
+const imagePopup = new PopupWithImage({ name, link });
+imagePopup.setEventListeners({ name, link});
 
-const imagePopup = new PopupWithImage(popupConfig.imageModalWindow);
-const formPopup = new PopupWithForm(popupConfig. formModalWindow);
-const info = new UserInfo(nameSelector, aboutMeSelector);
+const formPopup = new PopupWithForm (popupSelector, handleFormSubmit);
+formPopup.setEventListeners(popupSelector);
+formPopup.setEventListeners(handleFormSubmit);
+
+const UserData = info.getUserInfo(nameSelector, aboutMeSelector);
+getUserInfo.setEventListeners(nameSelector);
+getUserInfo.setEventListeners(aboutMeSelector);
+
+
+
  
