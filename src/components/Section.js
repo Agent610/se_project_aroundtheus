@@ -5,14 +5,14 @@ class section {
         this._container = document.querySelector(containerSelector);
     }
 
-    renderItems(items) {
-        items.forEach(items => {
-            this._renderer(items);
+    renderItems(item) {
+        item.forEach(item => {
+            this._renderer(item);
         });
     }
 
     addItem(element) {
-        this._element.document.querySelector(element);
+        this._container.prepend(element);
     }
 
 }
