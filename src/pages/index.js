@@ -197,25 +197,25 @@ initialCards.forEach((cardData) => {
 // Class Instances 
 
  // PopupWithImage 
-import {
-  open ({link,name}) {
-    image.src = link;
-    image.alt = name;
-    super.open();
-  }
-}
-
+    const imagePopup = new PopupWithImage({link , name});
+    imagePopup.setEventListeners();
+  
 
  // PopupWithForm 
-import {
-  _getInputValues, 
-  setEventListeners, 
+ const formPopup = new PopupWithForm(popupSelector, handleFormSubmit);
 
-  new Card= "modal__input_type_description", "modal__input_type_error", "modal__input_type_name", "modal__input_type_title", "modal__input_type_url";
-}
+ // Edit Profile
+ const editProfile = new PopupWithForm('#edit-modal',handleProfileFormSubmit);
+ editProfile.setEventListeners("submit",handleProfileFormSubmit);
+ const handleEditProfileFormSubmit = () => {} 
+
+ // Add Profile 
+ const addCardFormPopup = new PopupWithForm('#add-card-modal', handleAddCardFormSubmit);
+ addCardFormPopup.setEventListeners("submit", handleAddCardFormSubmit);
+ const handleAddCardSubmit = () => {}
+
 
 // UserInfo
-import {
-  getUserInfo, 
-  setUserInfo, 
-}
+const info = new UserInfo(nameSelector, aboutMeSelector);
+const userData = info.getUserInfo();
+const userInfo = info.setUserInfo();
