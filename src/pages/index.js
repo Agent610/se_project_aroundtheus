@@ -105,7 +105,7 @@ function renderCard(cardData, wrapper) {
   
 }
 
-function PopupWithImage(cardData) {
+function handleImagePreview(cardData) {
   previewModal.querySelector("#preview-modal-image").src = cardData.link;
   previewModal.querySelector("#preview-modal-title").alt = cardData.name;
   previewModal.querySelector("#preview-modal-title").textContent =
@@ -113,7 +113,7 @@ function PopupWithImage(cardData) {
   openModal(previewModal);
 }
 
-function UserInfo(e) {
+function handleProfileFormSubmit(e) {
   e.preventDefault();
   this._nameElement.textContent = nameInput.value;
   this._aboutMeElement.textContent = jobInput.value;
@@ -161,14 +161,14 @@ previewImageModalCloseButton.addEventListener("click", () => {
 });
 
 //EventListeners
-PopupWithForm.addEventListener("submit", handleProfileFormSubmit);
+profileFormElement.addEventListener("submit", handleProfileFormSubmit);
 addCardFormElement.addEventListener("submit", handleAddCardFormSubmit);
 
 profileEditButton.addEventListener("click", () => {
-  nameInput.value = nameElement.textContent;
-  jobInput.value = aboutMeElement.textContent;
-  editFormValidator.hideInputError(nameInput);
-  editFormValidator.hideInputError(jobInput);
+  nameInput.value = profileTitle.textContent;
+  jobInput.value = profileDescription.textContent;
+  editFormValidator._hideInputError(nameInput);
+  editFormValidator._hideInputError(jobInput);
   openModal(editProfileModal);
 });
 
@@ -177,8 +177,8 @@ profileModalCloseButton.addEventListener("click", () =>
 );
 
 addCardButton.addEventListener("click", () => {
-  addCardValidator.hideInputError(cardTitleInput);
-  addCardValidator.hideInputError(cardURLInput);
+  addCardValidator._hideInputError(cardTitleInput);
+  addCardValidator._hideInputError(cardURLInput);
   openModal(addCardModal);
 });
 
@@ -192,18 +192,30 @@ initialCards.forEach((cardData) => {
 });
 
 
-//Popup + Class Instances 
+//  create the class instances and use them in index.js.
 
-const imagePopup = new PopupWithImage({ name, link });
-imagePopup.setEventListeners({ name, link});
+// Class Instances 
 
-formPopup.setEventListeners(popupSelector);
-formPopup.setEventListeners(handleFormSubmit);
+ // PopupWithImage 
+import {
+  open ({link,name}) {
+    image.src = link;
+    image.alt = name;
+    super.open();
+  }
+}
 
-const UserData = info.getUserInfo(nameSelector, aboutMeSelector);
-getUserInfo.setEventListeners(nameSelector);
-getUserInfo.setEventListeners(aboutMeSelector);
 
+ // PopupWithForm 
+import {
+  _getInputValues, 
+  setEventListeners, 
 
+  new Card= "modal__input_type_description", "modal__input_type_error", "modal__input_type_name", "modal__input_type_title", "modal__input_type_url";
+}
 
- 
+// UserInfo
+import {
+  getUserInfo, 
+  setUserInfo, 
+}
