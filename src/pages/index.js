@@ -167,8 +167,8 @@ addCardFormElement.addEventListener("submit", handleAddCardFormSubmit);
 profileEditButton.addEventListener("click", () => {
   nameInput.value = profileTitle.textContent;
   jobInput.value = profileDescription.textContent;
-  editFormValidator._hideInputError(nameInput);
-  editFormValidator._hideInputError(jobInput);
+  editFormValidator.hideInputError(nameInput);
+  editFormValidator.hideInputError(jobInput);
   openModal(editProfileModal);
 });
 
@@ -177,8 +177,8 @@ profileModalCloseButton.addEventListener("click", () =>
 );
 
 addCardButton.addEventListener("click", () => {
-  addCardValidator._hideInputError(cardTitleInput);
-  addCardValidator._hideInputError(cardURLInput);
+  addCardValidator.hideInputError(cardTitleInput);
+  addCardValidator.hideInputError(cardURLInput);
   openModal(addCardModal);
 });
 
@@ -196,26 +196,25 @@ initialCards.forEach((cardData) => {
 
 // Class Instances 
 
- // PopupWithImage 
-    const imagePopup = new PopupWithImage({link , name});
-    imagePopup.setEventListeners();
-  
+//PopupWithImage 
+const imagePopup = new PopupWithImage()
+imagePopup.open({link, name});
+const PopupImage = new PopupWithImage("https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lago.jpg ","Lago-di-Braies");
+PopupImage.render();
 
- // PopupWithForm 
+// PopupWithForm 
  const formPopup = new PopupWithForm(popupSelector, handleFormSubmit);
+formPopup.getInputValues,setEventListeners();
 
  // Edit Profile
- const editProfile = new PopupWithForm('#edit-modal',handleProfileFormSubmit);
- editProfile.setEventListeners("submit",handleProfileFormSubmit);
- const handleEditProfileFormSubmit = () => {} 
+ const EditProfile = new EditProfile("Parth Sonan", "State-Trooper");
+EditProfile.render();
 
  // Add Profile 
- const addCardFormPopup = new PopupWithForm('#add-card-modal', handleAddCardFormSubmit);
- addCardFormPopup.setEventListeners("submit", handleAddCardFormSubmit);
- const handleAddCardSubmit = () => {}
-
+ const AddProfile = new AddProfile("https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lago.jpg ", "Lago-di-Braies");
+AddProfile.render();
 
 // UserInfo
-const info = new UserInfo(nameSelector, aboutMeSelector);
-const userData = info.getUserInfo();
-const userInfo = info.setUserInfo();
+const userInfo = new UserInfo(nameSelector, aboutMeSelector);
+const userDetails = userInfo.getUserInfo();
+UserInfo.setUserInfo()
