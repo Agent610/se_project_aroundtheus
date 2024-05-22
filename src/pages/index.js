@@ -106,16 +106,14 @@ function renderCard(cardData, wrapper) {
 }
 
 function handleImagePreview(cardData) {
+  PopupWithImage.open({name, link});
   previewModal.querySelector("#preview-modal-image").src = cardData.link;
   previewModal.querySelector("#preview-modal-title").alt = cardData.name;
   previewModal.querySelector("#preview-modal-title").textContent =
     cardData.name;
-    imagePopup.open(cardData);
-  openModal(previewModal);
 }
 
-function handleProfileFormSubmit(e) {
-  e.preventDefault();
+function handleProfileFormSubmit(value) {
   editProfilePopup.open();
   this._nameElement.textContent = nameInput.value;
   this._aboutMeElement.textContent = jobInput.value;
@@ -124,8 +122,7 @@ function handleProfileFormSubmit(e) {
   editProfileForm.reset();
 }
 
-function handleAddCardFormSubmit(e) {
-  e.preventDefault();
+function handleAddCardFormSubmit(value) {
   addProfilePopup.open();
   const name = cardTitleInput.value;
   const link = cardURLInput.value;
@@ -161,20 +158,15 @@ const addCardValidator = new FormValidator(validationSettings, addCardElement);
 
 addCardValidator.enableValidation();
 
-previewImageModalCloseButton.addEventListener("click", () => {
-  closeModal(previewModal);
-});
 
 
 //EventListeners
-//profileFormElement.addEventListener("submit", handleProfileFormSubmit);
-//addCardFormElement.addEventListener("submit", handleAddCardFormSubmit);
 
 profileEditButton.addEventListener("click", () => {
   nameInput.value = profileTitle.textContent;
   jobInput.value = profileDescription.textContent;
-  editFormValidator.hideInputError(nameInput);
-  editFormValidator.hideInputError(jobInput);
+  editFormValidator._hideInputError(nameInput);
+  editFormValidator._hideInputError(jobInput);
   openModal(editProfileModal);
 });
 
@@ -183,8 +175,8 @@ profileModalCloseButton.addEventListener("click", () =>
 );
 
 addCardButton.addEventListener("click", () => {
-  addCardValidator.hideInputError(cardTitleInput);
-  addCardValidator.hideInputError(cardURLInput);
+  addCardValidator._hideInputError(cardTitleInput);
+  addCardValidator._hideInputError(cardURLInput);
   openModal(addCardModal);
 });
 
@@ -209,7 +201,7 @@ popupImage.setEventListeners();
  const editProfilePopup = new PopupWithForm("#edit-modal", handleProfileFormSubmit);
 editProfilePopup.setEventListeners();
  
- const addProfilePopup = new PopupWithForm("#add-card-modal");
+ const addProfilePopup = new PopupWithForm("#add-card-modal",handleAddCardFormSubmit);
 addProfilePopup.setEventListeners();
 
 // UserInfo

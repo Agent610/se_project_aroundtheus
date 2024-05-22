@@ -5,24 +5,24 @@ class Popup {
     }
 
     open() {
-       this._modalElement.classList.add('modal_opened');
+       this._popupElement.classList.add('modal_opened');
        document.addEventListener('keydown', this._handleEscClose);
     }
 
     close() {
-        this._modalElement.classList.remove('modal_opened');
+        this._popupElement.classList.remove('modal_opened');
         document.removeEventListener('keydown', this._handleEscClose);
     }
 
-    _handlEscClose(evt) {
+    _handleEscClose(evt) {
 
-        if (evt.which === ESCAPE_KEYCODE) {
-            this._close();
+        if (evt.which === ESC_KEYCODE) {
+            this.close();
         }
     }
 
     setEventListeners() {
-        this._modalElement.addEventListener('click', (evt) => {
+        this._popupElement.addEventListener('click', (evt) => {
             if (evt.target.classList.contains("modal") || evt.target.classList.contains('modal__close')) {
                 this.close();
             }
