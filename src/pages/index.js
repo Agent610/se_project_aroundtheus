@@ -167,8 +167,8 @@ previewImageModalCloseButton.addEventListener("click", () => {
 
 
 //EventListeners
-profileFormElement.addEventListener("submit", handleProfileFormSubmit);
-addCardFormElement.addEventListener("submit", handleAddCardFormSubmit);
+//profileFormElement.addEventListener("submit", handleProfileFormSubmit);
+//addCardFormElement.addEventListener("submit", handleAddCardFormSubmit);
 
 profileEditButton.addEventListener("click", () => {
   nameInput.value = profileTitle.textContent;
@@ -198,24 +198,15 @@ initialCards.forEach((cardData) => {
 });
 
 
-//  create the class instances and use them in index.js.
-
 // Class Instances 
 
 //PopupWithImage 
-const imagePopup = new PopupWithImage();
-imagePopup.open({name, link});
-const popupImage = new PopupWithImage("#preview-modal");
-
-const previewImagePopup = new imagePopup(".#preview-modal-image");
-previewImagePopup.open(), close();
+const popupImage = new PopupWithImage("#preview-modal")
+popupImage.setEventListeners();
 
 
 // PopupWithForm 
- const formPopup = new PopupWithForm(popupSelector, handleFormSubmit);
-formPopup.getInputValues,setEventListeners();
-
- const editProfilePopup = new PopupWithForm("#edit-modal");
+ const editProfilePopup = new PopupWithForm("#edit-modal", handleProfileFormSubmit);
 editProfilePopup.setEventListeners();
  
  const addProfilePopup = new PopupWithForm("#add-card-modal");
@@ -224,3 +215,4 @@ addProfilePopup.setEventListeners();
 // UserInfo
 const userInfo = new UserInfo(nameSelector, aboutMeSelector);
 const userDetails = userInfo.getUserInfo();
+userInfo.setUserInfo({ name, about});
