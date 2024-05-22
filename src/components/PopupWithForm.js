@@ -12,7 +12,7 @@ class PopupWithForm extends Popup {
             this._inputList = this._modalElement.querySelector(".modal__input");
             this._formValues = {};
             this._inputList.forEach(
-                (input) => (this._formValues(input.name) = input.value)
+                (input) => (this._formValues[input.name] = input.value)
             );
 
             return this._formValues

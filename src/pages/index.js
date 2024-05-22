@@ -110,23 +110,28 @@ function handleImagePreview(cardData) {
   previewModal.querySelector("#preview-modal-title").alt = cardData.name;
   previewModal.querySelector("#preview-modal-title").textContent =
     cardData.name;
+    imagePopup.open(cardData);
   openModal(previewModal);
 }
 
 function handleProfileFormSubmit(e) {
   e.preventDefault();
+  editProfilePopup.open();
   this._nameElement.textContent = nameInput.value;
   this._aboutMeElement.textContent = jobInput.value;
   closeModal(editProfileModal);
+  editProfilePopup.close();
   editProfileForm.reset();
 }
 
 function handleAddCardFormSubmit(e) {
   e.preventDefault();
+  addProfilePopup.open();
   const name = cardTitleInput.value;
   const link = cardURLInput.value;
   renderCard({ name, link }, cardsWrap);
   closeModal(addCardModal);
+  addProfilePopup.close();
   addCardForm.reset();
 }
 
@@ -159,6 +164,7 @@ addCardValidator.enableValidation();
 previewImageModalCloseButton.addEventListener("click", () => {
   closeModal(previewModal);
 });
+
 
 //EventListeners
 profileFormElement.addEventListener("submit", handleProfileFormSubmit);
@@ -197,24 +203,24 @@ initialCards.forEach((cardData) => {
 // Class Instances 
 
 //PopupWithImage 
-const imagePopup = new PopupWithImage()
-imagePopup.open({link, name});
-const PopupImage = new PopupWithImage("https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lago.jpg ","Lago-di-Braies");
-PopupImage.render();
+const imagePopup = new PopupWithImage();
+imagePopup.open({name, link});
+const popupImage = new PopupWithImage("#preview-modal");
+
+const previewImagePopup = new imagePopup(".#preview-modal-image");
+previewImagePopup.open(), close();
+
 
 // PopupWithForm 
  const formPopup = new PopupWithForm(popupSelector, handleFormSubmit);
 formPopup.getInputValues,setEventListeners();
 
- // Edit Profile
- const EditProfile = new EditProfile("Parth Sonan", "State-Trooper");
-EditProfile.render();
-
- // Add Profile 
- const AddProfile = new AddProfile("https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lago.jpg ", "Lago-di-Braies");
-AddProfile.render();
+ const editProfilePopup = new PopupWithForm("#edit-modal");
+editProfilePopup.setEventListeners();
+ 
+ const addProfilePopup = new PopupWithForm("#add-card-modal");
+addProfilePopup.setEventListeners();
 
 // UserInfo
 const userInfo = new UserInfo(nameSelector, aboutMeSelector);
 const userDetails = userInfo.getUserInfo();
-UserInfo.setUserInfo()
