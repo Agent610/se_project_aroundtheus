@@ -33,11 +33,6 @@ const initialCards = [
   },
 ];
 
-//const cardData = {
-//name: "Yosemite-Valley",
-//link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
-//};
-
 const cardTemplate = document
   .querySelector("#card-template")
   .content.querySelector("card");
@@ -106,7 +101,6 @@ function renderCard(cardData, wrapper) {
 }
 
 function handleImagePreview(cardData) {
-  PopupWithImage.open({name, link});
   previewModal.querySelector("#preview-modal-image").src = cardData.link;
   previewModal.querySelector("#preview-modal-title").alt = cardData.name;
   previewModal.querySelector("#preview-modal-title").textContent =
@@ -193,7 +187,7 @@ initialCards.forEach((cardData) => {
 // Class Instances 
 
 //PopupWithImage 
-const popupImage = new PopupWithImage("#preview-modal")
+const popupImage = new PopupWithImage({popupSelector: "#preview-modal"});
 popupImage.setEventListeners();
 
 
@@ -205,6 +199,7 @@ editProfilePopup.setEventListeners();
 addProfilePopup.setEventListeners();
 
 // UserInfo
+const nameSelector = ('.profile__title');
+const aboutMeSelector = ('.profile__description');
 const userInfo = new UserInfo(nameSelector, aboutMeSelector);
 const userDetails = userInfo.getUserInfo();
-userInfo.setUserInfo({ name, about});

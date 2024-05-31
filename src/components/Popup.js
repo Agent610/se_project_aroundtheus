@@ -16,14 +16,14 @@ class Popup {
 
     _handleEscClose(evt) {
 
-        if (evt.which === ESC_KEYCODE) {
+        if (evt.key === "Escape") {
             this.close();
         }
     }
 
     setEventListeners() {
-        this._popupElement.addEventListener('click', (evt) => {
-            if (evt.target.classList.contains("modal") || evt.target.classList.contains('modal__close')) {
+        this._popupElement.addEventListener("click", (evt) => {
+            if (evt.target.classList.contains("#modal") || evt.target.classList.contains('modal__close')) {
                 this.close();
             }
         });

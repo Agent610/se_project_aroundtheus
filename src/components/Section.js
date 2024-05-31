@@ -1,4 +1,4 @@
-class section {
+class Section {
     constructor({renderer}, items, containerSelector) {
         this._renderer = renderer;
         this._items = items;
@@ -17,4 +17,4 @@ class section {
 
 }
 
-export default section
+export default Section
