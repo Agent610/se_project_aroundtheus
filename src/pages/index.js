@@ -101,11 +101,12 @@ function renderCard(cardData, wrapper) {
 }
 
 function handleImagePreview(cardData) {
+  open ({name, link}) 
   previewModal.querySelector("#preview-modal-image").src = cardData.link;
   previewModal.querySelector("#preview-modal-title").alt = cardData.name;
-  previewModal.querySelector("#preview-modal-title").textContent =
-    cardData.name;
-}
+  previewModal.querySelector("#preview-modal-title").textContent = cardData.name;
+  }
+
 
 function handleProfileFormSubmit(value) {
   editProfilePopup.open();
@@ -178,6 +179,12 @@ addCardModalCloseButton.addEventListener("click", () =>
   closeModal(addCardModal)
 );
 
+this._popupElement.addEventListener("submit", (evt) => {
+  this._handleAddCardFormSubmit(this._getInputValues());
+  this._handleProfileFormSubmit(this._getInputValues());
+  evt.preventDefault();
+
+})
 //Rendering Cards
 initialCards.forEach((cardData) => {
   renderCard(cardData, cardsWrap);
@@ -195,7 +202,7 @@ popupImage.setEventListeners();
  const editProfilePopup = new PopupWithForm("#edit-modal", handleProfileFormSubmit);
 editProfilePopup.setEventListeners();
  
- const addProfilePopup = new PopupWithForm("#add-card-modal",handleAddCardFormSubmit);
+ const addProfilePopup = new PopupWithForm("#add-card-modal", handleAddCardFormSubmit);
 addProfilePopup.setEventListeners();
 
 // UserInfo
