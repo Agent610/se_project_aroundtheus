@@ -101,7 +101,7 @@ function renderCard(cardData, wrapper) {
 }
 
 function handleImagePreview(cardData) {
-  open ({name, link}) 
+  open ({previewModal}) 
   previewModal.querySelector("#preview-modal-image").src = cardData.link;
   previewModal.querySelector("#preview-modal-title").alt = cardData.name;
   previewModal.querySelector("#preview-modal-title").textContent = cardData.name;
@@ -109,12 +109,14 @@ function handleImagePreview(cardData) {
 
 
 function handleProfileFormSubmit(value) {
+  e.preventDefault();
   editProfilePopup.open();
   this._nameElement.textContent = nameInput.value;
   this._aboutMeElement.textContent = jobInput.value;
-  closeModal(editProfileModal);
+  close(editProfileModal);
   editProfilePopup.close();
   editProfileForm.reset();
+  editProfilePopup.addEventListener("submit", handleProfileFormSubmit);
 }
 
 function handleAddCardFormSubmit(value) {
@@ -122,9 +124,10 @@ function handleAddCardFormSubmit(value) {
   const name = cardTitleInput.value;
   const link = cardURLInput.value;
   renderCard({ name, link }, cardsWrap);
-  closeModal(addCardModal);
+  close(addCardModal);
   addProfilePopup.close();
   addCardForm.reset();
+  addProfilePopup.addEventListener("submit", handleAddCardFormSubmit);
 }
 
 const cardSelector = "#card-template";
@@ -150,10 +153,9 @@ const editFormValidator = new FormValidator(
 editFormValidator.enableValidation();
 
 const addCardValidator = new FormValidator(validationSettings, addCardElement);
-
 addCardValidator.enableValidation();
 
-
+close(previewModal);
 
 //EventListeners
 
@@ -179,11 +181,11 @@ addCardModalCloseButton.addEventListener("click", () =>
   closeModal(addCardModal)
 );
 
+this._popupForm = this.popupElement.querySelector('.modal__form');
 this._popupElement.addEventListener("submit", (evt) => {
   this._handleAddCardFormSubmit(this._getInputValues());
   this._handleProfileFormSubmit(this._getInputValues());
   evt.preventDefault();
-
 })
 //Rendering Cards
 initialCards.forEach((cardData) => {
