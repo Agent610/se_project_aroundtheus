@@ -102,33 +102,24 @@ function renderCard(cardData, wrapper) {
 }
 
 function handleImagePreview(cardData) {
-  open ({previewModal}) 
-  previewModal.querySelector("#preview-modal-image").src = cardData.link;
-  previewModal.querySelector("#preview-modal-title").alt = cardData.name;
-  previewModal.querySelector("#preview-modal-title").textContent = cardData.name;
+  open ({name,link})  
+Image.src = link;
+Image.alt = name;
   }
 
 
 function handleProfileFormSubmit(inputValues) {
-
-
  userInfo.setUserInfo(inputValues);
-
   editProfilePopup.close();
   editProfileForm.reset();
-
-  //editProfilePopup.addEventListener("submit", handleProfileFormSubmit);
 }
 
-function handleAddCardFormSubmit(e) {
-  addProfilePopup.open();
-  const name = cardTitleInput.value;
-  const link = cardURLInput.value;
+function handleAddCardFormSubmit(inputValues) {
+  userInfo.getUserInfo(inputValues);
   renderCard({ name, link }, cardsWrap);
   addProfilePopup.close();
   addCardForm.reset();
   addProfilePopup.setEventListeners();
-  addProfilePopup.addEventListener("submit", handleAddCardFormSubmit);
 }
 
 const cardSelector = "#card-template";
@@ -161,8 +152,8 @@ close(previewModal);
 //EventListeners
 
 profileEditButton.addEventListener("click", () => {
-  nameInput.value = profileTitle.textContent;
-  jobInput.value = profileDescription.textContent;
+userInfo.getUserInfo(inputValues);
+userInfo.setUserInfo(inputValues);
   editFormValidator._hideInputError(nameInput);
   editFormValidator._hideInputError(jobInput);
   openModal(editProfileModal);
@@ -183,12 +174,12 @@ addCardModalCloseButton.addEventListener("click", () =>
 );
 
 
-this.popupElement.querySelector('.modal__form')
-this._popupElement.addEventListener("submit", (evt) => {
+this.popupForm.querySelector('.modal__form');
   this._handleAddCardFormSubmit(this._getInputValues());
   this._handleProfileFormSubmit(this._getInputValues());
   evt.preventDefault();
-})
+
+
 //Rendering Cards
 initialCards.forEach((cardData) => {
   renderCard(cardData, cardsWrap);
