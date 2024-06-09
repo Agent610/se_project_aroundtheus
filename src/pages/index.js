@@ -5,6 +5,7 @@ import PopupWithForm from "../components/PopupWithForm.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import Section from "../components/Section.js";
 import UserInfo from "../components/UserInfo.js";
+import '/index.css';
 
 const initialCards = [
   {
@@ -108,25 +109,25 @@ function handleImagePreview(cardData) {
   }
 
 
-function handleProfileFormSubmit(value) {
-  e.preventDefault();
-  editProfilePopup.open();
-  this._nameElement.textContent = nameInput.value;
-  this._aboutMeElement.textContent = jobInput.value;
-  close(editProfileModal);
+function handleProfileFormSubmit(inputValues) {
+
+
+ userInfo.setUserInfo(inputValues);
+
   editProfilePopup.close();
   editProfileForm.reset();
-  editProfilePopup.addEventListener("submit", handleProfileFormSubmit);
+
+  //editProfilePopup.addEventListener("submit", handleProfileFormSubmit);
 }
 
-function handleAddCardFormSubmit(value) {
+function handleAddCardFormSubmit(e) {
   addProfilePopup.open();
   const name = cardTitleInput.value;
   const link = cardURLInput.value;
   renderCard({ name, link }, cardsWrap);
-  close(addCardModal);
   addProfilePopup.close();
   addCardForm.reset();
+  addProfilePopup.setEventListeners();
   addProfilePopup.addEventListener("submit", handleAddCardFormSubmit);
 }
 
@@ -181,7 +182,8 @@ addCardModalCloseButton.addEventListener("click", () =>
   closeModal(addCardModal)
 );
 
-this._popupForm = this.popupElement.querySelector('.modal__form');
+
+this.popupElement.querySelector('.modal__form')
 this._popupElement.addEventListener("submit", (evt) => {
   this._handleAddCardFormSubmit(this._getInputValues());
   this._handleProfileFormSubmit(this._getInputValues());
@@ -193,6 +195,11 @@ initialCards.forEach((cardData) => {
 });
 
 
+//Popup
+ const addCardPopup = new Popup(popUpAdd);
+ const addEditPopup = new Popup(popUpEdit);
+ const addImagePreviewPopup = new Popup(popupImage);
+
 // Class Instances 
 
 //PopupWithImage 
@@ -202,13 +209,14 @@ popupImage.setEventListeners();
 
 // PopupWithForm 
  const editProfilePopup = new PopupWithForm("#edit-modal", handleProfileFormSubmit);
-editProfilePopup.setEventListeners();
+//editProfilePopup.setEventListeners();
  
  const addProfilePopup = new PopupWithForm("#add-card-modal", handleAddCardFormSubmit);
-addProfilePopup.setEventListeners();
+//addProfilePopup.setEventListeners();
 
 // UserInfo
 const nameSelector = ('.profile__title');
 const aboutMeSelector = ('.profile__description');
 const userInfo = new UserInfo(nameSelector, aboutMeSelector);
 const userDetails = userInfo.getUserInfo();
+

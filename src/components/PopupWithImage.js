@@ -7,7 +7,7 @@ class PopupWithImage extends Popup {
         image.src = link;
         image.alt = name;
         super.open();
-    }
+}
 }
 
 export default PopupWithImage;
