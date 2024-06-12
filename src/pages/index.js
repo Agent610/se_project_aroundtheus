@@ -6,6 +6,7 @@ import PopupWithImage from "../components/PopupWithImage.js";
 import Section from "../components/Section.js";
 import UserInfo from "../components/UserInfo.js";
 import '/index.css';
+import {initialCards, selectors}
 
 const initialCards = [
   {
@@ -37,6 +38,11 @@ const initialCards = [
 const cardTemplate = document
   .querySelector("#card-template")
   .content.querySelector("card");
+
+export const selectors = {
+cardSelector: '.cards__list',
+cardTemplate: 'card-template',
+}  
 
 //Wrappers
 const cardsWrap = document.querySelector(".cards__list");
@@ -101,10 +107,10 @@ function renderCard(cardData, wrapper) {
   
 }
 
-function handleImagePreview(cardData) {
-  open ({name,link})  
-Image.src = link;
-Image.alt = name;
+function handleImagePreview (cardData) 
+  class Popup {
+    open() {
+    }
   }
 
 
@@ -115,11 +121,9 @@ function handleProfileFormSubmit(inputValues) {
 }
 
 function handleAddCardFormSubmit(inputValues) {
-  userInfo.getUserInfo(inputValues);
   renderCard({ name, link }, cardsWrap);
   addProfilePopup.close();
   addCardForm.reset();
-  addProfilePopup.setEventListeners();
 }
 
 const cardSelector = "#card-template";
@@ -153,31 +157,24 @@ close(previewModal);
 
 profileEditButton.addEventListener("click", () => {
 userInfo.getUserInfo(inputValues);
-userInfo.setUserInfo(inputValues);
   editFormValidator._hideInputError(nameInput);
   editFormValidator._hideInputError(jobInput);
-  openModal(editProfileModal);
+  Popup.open(editProfileModal);
 });
 
 profileModalCloseButton.addEventListener("click", () =>
-  closeModal(editProfileModal)
+  Popup.close(editProfileModal)
 );
 
 addCardButton.addEventListener("click", () => {
   addCardValidator._hideInputError(cardTitleInput);
   addCardValidator._hideInputError(cardURLInput);
-  openModal(addCardModal);
+  Popup.open(addCardModal);
 });
 
 addCardModalCloseButton.addEventListener("click", () =>
-  closeModal(addCardModal)
+  Popup.close(addCardModal)
 );
-
-
-this.popupForm.querySelector('.modal__form');
-  this._handleAddCardFormSubmit(this._getInputValues());
-  this._handleProfileFormSubmit(this._getInputValues());
-  evt.preventDefault();
 
 
 //Rendering Cards
@@ -185,6 +182,14 @@ initialCards.forEach((cardData) => {
   renderCard(cardData, cardsWrap);
 });
 
+//Section 
+const CardSelector = new Section({
+  renderer (item) => {
+    const cardElement = new Card(item, selectors.cardTemplate);
+  },
+  selector: selectors.cardSelector,
+)};
+CardSelector.renderItems(initialCards);
 
 //Popup
  const addCardPopup = new Popup(popUpAdd);
@@ -209,5 +214,4 @@ popupImage.setEventListeners();
 const nameSelector = ('.profile__title');
 const aboutMeSelector = ('.profile__description');
 const userInfo = new UserInfo(nameSelector, aboutMeSelector);
-const userDetails = userInfo.getUserInfo();
 
