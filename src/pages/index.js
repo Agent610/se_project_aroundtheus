@@ -5,7 +5,7 @@ import PopupWithForm from "../components/PopupWithForm.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import Section from "../components/Section.js";
 import UserInfo from "../components/UserInfo.js";
-import '/index.css';
+import './index.css';
 import {initialCards, selectors}
 
 const initialCards = [
@@ -108,9 +108,8 @@ function renderCard(cardData, wrapper) {
 }
 
 function handleImagePreview (cardData) 
-  class Popup {
-    open() {
-    }
+  {
+    Popup.open() 
   }
 
 
@@ -126,7 +125,7 @@ function handleAddCardFormSubmit(inputValues) {
   addCardForm.reset();
 }
 
-const cardSelector = "#card-template";
+const CardSelector = "#card-template";
 
 //Validation
 
@@ -156,40 +155,45 @@ close(previewModal);
 //EventListeners
 
 profileEditButton.addEventListener("click", () => {
-userInfo.getUserInfo(inputValues);
-  editFormValidator._hideInputError(nameInput);
-  editFormValidator._hideInputError(jobInput);
-  Popup.open(editProfileModal);
+  return
+const userData = userInfo.getUserInfo();
+  editFormValidator.hideInputError(nameInput);
+  editFormValidator.hideInputError(jobInput);
+  const PopupWithForm = new Popup();
+  PopupWithForm.open(editProfileModal);  
 });
 
-profileModalCloseButton.addEventListener("click", () =>
-  Popup.close(editProfileModal)
-);
+profileModalCloseButton.addEventListener("click", () => {
+  const PopupWithForm = new Popup();
+  PopupWithForm.close(editProfileModal);
+});
 
 addCardButton.addEventListener("click", () => {
-  addCardValidator._hideInputError(cardTitleInput);
-  addCardValidator._hideInputError(cardURLInput);
-  Popup.open(addCardModal);
+  addCardValidator.hideInputError(cardTitleInput);
+  addCardValidator.hideInputError(cardURLInput);
+  const PopupWithForm = new Popup();
+  PopupWithForm.open(addCardModal);
 });
 
-addCardModalCloseButton.addEventListener("click", () =>
-  Popup.close(addCardModal)
-);
+addCardModalCloseButton.addEventListener("click", () => {
+  const PopupWithForm = new Popup();
+  PopupWithForm.close(addCardModal);
+});
 
 
 //Rendering Cards
-initialCards.forEach((cardData) => {
+initialCards = new Section((cardData) => {
   renderCard(cardData, cardsWrap);
 });
 
 //Section 
-const CardSelector = new Section({
+const cardSelector = new Section({
   renderer (item) => {
     const cardElement = new Card(item, selectors.cardTemplate);
   },
   selector: selectors.cardSelector,
 )};
-CardSelector.renderItems(initialCards);
+cardSelector.renderItems(initialCards);
 
 //Popup
  const addCardPopup = new Popup(popUpAdd);
