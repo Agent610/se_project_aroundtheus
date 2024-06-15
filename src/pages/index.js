@@ -8,7 +8,7 @@ import UserInfo from "../components/UserInfo.js";
 import './index.css';
 import {initialCards, selectors}
 
-const initialCards = [
+ from initialCards = [
   {
     name: "Yosemite-Valley",
     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
@@ -109,7 +109,7 @@ function renderCard(cardData, wrapper) {
 
 function handleImagePreview (cardData) 
   {
-    Popup.open() 
+    popupImage.open({cardData}); 
   }
 
 
@@ -125,7 +125,7 @@ function handleAddCardFormSubmit(inputValues) {
   addCardForm.reset();
 }
 
-const CardSelector = "#card-template";
+const cardSelect = "#card-template";
 
 //Validation
 
@@ -150,55 +150,44 @@ editFormValidator.enableValidation();
 const addCardValidator = new FormValidator(validationSettings, addCardElement);
 addCardValidator.enableValidation();
 
-close(previewModal);
 
 //EventListeners
 
 profileEditButton.addEventListener("click", () => {
-  return
 const userData = userInfo.getUserInfo();
   editFormValidator.hideInputError(nameInput);
   editFormValidator.hideInputError(jobInput);
-  const PopupWithForm = new Popup();
-  PopupWithForm.open(editProfileModal);  
+  editProfilePopup.open(editProfileModal);  
 });
 
-profileModalCloseButton.addEventListener("click", () => {
-  const PopupWithForm = new Popup();
-  PopupWithForm.close(editProfileModal);
-});
+
+  const editPopupWithForm = new Popup();
+  editPopupWithForm.close(editProfileModal);
 
 addCardButton.addEventListener("click", () => {
   addCardValidator.hideInputError(cardTitleInput);
   addCardValidator.hideInputError(cardURLInput);
-  const PopupWithForm = new Popup();
-  PopupWithForm.open(addCardModal);
+  addProfilePopup.open(addCardModal);
 });
 
-addCardModalCloseButton.addEventListener("click", () => {
-  const PopupWithForm = new Popup();
-  PopupWithForm.close(addCardModal);
-});
+  const addPopupWithForm = new Popup();
+  addPopupWithForm.close(addCardModal);
 
 
 //Rendering Cards
-initialCards = new Section((cardData) => {
   renderCard(cardData, cardsWrap);
-});
+
 
 //Section 
 const cardSelector = new Section({
-  renderer (item) => {
+  renderer: (item) => {
     const cardElement = new Card(item, selectors.cardTemplate);
   },
   selector: selectors.cardSelector,
-)};
+});
 cardSelector.renderItems(initialCards);
 
 //Popup
- const addCardPopup = new Popup(popUpAdd);
- const addEditPopup = new Popup(popUpEdit);
- const addImagePreviewPopup = new Popup(popupImage);
 
 // Class Instances 
 
