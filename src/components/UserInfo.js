@@ -2,7 +2,6 @@ class UserInfo {
     constructor ({nameSelector, aboutMeSelector} ) {
       this._nameElement = document.querySelector(nameSelector);
       this._aboutMeElement = document.querySelector(aboutMeSelector);
-
     }
 
         getUserInfo () {
@@ -10,7 +9,6 @@ class UserInfo {
                 name: this._nameElement.textContent, 
                 about: this._aboutMeElement.textContent,
             }
-
         }
 
         setUserInfo ({name, about}) {

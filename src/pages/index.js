@@ -5,10 +5,10 @@ import PopupWithForm from "../components/PopupWithForm.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import Section from "../components/Section.js";
 import UserInfo from "../components/UserInfo.js";
-import './index.css';
-import {initialCards, selectors}
+import Styles from "./index.css";
+//import {initialCards, selectors}
 
- from initialCards = [
+const initialCards = [
   {
     name: "Yosemite-Valley",
     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
@@ -40,9 +40,9 @@ const cardTemplate = document
   .content.querySelector("card");
 
 export const selectors = {
-cardSelector: '.cards__list',
-cardTemplate: 'card-template',
-}  
+  cardSelector: ".cards__list",
+  cardTemplate: "#card-template",
+};
 
 //Wrappers
 const cardsWrap = document.querySelector(".cards__list");
@@ -104,17 +104,15 @@ function closeModal(modal) {
 function renderCard(cardData, wrapper) {
   const card = new Card(cardData, "#card-template", handleImagePreview);
   wrapper.prepend(card.getView());
-  
+  Section.renderItems(item);
 }
 
-function handleImagePreview (cardData) 
-  {
-    popupImage.open({cardData}); 
-  }
-
+function handleImagePreview(cardData) {
+  popupImage.open({ cardData });
+}
 
 function handleProfileFormSubmit(inputValues) {
- userInfo.setUserInfo(inputValues);
+  userInfo.setUserInfo(inputValues);
   editProfilePopup.close();
   editProfileForm.reset();
 }
@@ -150,61 +148,69 @@ editFormValidator.enableValidation();
 const addCardValidator = new FormValidator(validationSettings, addCardElement);
 addCardValidator.enableValidation();
 
-
 //EventListeners
 
+const aboutEl = document.querySelector("#profile-description-input");
+const nameEl = document.querySelector("#profile-name-input");
+
 profileEditButton.addEventListener("click", () => {
-const userData = userInfo.getUserInfo();
-  editFormValidator.hideInputError(nameInput);
-  editFormValidator.hideInputError(jobInput);
-  editProfilePopup.open(editProfileModal);  
+  const userData = userInfo.getUserInfo();
+  nameEl.value = userData.name;
+  aboutEl.value = userData.about;
+  // editFormValidator.hideInputError(nameInput);
+  // editFormValidator.hideInputError(jobInput);
+  editProfilePopup.open(editProfileModal);
 });
 
-
-  const editPopupWithForm = new Popup();
-  editPopupWithForm.close(editProfileModal);
+const editPopupWithForm = new PopupWithForm("#edit-modal");
+editPopupWithForm.close(editProfileModal);
 
 addCardButton.addEventListener("click", () => {
-  addCardValidator.hideInputError(cardTitleInput);
-  addCardValidator.hideInputError(cardURLInput);
+  //  addCardValidator.hideInputError(cardTitleInput);
+  //  addCardValidator.hideInputError(cardURLInput);
   addProfilePopup.open(addCardModal);
 });
 
-  const addPopupWithForm = new Popup();
-  addPopupWithForm.close(addCardModal);
-
+const addPopupWithForm = new PopupWithForm("#add-card-modal");
+addPopupWithForm.close(addCardModal);
 
 //Rendering Cards
-  renderCard(cardData, cardsWrap);
 
-
-//Section 
-const cardSelector = new Section({
-  renderer: (item) => {
-    const cardElement = new Card(item, selectors.cardTemplate);
+//Section
+const section = new Section(
+  {
+    items: initialCards,
+    renderer: (item) => {
+      const card = new Card(item, selectors.cardTemplate, Card);
+      section.addItem(card.getView());
+    },
   },
-  selector: selectors.cardSelector,
-});
-cardSelector.renderItems(initialCards);
+  selectors.cardSelector
+);
+section.renderItems();
 
 //Popup
 
-// Class Instances 
+// Class Instances
 
-//PopupWithImage 
-const popupImage = new PopupWithImage({popupSelector: "#preview-modal"});
+//PopupWithImage
+const popupImage = new PopupWithImage({ popupSelector: "#preview-modal" });
 popupImage.setEventListeners();
 
+// PopupWithForm
+const editProfilePopup = new PopupWithForm(
+  "#edit-modal",
+  handleProfileFormSubmit
+);
+editProfilePopup.setEventListeners();
 
-// PopupWithForm 
- const editProfilePopup = new PopupWithForm("#edit-modal", handleProfileFormSubmit);
-//editProfilePopup.setEventListeners();
- 
- const addProfilePopup = new PopupWithForm("#add-card-modal", handleAddCardFormSubmit);
-//addProfilePopup.setEventListeners();
+const addProfilePopup = new PopupWithForm(
+  "#add-card-modal",
+  handleAddCardFormSubmit
+);
+addProfilePopup.setEventListeners();
 
 // UserInfo
-const nameSelector = ('.profile__title');
-const aboutMeSelector = ('.profile__description');
-const userInfo = new UserInfo(nameSelector, aboutMeSelector);
-
+const nameSelector = ".profile__title";
+const aboutMeSelector = ".profile__description";
+const userInfo = new UserInfo({ nameSelector, aboutMeSelector });
