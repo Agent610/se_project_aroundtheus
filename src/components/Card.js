@@ -22,7 +22,7 @@ class Card {
       });
 
     this._cardImage.addEventListener("click", () => {
-      this._handleImageClick({ name: this._name, link: this._link });
+     this._handleImageClick({ name: this._name, link: this._link });
     });
   }
 

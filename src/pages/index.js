@@ -103,8 +103,9 @@ function closeModal(modal) {
 
 function renderCard(cardData, wrapper) {
   const card = new Card(cardData, "#card-template", handleImagePreview);
-  wrapper.prepend(card.getView());
-  Section.renderItems(item);
+  section.addItem(card.getView());
+  //wrapper.prepend();
+  //Section.renderItems(item);
 }
 
 function handleImagePreview(cardData) {
@@ -180,11 +181,11 @@ addPopupWithForm.close(addCardModal);
 const section = new Section(
   {
     items: initialCards,
-    renderer: (item) => {
-      const card = new Card(item, selectors.cardTemplate, Card);
-      section.addItem(card.getView());
-    },
+    renderer: (renderCard) => { 
+      const card = new Card(renderCard, selectors.cardTemplate, Card);
+      section.addItem(card.getView()); 
   },
+},
   selectors.cardSelector
 );
 section.renderItems();
