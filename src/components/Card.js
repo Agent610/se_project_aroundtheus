@@ -26,11 +26,6 @@ class Card {
     });
   }
 
-  _handleImageClick() {
-    this._element.querySelector(".modal_preview");
-    this._handleImageClick(this);
-  }
-
   _handleLikeButton() {
     this._element
       .querySelector(".card__like-button")

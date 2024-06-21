@@ -101,15 +101,15 @@ function closeModal(modal) {
   modal.classList.remove("modal_opened");
 }
 
-function renderCard(cardData, wrapper) {
-  const card = new Card(cardData, "#card-template", handleImagePreview);
-  section.addItem(card.getView());
+function renderCard(cardData) {
+  const card = createCard(cardData);
+  section.addItem(card);
   //wrapper.prepend();
   //Section.renderItems(item);
 }
 
 function handleImagePreview(cardData) {
-  popupImage.open({ cardData });
+  popupImage.open(cardData); 
 }
 
 function handleProfileFormSubmit(inputValues) {
@@ -118,7 +118,7 @@ function handleProfileFormSubmit(inputValues) {
   editProfileForm.reset();
 }
 
-function handleAddCardFormSubmit(inputValues) {
+function handleAddCardFormSubmit({ name, link }) {
   renderCard({ name, link }, cardsWrap);
   addProfilePopup.close();
   addCardForm.reset();
@@ -175,15 +175,19 @@ addCardButton.addEventListener("click", () => {
 const addPopupWithForm = new PopupWithForm("#add-card-modal");
 addPopupWithForm.close(addCardModal);
 
+function createCard(cardData) {
+  const card = new Card(cardData, selectors.cardTemplate, handleImagePreview);
+  return card.getView();
+}
+
 //Rendering Cards
 
 //Section
 const section = new Section(
   {
     items: initialCards,
-    renderer: (renderCard) => { 
-      const card = new Card(renderCard, selectors.cardTemplate, Card);
-      section.addItem(card.getView()); 
+    renderer: (cardData) => { 
+      renderCard(cardData)
   },
 },
   selectors.cardSelector
