@@ -219,3 +219,4 @@ addProfilePopup.setEventListeners();
 const nameSelector = ".profile__title";
 const aboutMeSelector = ".profile__description";
 const userInfo = new UserInfo({ nameSelector, aboutMeSelector });
+
