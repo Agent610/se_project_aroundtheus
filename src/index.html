@@ -129,6 +129,39 @@
       </li>
     </template>
 
+    <!--Modal Delete-->
+     <div class="modal modal__delete" id="modal-delete">
+      <div class="modal__container-delete">
+        <button class="modal__close" type="button"></button>
+        <p class="modal__heading">Are you sure?</h3>
+          <form class="modal__form" id="modal-delete-form">
+
+          </form>
+          <button class="modal__button modal__button_disabled" type="submit">Yes</button>
+      </div>
+     </div>
+
+     <!--Modal Profile Picture-->
+     <div class="modal modal__profile-picture" id="modal-profile-pic">
+      <div class="modal__container-profile-picture">
+        <button class="modal__close" type="button"></button>
+        <p class="modal__heading">Change profile picture</h4>
+          <form class="modal__form" id="modal-change-picture">
+            <input 
+            class="modal__input modal__input_type_title"
+            name="URL"
+            id="change-profile-picture"
+            placeholder="Picture URL"
+            type="URL"
+            required
+            url
+            />
+            <button class="modal__button modal__button_disabled" type="submit">Save</button>
+            </form>
+      </div>
+
+
+     </div>
    <!-- <script src="./scripts/validation.js" defer></script> -->
   </body>
 </html>

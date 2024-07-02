@@ -6,6 +6,7 @@ import PopupWithImage from "../components/PopupWithImage.js";
 import Section from "../components/Section.js";
 import UserInfo from "../components/UserInfo.js";
 import Styles from "./index.css";
+import Api from "../components/Api.js";
 //import {initialCards, selectors}
 
 const initialCards = [
@@ -220,3 +221,43 @@ const nameSelector = ".profile__title";
 const aboutMeSelector = ".profile__description";
 const userInfo = new UserInfo({ nameSelector, aboutMeSelector });
 
+//API 
+const api = new Api({
+  baseURL: "https://around.nomoreparties.co/v1/group-1",
+  authToken: "eeb6862d-8337-45ca-b804-a54d677deb3a"
+})
+
+api.removeCard("cardID:any").then(res => console.log(res));
+
+api.getCardList().then(res => console.log(res));
+api.getCardList().then(cardData => { 
+  const cardList = new Section(
+    Card, 
+    cardData,
+    renderer,
+     (data) => {
+      api.addCard(data).then(res => console.log(res));
+      const card = new card({
+        data, 
+        handleImageClick: () => {
+          PopupWithImage.open(data);
+        },
+        handleDeleteButton: () => {
+          const id = card.getID();
+          api.removeCard(id).then(res => {
+            card._handleDeleteButton();
+          })
+        }
+      }, cardsConfig.cardSelector)
+    })
+    }
+  )
+    cardList.renderItems(Card);
+
+api.getUserInfo().then(userData => {
+  userInfo.setUserInfo({
+    userName: userData.name,
+    userDescription: userData.about
+  })
+}
+);

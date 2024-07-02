@@ -40,6 +40,21 @@
   padding: 0;
 }
 
+.modal__container-delete {
+  width: 430px;
+  height: 181px;
+  top: 270px;
+  left: 425px;
+}
+
+.modal__container-profile-picture {
+  width: 430px;
+  height: 272px;
+  top: 224px;
+  left: 425px;
+  border: 1px;
+}
+
 .modal__caption {
   position: absolute;
   font-family: Inter;

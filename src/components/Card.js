@@ -4,6 +4,12 @@ class Card {
     this._link = link;
     this._cardSelector = cardSelector;
     this._handleImageClick = handleImageClick;
+    //this._id = data.id;
+    //this._handleDeleteButton = handleDeleteButton;
+  }
+
+  getID() {
+    return this._id;
   }
 
   _setEventListeners() {
@@ -57,6 +63,21 @@ class Card {
     this._setEventListeners();
 
     return this._element;
+  }
+
+  //API 
+
+  _updatedLikesView() {
+    this._element.querySelector(".card__like-count").textContent = this._likes.length;
+
+    if (this.isLiked())
+      this._element
+    .querySelector(".card__like-button")
+    .classList.add(".card__like-button_active");
+    else 
+    this._element
+  .querySelector(".card__like-button")
+  .classList.remove(".card__like-button_active");
   }
 }
 
