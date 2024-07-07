@@ -70,14 +70,30 @@ class Card {
   _updatedLikesView() {
     this._element.querySelector(".card__like-count").textContent = this._likes.length;
 
-    if (this.isLiked())
-      this._element
-    .querySelector(".card__like-button")
-    .classList.add(".card__like-button_active");
-    else 
-    this._element
-  .querySelector(".card__like-button")
-  .classList.remove(".card__like-button_active");
+  setIsLiked(isLiked); 
+  {
+    this._element.querySelector(".card__like-button")
+    this._isLiked = isLiked;
+    this._renderLikes();
+  }
+
+  isLiked(); {
+    return this._isLiked;
+  }
+
+  _renderLikes(); {
+    if (this._isLiked) {
+      classList.add(".card__like-button_active");
+    } else {
+      classList.remove(".card__like-button_active");
+    }
+  }
+
+  createCard(); {
+    this._renderLikes();
+  }
+
+
   }
 }
 

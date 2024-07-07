@@ -6,7 +6,7 @@ class Api {
     }
 
     getInitialCards() {
-        return fetch("https://around-api.en.tripleten-services.com/v1/cards",)
+        return fetch("https://around-api.en.tripleten-services.com/v1/cards").then(res => res);
     }
 
         //methods for working with the API 
@@ -18,7 +18,7 @@ class Api {
                       authorization: this._authToken
                     }
                   })
-                    .then(res => {res.ok ? res.json() : Promise.reject(`Error: ${res.status}`)})
+                    .then(res => {res.ok ? res.json() : Promise.reject(`Error: ${this._handleServerResponse}`)})
                     .catch((err) => {
                     console.log(err); // log error to console
                 });
@@ -31,7 +31,7 @@ class Api {
                 authorization: this._authToken
             }
         })
-        .then(res => {res.ok ? res.json() : Promise.reject(`Error: ${res.status}`)})
+        .then(res => {res.ok ? res.json() : Promise.reject(`Error: ${this._handleServerResponse}`)})
         .catch((err) => {
             console.log(err); //log error to console
         });
@@ -54,7 +54,7 @@ class Api {
                   link
                 })
               })
-              .then(res => {res.ok ? res.json() : Promise.reject(`Error: ${res.status}`)})
+              .then(res => {res.ok ? res.json() : Promise.reject(`Error: ${this._handleServerResponse}`)})
               .catch((err) => {
                   console.log(err); //log error to console
               });
@@ -69,7 +69,7 @@ class Api {
               "Content-Type": "application/json"
             }
           })
-          .then(res => {res.ok ? res.json() : Promise.reject(`Error: ${res.status}`)})
+          .then(res => {res.ok ? res.json() : Promise.reject(`Error: ${this._handleServerResponse}`)})
           .catch((err) => {
               console.log(err); //log error to console
           });
@@ -87,7 +87,7 @@ class Api {
         //setUserInfo() {}
 
         _handleServerResponse(res) {
-          return res.ok ? res.json() :Promise.reject(`Error: ${res.status}`)
+          return res.ok ? res.json() :Promise.reject(`Error: ${this._handleServerResponse}`)
         }
 
         setUserAvatar({avatar}) {
@@ -96,10 +96,9 @@ class Api {
             headers: {
               this:_headers,
             body: JSON.stringify({
-              avatar,
+              avatar
             })
-        }}),
-          then (this._handleServerResponse);
+        }}).then (this._handleServerResponse);
         }
 
         changeCardLikeStatus(cardID, like) {
@@ -109,7 +108,7 @@ class Api {
         }). then(this._handleServerResponse);
         }
 
-     Api = new Api({
+    Api = ({
         baseUrl: "https://around-api.en.tripleten-services.com/v1",
         headers: {
         authToken: "eeb6862d-8337-45ca-b804-a54d677deb3a",

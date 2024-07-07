@@ -227,37 +227,56 @@ const api = new Api({
   authToken: "eeb6862d-8337-45ca-b804-a54d677deb3a"
 })
 
-api.removeCard("cardID:any").then(res => console.log(res));
-
-api.getCardList().then(res => console.log(res));
-api.getCardList().then(cardData => { 
+api.getCardList().then(cardData => {  
   const cardList = new Section(
     Card, 
     cardData,
     renderer,
      (data) => {
-      api.addCard(data).then(res => console.log(res));
+      if (Card.isLiked()) {
+        api.dislikeCard(Card.getID()).then(response => {Card.setIsLiked(response.isLiked);}).catch((error) => {
+          console.error('Error disliking card:', error); }); }
+        else {
+       api.likeCard(Card.getID()).then(response => {card.setIsLiked(response.isLiked); }).catch((error) => {
+        console.error('Error liking card:', error); 
+       });
+      }
+    })
+  })
+
+
       const card = new card({
         data, 
         handleImageClick: () => {
-          PopupWithImage.open(data);
+          PopupWithImage.open({popupSelector});
         },
         handleDeleteButton: () => {
           const id = card.getID();
           api.removeCard(id).then(res => {
             card._handleDeleteButton();
-          })
+          }).catch((error) => {
+            console.error('Error removing card:', error);
+          });
         }
       }, cardsConfig.cardSelector)
-    })
-    }
-  )
-    cardList.renderItems(Card);
-
+    cardList.renderItems(Card)
+    .catch((error) => {
+      console.error('Error getting card list:', error);
+    });
+  
+    //show loading
+    api.loading 
+      .then(res => {res.ok ? res.json : Promise.reject(`Error: ${res.status}`)})
+      .catch((err) => {
+        api.finally() 
+        //hide loading
+      })
+      
 api.getUserInfo().then(userData => {
   userInfo.setUserInfo({
     userName: userData.name,
     userDescription: userData.about
-  })
-}
-);
+}).catch((error) => {
+  console.error('Error getting user info:', error);
+})
+});
