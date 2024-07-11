@@ -10,8 +10,7 @@ class Api {
     }
 
         //methods for working with the API 
-        
-        //GET https://around.nomoreparties.co/v1/groupID/cards
+        //GET https://around-api.en.tripleten-services.com/v1/cards
              getCardList(){
                 return fetch(`${this._baseUrl}/cards`, {
                     headers: {
@@ -24,7 +23,7 @@ class Api {
                 });
             }
 
-        // GET https://around.nomoreparties.co/v1/groupID/users/me
+        //GET https://around-api.en.tripleten-services.com/v1/users/me
           getUserInfo(){
         return fetch(`${this._baseUrl}/users/me`, {
             headers: {
@@ -36,12 +35,11 @@ class Api {
             console.log(err); //log error to console
         });
         }
-
         getAppInfo() {
           return Promise.all({this:getCardList(), this:getUserInfo()});
         }
 
-        //POST https://around.nomoreparties.co/v1/groupID/cards
+        //POST https://around-api.en.tripleten-services.com/v1/cards
         addCard({name, link}) {
            return fetch(`${this._baseUrl}/cards`, {
                 method: "POST",
@@ -60,7 +58,7 @@ class Api {
               });
         }
 
-        //DELETE https://around.nomoreparties.co/v1/groupID/cards/cardID
+        //DELETE https://around-api.en.tripleten-services.com/v1/cards/cardId
         removeCard(cardID) {
           return fetch(`${this._baseUrl}/cards/${cardID}`, {
             method: "DELETE",
@@ -75,22 +73,26 @@ class Api {
           });
         }
 
-        // PUT https://around.nomoreparties.co/v1/groupID/cards/likes/cardID
+        //PATCH https://around-api.en.tripleten-services.com/v1/users/me
+        setUserInfo() {
+            method: "PATCH",
+            headers; {
+              authorization: "c56e30dc-2883-4270-a59e-b2f7bae969c6",
+              "Content-Type"; "application/json"
+            }
+            body: JSON.stringify({
+              name: "Parth Sonanitwala",
+              about: "State-Trooper"
+            })
+          };
+        }
 
-        //DELETE https://around.nomoreparties.co/v1/groupID/cards/likes/cardID
-        //changeLikeCardStatus(cardID, like)
-
-        //PATCH https://around.nomoreparties/co/v1/groupID/users/me
-        //setUserInfo() {}
-
-        //PATCH https://around.nomoreparties/co/v1/groupID/users/me/avatar
-        //setUserInfo() {}
-
-        _handleServerResponse(res) {
+        _handleServerResponse(res); {
           return res.ok ? res.json() :Promise.reject(`Error: ${this._handleServerResponse}`)
         }
 
-        setUserAvatar({avatar}) {
+        //PATCH https://around-api.en.tripleten-services.com/v1/users/me/avatar
+        setUserAvatar({avatar}) ;{
           return fetch(`${this._baseUrl}/users/me/avatar`, {
             method: "PATCH",
             headers: {
@@ -101,12 +103,21 @@ class Api {
         }}).then (this._handleServerResponse);
         }
 
-        changeCardLikeStatus(cardID, like) {
+        //PUT https://around-api.en.tripleten-services.com/v1/cards/cardId/likes
+        changeCardLikeStatus(cardID, like); {
           return fetch (`${this._baseUrl}/cards/like/${cardID}`, {
-            method: like ? "PUT": "DELETE",
-            headers: this._headers,
+            method: like ? "PUT":
+            headers, this:_headers,
         }). then(this._handleServerResponse);
         }
+
+        //DELETE https://around-api.en.tripleten-services.com/v1/cards/cardId/likes  
+        changeCardLikeStatus(cardID, like); {
+          return fetch (`${this._baseUrl}/cards/like/${cardID}`, {
+            method: like ? "DELETE":
+            headers, this:_headers,
+          }).then(this._handleServerResponse); 
+        }     
 
     Api = ({
         baseUrl: "https://around-api.en.tripleten-services.com/v1",
@@ -117,6 +128,6 @@ class Api {
     });
     
 
-}
+
 
 export default Api 
