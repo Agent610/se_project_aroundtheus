@@ -1,13 +1,13 @@
 class Api {
-    constructor({baseUrl, authToken, headers}) {
-        this._baseUrl = baseUrl;
-        this._authToken = authToken;
-        this._headers = headers;
-    }
+  constructor({baseUrl, authToken, headers}) {
+    this._baseUrl = baseUrl;
+    this._authToken = authToken;
+    this._headers = headers;
+  }
 
-    getInitialCards() {
-        return fetch("https://around-api.en.tripleten-services.com/v1/cards").then(res => res);
-    }
+  getInitialCards() {
+    return fetch("https://around-api.en.tripleten-services.com/v1/cards").then(res => res);
+  }
 
         //methods for working with the API 
         //GET https://around-api.en.tripleten-services.com/v1/cards
@@ -75,24 +75,24 @@ class Api {
 
         //PATCH https://around-api.en.tripleten-services.com/v1/users/me
         setUserInfo() {
-            method: "PATCH",
-            headers; {
-              authorization: "c56e30dc-2883-4270-a59e-b2f7bae969c6",
-              "Content-Type"; "application/json"
-            }
-            body: JSON.stringify({
-              name: "Parth Sonanitwala",
-              about: "State-Trooper"
-            })
-          };
-        }
+          method: "PATCH",
+          headers; {
+            authorization: "c56e30dc-2883-4270-a59e-b2f7bae969c6",
+            "Content-Type"; "application/json"
+          }
+          body: JSON.stringify({
+            name: "Parth Sonanitwala",
+            about: "State-Trooper"
+          })
+        };
 
-        _handleServerResponse(res); {
+        _handleServerResponse(res) {
           return res.ok ? res.json() :Promise.reject(`Error: ${this._handleServerResponse}`)
         }
 
         //PATCH https://around-api.en.tripleten-services.com/v1/users/me/avatar
-        setUserAvatar({avatar}) ;{
+        setUserAvatar({avatar}) 
+        {
           return fetch(`${this._baseUrl}/users/me/avatar`, {
             method: "PATCH",
             headers: {
@@ -104,7 +104,8 @@ class Api {
         }
 
         //PUT https://around-api.en.tripleten-services.com/v1/cards/cardId/likes
-        changeCardLikeStatus(cardID, like); {
+        changeCardLikeStatus(cardID, like) 
+        {
           return fetch (`${this._baseUrl}/cards/like/${cardID}`, {
             method: like ? "PUT":
             headers, this:_headers,
@@ -112,7 +113,8 @@ class Api {
         }
 
         //DELETE https://around-api.en.tripleten-services.com/v1/cards/cardId/likes  
-        changeCardLikeStatus(cardID, like); {
+        changeCardLikeStatus(cardID, like) 
+        {
           return fetch (`${this._baseUrl}/cards/like/${cardID}`, {
             method: like ? "DELETE":
             headers, this:_headers,
@@ -127,7 +129,8 @@ class Api {
         }
     });
     
+  };
 
 
 
-export default Api 
+ export default Api 

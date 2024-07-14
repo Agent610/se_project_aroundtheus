@@ -54,7 +54,7 @@ const addCardFormElement = addCardModal.querySelector(".modal__form");
 const previewModal = document.querySelector("#preview-modal");
 const deleteModal = document.querySelector("#modal-delete");
 const deleteCardFormElement = deleteModal.querySelector(".modal__form");
-const changeCardModal = document.querySelector("#modal-profile-picture");
+const changeCardModal = document.querySelector("#modal-profile-pic");
 const changeCardFormElement = changeCardModal.querySelector(".modal__form");
 
 //Button Information
@@ -80,7 +80,7 @@ const cardTitleInput = addCardFormElement.querySelector(
   ".modal__input_type_title"
 );
 const cardURLInput = addCardFormElement.querySelector(".modal__input_type_url");
-const cardTitleURLInput = ProfilePictureFormElement.querySelector(".modal__input_type_title"); 
+const cardTitleURLInput = profileFormElement.querySelector(".modal__input_type_title"); 
 
 function closeWithEsc(event) {
   if (event.key === "Escape") {
