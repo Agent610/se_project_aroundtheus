@@ -61,8 +61,7 @@ const changeCardFormElement = changeCardModal.querySelector(".modal__form");
 const profileEditButton = document.querySelector(".profile__edit-button");
 const profileModalCloseButton = editProfileModal.querySelector(".modal__close");
 const addCardModalCloseButton = addCardModal.querySelector(".modal__close");
-const previewImageModalCloseButton =
-  previewModal.querySelector(".modal__close");
+const previewImageModalCloseButton = previewModal.querySelector(".modal__close");
 const deleteCardCloseButton = deleteModal.querySelector(".modal__close");
 const changeProfilePictureCloseButton = changeCardModal.querySelector(".modal__close");  
 const profileTitle = document.querySelector(".profile__title");
@@ -84,14 +83,14 @@ const cardTitleURLInput = profileFormElement.querySelector(".modal__input_type_t
 
 function closeWithEsc(event) {
   if (event.key === "Escape") {
-    const modal = document.querySelector(".modal_opened");
-    closeModal(modal);
+  const modal = document.querySelector(".modal_opened");
+  closeModal(modal);
   }
 }
 
 function closeModalOnRemoteClick(event) {
   if (event.target === event.currentTarget) {
-    closeModal(event.currentTarget);
+  closeModal(event.currentTarget);
   }
 }
 
@@ -163,21 +162,21 @@ const aboutEl = document.querySelector("#profile-description-input");
 const nameEl = document.querySelector("#profile-name-input");
 
 profileEditButton.addEventListener("click", () => {
-  const userData = userInfo.getUserInfo();
-  nameEl.value = userData.name;
-  aboutEl.value = userData.about;
-  // editFormValidator.hideInputError(nameInput);
-  // editFormValidator.hideInputError(jobInput);
-  editProfilePopup.open(editProfileModal);
+const userData = userInfo.getUserInfo();
+nameEl.value = userData.name;
+aboutEl.value = userData.about;
+// editFormValidator.hideInputError(nameInput);
+// editFormValidator.hideInputError(jobInput);
+editProfilePopup.open(editProfileModal);
 });
 
 const editPopupWithForm = new PopupWithForm("#edit-modal");
 editPopupWithForm.close(editProfileModal);
 
 addCardButton.addEventListener("click", () => {
-  //  addCardValidator.hideInputError(cardTitleInput);
-  //  addCardValidator.hideInputError(cardURLInput);
-  addProfilePopup.open(addCardModal);
+//  addCardValidator.hideInputError(cardTitleInput);
+//  addCardValidator.hideInputError(cardURLInput);
+addProfilePopup.open(addCardModal);
 });
 
 const addPopupWithForm = new PopupWithForm("#add-card-modal");
@@ -193,9 +192,9 @@ function createCard(cardData) {
 //Section
 const section = new Section(
   {
-    items: initialCards,
-    renderer: (cardData) => { 
-      renderCard(cardData)
+  items: initialCards,
+  renderer: (cardData) => { 
+  renderCard(cardData)
   },
 },
   selectors.cardSelector
@@ -212,14 +211,14 @@ popupImage.setEventListeners();
 
 // PopupWithForm
 const editProfilePopup = new PopupWithForm(
-  "#edit-modal",
-  handleProfileFormSubmit
+"#edit-modal",
+handleProfileFormSubmit
 );
 editProfilePopup.setEventListeners();
 
 const addProfilePopup = new PopupWithForm(
-  "#add-card-modal",
-  handleAddCardFormSubmit
+"#add-card-modal",
+handleAddCardFormSubmit
 );
 addProfilePopup.setEventListeners();
 
@@ -230,60 +229,61 @@ const userInfo = new UserInfo({ nameSelector, aboutMeSelector });
 
 //API 
 const api = new Api({
-  baseURL: "https://around.nomoreparties.co/v1/group-1",
-  authToken: "eeb6862d-8337-45ca-b804-a54d677deb3a"
+baseURL: "around-api.en.tripleten-services.com/v1",
+authToken: "eeb6862d-8337-45ca-b804-a54d677deb3a"
 })
 
-api.getCardList().then(cardData => {  
+api.getCardList().then(cardData => {   // cardData is an array
+  console.log(cardData)
   const cardList = new Section(
-    Card, 
-    cardData,
-    renderer,
-     (data) => {
-      if (Card.isLiked()) {
-        api.dislikeCard(Card.getID()).then(response => {Card.setIsLiked(response.isLiked);}).catch((error) => {
-          console.error('Error disliking card:', error); }); }
-        else {
-       api.likeCard(Card.getID()).then(response => {card.setIsLiked(response.isLiked); }).catch((error) => {
-        console.error('Error liking card:', error); 
-       });
-      }
-    })
+  Card, 
+  cardData,
+  renderer,
+  (data) => {
+  if (Card.isLiked()) {
+  api.dislikeCard(Card.getID()).then(response => {Card.setIsLiked(response.isLiked);}).catch((error) => {
+  console.error('Error disliking card:', error); }); }
+  else {
+  api.likeCard(Card.getID()).then(response => {card.setIsLiked(response.isLiked); }).catch((error) => {
+  console.error('Error liking card:', error); 
+  });
+  }
   })
+  });
 
+  const card = new Card({
+  Card, 
+  handleImageClick: () => {
+  PopupWithImage.open({popupSelector});
+  },
+  handleDeleteButton: () => {
+  const id = card.getID();
+  api.removeCard(id).then(res => {
+  card._handleDeleteButton();
+  }).catch((error) => {
+  console.error('Error removing card:', error);
+  });
+  }
+  }, cardSelect);
 
-      const card = new card({
-        data, 
-        handleImageClick: () => {
-          PopupWithImage.open({popupSelector});
-        },
-        handleDeleteButton: () => {
-          const id = card.getID();
-          api.removeCard(id).then(res => {
-            card._handleDeleteButton();
-          }).catch((error) => {
-            console.error('Error removing card:', error);
-          });
-        }
-      }, cardsConfig.cardSelector)
-    cardList.renderItems(Card)
-    .catch((error) => {
-      console.error('Error getting card list:', error);
-    });
+  cardList.renderItems(card)
+  .catch((error) => {
+  console.error('Error getting card list:', error);
+  });
   
-    //show loading
-    api.loading 
-      .then(res => {res.ok ? res.json : Promise.reject(`Error: ${res.status}`)})
-      .catch((err) => {
-        api.finally() 
-        //hide loading
-      })
+   //show loading
+   api.loading 
+  .then(res => {res.ok ? res.json : Promise.reject(`Error: ${res.status}`)})
+  .catch((err) => {
+  api.finally() 
+  //hide loading
+  });
       
-api.getUserInfo().then(userData => {
+  api.getUserInfo().then(userData => {
   userInfo.setUserInfo({
-    userName: userData.name,
-    userDescription: userData.about
-}).catch((error) => {
+  userName: userData.name,
+  userDescription: userData.about
+  }).catch((error) => {
   console.error('Error getting user info:', error);
-})
+  });
 });
