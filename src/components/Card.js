@@ -10,90 +10,93 @@ class Card {
   }
 
   getID() {
-  return this._id;
+    return this._id;
   }
 
   _setEventListeners() {
-  //".card__like-button"
-  this._element
-  .querySelector(".card__like-button");
-  //this._isLiked = isLiked;
-  //this.renderLikes()
-  addEventListener("click", () => {
-  this._handleLikeButton();
-  });
+    //".card__like-button"
+    this._element
+      .querySelector(".card__like-button")
+      .addEventListener("click", () => {
+        this._handleLikeButton();
+      });
 
-  //".card__delete-button"
-  this._element
-  .querySelector(".card__delete-button")
-  .addEventListener("click", () => {
-  this._handleDeleteButton();
-  });
+    //".card__delete-button"
+    this._element
+      .querySelector(".card__delete-button")
+      .addEventListener("click", () => {
+        this._handleDeleteButton();
+      });
 
-  this._cardImage.addEventListener("click", () => {
-  this._handleImageClick({ name: this._name, link: this._link });
-  });
+    this._cardImage.addEventListener("click", () => {
+      this._handleImageClick({ name: this._name, link: this._link });
+    });
   }
 
   _handleLikeButton() {
-  this._element
-  .querySelector(".card__like-button")
-  .classList.toggle("card__like-button_active");
+    this._element
+      .querySelector(".card__like-button")
+      .classList.toggle("card__like-button_active");
   }
 
   _handleDeleteButton() {
-  this._element.remove();
+    this._element.remove();
   }
 
   _getTemplate() {
-  return document
-  .querySelector(this._cardSelector)
-  .content.querySelector(".card")
-  .cloneNode(true);
+    return document
+      .querySelector(this._cardSelector)
+      .content.querySelector(".card")
+      .cloneNode(true);
   }
 
   getView() {
-  this._element = this._getTemplate();
-  this._cardImage = this._element.querySelector(".card__image");
-  const cardTitle = this._element.querySelector(".card__title");
-  const likeButton = this._element.querySelector(".card__like-button");
-  const deleteButton = this._element.querySelector(".card__delete-button");
-
-  this._cardImage.src = this._link;
-  this._cardImage.alt = this._name;
-  cardTitle.textContent = this._name;
-  this._setEventListeners();
-
+    this._element = this._getTemplate();
+    this._cardImage = this._element.querySelector(".card__image");
+    this._cardTitle = this._element.querySelector(".card__title");
+    this._likeButton = this._element.querySelector(".card__like-button");
+    this._deleteButton = this._element.querySelector(".card__delete-button");
+    this._cardImage.src = this._link;
+    this._cardImage.alt = this._name;
+    this._cardTitle.textContent = this._name;
+    this._setEventListeners();
     return this._element;
   }
 
-  //API 
-
+  //API
   _updatedLikesView() {
-  this._element.querySelector(".card__like-count").textContent = this._likes.length;
+    this._element.querySelector(".card__like-count").textContent =
+      this._likes.length;
 
-  setIsLiked(isLikedGetter); 
-  {
-  this._element.querySelector(".card__like-button")
-  this._isLikedGetter = isLikedGetter;
-  this._renderLikes();
-  }
+    setIsLiked(isLiked);
+    {
+      this._element.querySelector(".card__like-button");
+      this._isLiked = isLiked;
+      this._renderLikes();
+    }
 
-  isLiked(); {
-  return this._isLikedGetter;
-  }
+    isLiked();
+    {
+      return this._isLiked;
+    }
 
-  _renderLikes(); {
-  if (this._isLikedGetter) {
-  this._element.querySelector(".card__like-button").classList.add(".card__like-button_active");
-  } else {
-  this._element.querySelector(".card__like-button").classList.remove(".card__like-button_active");
-  }
-  }
+    _renderLikes();
+    {
+      if (this._isLiked) {
+        this._element
+          .querySelector(".card__like-button")
+          .classList.add(".card__like-button_active");
+      } else {
+        this._element
+          .querySelector(".card__like-button")
+          .classList.remove(".card__like-button_active");
+      }
+    }
 
-  createCard(); {
-  this._renderLikes();
-  }
+    createCard();
+    {
+      this._renderLikes();
+    }
   }
 }
 
