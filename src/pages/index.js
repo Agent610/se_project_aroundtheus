@@ -53,9 +53,12 @@ const profileFormElement = editProfileModal.querySelector(".modal__form");
 const addCardFormElement = addCardModal.querySelector(".modal__form");
 const previewModal = document.querySelector("#preview-modal");
 const deleteModal = document.querySelector("#modal-delete");
-const deleteCardFormElement = deleteModal.querySelector(".modal__form");
-const changeCardModal = document.querySelector("#modal-profile-pic");
-const changeCardFormElement = changeCardModal.querySelector(".modal__form");
+const deleteFormElement = deleteModal.querySelector(".modal__form");
+const changeProfilePictureModal = document.querySelector(
+  "#modal-profile-picture"
+);
+const changePictureFormElement =
+  changeProfilePictureModal.querySelector(".modal__form");
 
 //Button Information
 const profileEditButton = document.querySelector(".profile__edit-button");
@@ -63,16 +66,18 @@ const profileModalCloseButton = editProfileModal.querySelector(".modal__close");
 const addCardModalCloseButton = addCardModal.querySelector(".modal__close");
 const previewImageModalCloseButton =
   previewModal.querySelector(".modal__close");
-const deleteCardButton = document.querySelector(".modal__close");
-const deleteCardCloseButton = deleteModal.querySelector(".modal__close");
-const changeProfilePicture = document.querySelector(".modal__close");
-const changeProfilePictureCloseButton =
-  changeCardModal.querySelector(".modal__close");
 const profileTitle = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__description");
 const addCardButton = document.querySelector("#profile-add-button");
 const editProfileForm = document.querySelector("#profile-edit-form");
 const addCardForm = document.querySelector("#add-card-form");
+const deleteCardModalButton = document.querySelector(".modal__button");
+const deleteModalCloseButton = deleteModal.querySelector(".modal__form");
+const deleteCardForm = document.querySelector("#modal-delete-form");
+const changePictureButton = document.querySelector(".modal__button");
+const changePictureCloseButton =
+  changeProfilePictureModal.querySelector(".modal__form");
+const changePictureForm = document.querySelector("#modal-change-picture");
 
 //Form Information
 const nameInput = profileFormElement.querySelector(".modal__input_type_name");
@@ -137,6 +142,14 @@ function handleAddCardFormSubmit({ name, link }) {
   addCardForm.reset();
 }
 
+function handleDeleteCardFormSubmit() {
+  deleteCardPopup.close();
+}
+
+function handleProfilePictureFormSubmit() {
+  changePicturePopup.close();
+}
+
 const cardSelect = "#card-template";
 
 //Validation
@@ -151,6 +164,9 @@ const validationSettings = {
 
 const editFormElement = editProfileModal.querySelector(".modal__form");
 const addCardElement = addCardModal.querySelector(".modal__form");
+const deleteCardElement = deleteModal.querySelector(".modal__form");
+const profilePictureElement =
+  changeProfilePictureModal.querySelector(".modal__form");
 
 const editFormValidator = new FormValidator(
   validationSettings,
@@ -188,14 +204,25 @@ addCardButton.addEventListener("click", () => {
 const addPopupWithForm = new PopupWithForm("#add-card-modal");
 addPopupWithForm.close(addCardModal);
 
+deleteCardModalButton.addEventListener("click", () => {
+  deleteCardPopup.open(deleteModal);
+});
+
+const deletePopupWithForm = new PopupWithForm("#modal-delete");
+deletePopupWithForm.close(deleteModal);
+
+changePictureButton.addEventListener("click", () => {
+  changePicturePopup.open(changeProfilePictureModal);
+});
+
+const pictureWithForm = new PopupWithForm("#modal-profile-picture");
+//changePictureForm.close(changeProfilePictureModal);
+
 function createCard(cardData) {
   const card = new Card(cardData, selectors.cardTemplate, handleImagePreview);
   return card.getView();
 }
 
-deleteCardButton.addEventListener("click", () => {
-  //.open(deleteModal);
-});
 //Rendering Cards
 
 //Section
@@ -231,7 +258,17 @@ const addProfilePopup = new PopupWithForm(
 );
 addProfilePopup.setEventListeners();
 
-const deleteCardPopup = new PopupWithForm("#modal-delete");
+const deleteCardPopup = new PopupWithForm(
+  "#modal-delete",
+  handleDeleteCardFormSubmit
+);
+deleteCardPopup.setEventListeners();
+
+const changePicturePopup = new PopupWithForm(
+  "#modal-profile-picture",
+  handleProfilePictureFormSubmit
+);
+changePicturePopup.setEventListeners();
 
 // UserInfo
 const nameSelector = ".profile__title";
