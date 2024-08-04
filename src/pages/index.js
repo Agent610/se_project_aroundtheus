@@ -178,6 +178,18 @@ editFormValidator.enableValidation();
 const addCardValidator = new FormValidator(validationSettings, addCardElement);
 addCardValidator.enableValidation();
 
+const deleteCardValidator = new FormValidator(
+  validationSettings,
+  deleteCardElement
+);
+deleteCardValidator.enableValidation();
+
+const profilePictureValidator = new FormValidator(
+  validationSettings,
+  profilePictureElement
+);
+profilePictureValidator.enableValidation();
+
 //EventListeners
 
 const aboutEl = document.querySelector("#profile-description-input");
@@ -216,7 +228,7 @@ changePictureButton.addEventListener("click", () => {
 });
 
 const pictureWithForm = new PopupWithForm("#modal-profile-picture");
-//changePictureForm.close(changeProfilePictureModal);
+pictureWithForm.close(changeProfilePictureModal);
 
 function createCard(cardData) {
   const card = new Card(cardData, selectors.cardTemplate, handleImagePreview);
@@ -235,6 +247,7 @@ const section = new Section(
   },
   selectors.cardSelector
 );
+
 section.renderItems();
 
 //Popup
@@ -284,66 +297,92 @@ const api = new Api({
   },
 });
 
-const sectionRenderer = (/*something*/) => {
-  /* does something */
-};
+const fallbackItems = [];
 
-api.getCardList().then((res) => {
-  //const section = new Section(
-  //{
-  items: res, renderer;
-  sectionRenderer;
-  //},
-  //".cards__list"
-  //);
-  const cardList = new Section(items, cardData, renderer, (cardData) => {
-    if (Card.isLiked()) {
-      api
-        .dislikeCard(Card.getID())
-        .then((response) => {
-          Card.setIsLiked(response.isLiked);
-        })
-        .catch((error) => {
-          console.error("Error disliking card:", error);
-        });
-    } else {
-      api
-        .likeCard(Card.getID())
-        .then((response) => {
-          card.setIsLiked(response.isLiked);
-        })
-        .catch((error) => {
-          console.error("Error liking card:", error);
-        });
+api
+  .getCardList()
+  .then((res) => {
+    console.log(res);
+    if (Array.isArray(res)) {
+      const sectionRenderer = new Section(
+        {
+          items: res,
+          renderer: (cardData) => {
+            renderCard(cardData);
+          },
+        },
+        selectors.cardsList
+      );
+      sectionRenderer.renderItems();
+      //{
+      //console.error("Error: received data is not an array");
+      //}
     }
 
-    // cardList.renderItems(card)
-    //   .catch((error) => {
-    //     console.error('Error getting card list:', error);
-    //   });
+    const sectionRenderer = new Section(
+      {
+        items: res,
+        renderer: (cardData) => {
+          renderCard(cardData);
+        },
+      },
+      selectors.cardsList
+    );
+
+    sectionRenderer.renderItems();
+  })
+  .catch((error) => {
+    console.error("Error fetching card list:", error);
   });
 
-  const card = new Card(
-    {
-      Card,
-      handleImageClick: () => {
-        PopupWithImage.open({ popupSelector });
-      },
-      handleDeleteButton: () => {
-        const id = card.getID();
-        api
-          .removeCard(id)
-          .then((res) => {
-            card._handleDeleteButton();
-          })
-          .catch((error) => {
-            console.error("Error removing card:", error);
-          });
-      },
-    },
-    cardSelect
-  );
+const cardList = new Section({ renderer, items }, (cardData) => {
+  if (Card.isLiked()) {
+    api
+      .dislikeCard(Card.getID())
+      .then((response) => {
+        Card.setIsLiked(response.isLiked);
+      })
+      .catch((error) => {
+        console.error("Error disliking card:", error);
+      });
+  } else {
+    api
+      .likeCard(Card.getID())
+      .then((response) => {
+        card.setIsLiked(response.isLiked);
+      })
+      .catch((error) => {
+        console.error("Error liking card:", error);
+      });
+  }
+
+  // cardList.renderItems(card)
+  //   .catch((error) => {
+  //     console.error('Error getting card list:', error);
+  //   });
 });
+
+const card = new Card(
+  {
+    Card,
+    handleImageClick: () => {
+      PopupWithImage.open({ popupSelector });
+    },
+    handleDeleteButton: () => {
+      const id = card.getID();
+      api
+        .removeCard(id)
+        .then((res) => {
+          card._handleDeleteButton();
+        })
+        .catch((error) => {
+          console.error("Error removing card:", error);
+        });
+    },
+  },
+  cardSelect
+);
+//});
 
 //show loading
 // api.loading.then(res => {res.ok ? res.json : Promise.reject(`Error: ${res.status}`)})
