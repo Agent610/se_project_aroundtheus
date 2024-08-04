@@ -9,7 +9,6 @@ class Api {
       if (res.ok) {
         return res.json();
       }
-      //Returns an error, reject
       return Promise.reject(`Error: ${res.status}`);
     });
   }
@@ -19,7 +18,14 @@ class Api {
   getCardList() {
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers,
-    }).then(this._handleServerResponse);
+      //}).then(this._handleServerResponse);
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        console.log(result);
+        //Debugging check
+        return result;
+      });
     //.catch((err) => {
     //console.log(err); // log error to console
     //});

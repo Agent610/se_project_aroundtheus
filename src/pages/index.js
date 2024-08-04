@@ -7,34 +7,6 @@ import Section from "../components/Section.js";
 import UserInfo from "../components/UserInfo.js";
 import Styles from "./index.css";
 import Api from "../components/Api.js";
-//import {initialCards, selectors}
-
-const initialCards = [
-  {
-    name: "Yosemite-Valley",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
-  },
-  {
-    name: "Lake-Louise",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lake-louise.jpg",
-  },
-  {
-    name: "Bald-Mountains",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/bald-mountains.jpg",
-  },
-  {
-    name: "Latemar",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/latemar.jpg",
-  },
-  {
-    name: "Vanoise-National-Park",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/vanoise.jpg",
-  },
-  {
-    name: "Lago-di-Braies",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lago.jpg ",
-  },
-];
 
 const cardTemplate = document
   .querySelector("#card-template")
@@ -240,7 +212,7 @@ function createCard(cardData) {
 //Section
 const section = new Section(
   {
-    items: initialCards,
+    items: [],
     renderer: (cardData) => {
       renderCard(cardData);
     },
@@ -302,22 +274,21 @@ const fallbackItems = [];
 api
   .getCardList()
   .then((res) => {
-    console.log(res);
-    if (Array.isArray(res)) {
-      const sectionRenderer = new Section(
-        {
-          items: res,
-          renderer: (cardData) => {
-            renderCard(cardData);
-          },
-        },
-        selectors.cardsList
-      );
-      sectionRenderer.renderItems();
-      //{
-      //console.error("Error: received data is not an array");
-      //}
-    }
+    //if (Array.isArray(res)) {
+    //const sectionRenderer = new Section(
+    // {
+    //items: res,
+    //renderer: (cardData) => {
+    //renderCard(cardData);
+    //},
+    //},
+    //selectors.cardsList
+    //);
+    //sectionRenderer.renderItems();
+    //{
+    //console.error("Error received data is not an array:", error);
+    //}
+    //}
 
     const sectionRenderer = new Section(
       {
@@ -331,36 +302,43 @@ api
 
     sectionRenderer.renderItems();
   })
+
   .catch((error) => {
     console.error("Error fetching card list:", error);
   });
 
-const cardList = new Section({ renderer, items }, (cardData) => {
-  if (Card.isLiked()) {
-    api
-      .dislikeCard(Card.getID())
-      .then((response) => {
-        Card.setIsLiked(response.isLiked);
-      })
-      .catch((error) => {
-        console.error("Error disliking card:", error);
-      });
-  } else {
-    api
-      .likeCard(Card.getID())
-      .then((response) => {
-        card.setIsLiked(response.isLiked);
-      })
-      .catch((error) => {
-        console.error("Error liking card:", error);
-      });
-  }
+//const cardList = new Section({ renderer, items }, (cardData) => {
+//{
+//items: res,
+//renderer: (cardData) => {
+//renderCard(cardData);
+//};
+//}
+if (Card.isLiked()) {
+  api
+    .dislikeCard(Card.getID())
+    .then((response) => {
+      Card.setIsLiked(response.isLiked);
+    })
+    .catch((error) => {
+      console.error("Error disliking card:", error);
+    });
+} else {
+  api
+    .likeCard(Card.getID())
+    .then((response) => {
+      Card.setIsLiked(response.isLiked);
+    })
+    .catch((error) => {
+      console.error("Error liking card:", error);
+    });
+}
 
-  // cardList.renderItems(card)
-  //   .catch((error) => {
-  //     console.error('Error getting card list:', error);
-  //   });
-});
+// cardList.renderItems(card)
+//   .catch((error) => {
+//     console.error('Error getting card list:', error);
+//   });
+//});
 
 const card = new Card(
   {
