@@ -272,73 +272,22 @@ const api = new Api({
 const fallbackItems = [];
 
 api
-  .getCardList()
+  .getInitialCards()
   .then((res) => {
-    //if (Array.isArray(res)) {
-    //const sectionRenderer = new Section(
-    // {
-    //items: res,
-    //renderer: (cardData) => {
-    //renderCard(cardData);
-    //},
-    //},
-    //selectors.cardsList
-    //);
-    //sectionRenderer.renderItems();
-    //{
-    //console.error("Error received data is not an array:", error);
-    //}
-    //}
-
-    const sectionRenderer = new Section(
-      {
-        items: res,
-        renderer: (cardData) => {
-          renderCard(cardData);
-        },
-      },
-      selectors.cardsList
-    );
-
-    sectionRenderer.renderItems();
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Error: ${res.status}`);
   })
-
-  .catch((error) => {
-    console.error("Error fetching card list:", error);
+  .catch((err) => {
+    console.error(err);
   });
 
-//const cardList = new Section({ renderer, items }, (cardData) => {
-//{
-//items: res,
-//renderer: (cardData) => {
-//renderCard(cardData);
-//};
-//}
-if (Card.isLiked()) {
-  api
-    .dislikeCard(Card.getID())
-    .then((response) => {
-      Card.setIsLiked(response.isLiked);
-    })
-    .catch((error) => {
-      console.error("Error disliking card:", error);
-    });
-} else {
-  api
-    .likeCard(Card.getID())
-    .then((response) => {
-      Card.setIsLiked(response.isLiked);
-    })
-    .catch((error) => {
-      console.error("Error liking card:", error);
-    });
-}
-
-// cardList.renderItems(card)
-//   .catch((error) => {
-//     console.error('Error getting card list:', error);
-//   });
-//});
+api.getUserInfo().then((userData) => {
+  userInfo.catch((error) => {
+    console.error("Error getting user info:", error);
+  });
+});
 
 const card = new Card(
   {
@@ -360,6 +309,85 @@ const card = new Card(
   },
   cardSelect
 );
+
+api.getCardList().then(res);
+if (Array.isArray(res)) {
+  const sectionRenderer = new Section(
+    {
+      items: res,
+      renderer: (cardData) => {
+        renderCard(cardData);
+      },
+    },
+    selectors.cardsList
+  );
+  sectionRenderer.renderItems();
+  {
+    console.error("Error received data is not an array:", error);
+  }
+}
+
+const sectionRenderer = new Section(
+  {
+    items: res,
+    renderer: (cardData) => {
+      renderCard(cardData);
+    },
+  },
+  selectors.cardsList
+);
+
+sectionRenderer.renderItems().catch((error) => {
+  console.error("Error fetching card list:", error);
+});
+
+cardList.renderItems(card).catch((error) => {
+  console.error("Error getting card list:", error);
+});
+
+// const cardList = new cardList{ renderer, items }, (cardData) =>
+// {
+// items: res,
+// renderer: (cardData) => {
+// renderCard(cardData);
+// };
+// }
+
+api.setUserInfo({
+  userName: userData.name,
+  userDescription: userData.about,
+});
+
+api.addCard();
+
+api.removeCard();
+
+api.changeCardLikeStatus();
+if (Card.isLiked()) {
+  likeCard(Card.getID())
+    .then((response) => {
+      Card.setIsLiked(response.isLiked);
+    })
+    .catch((error) => {
+      console.error("Error liking card:", error);
+    });
+}
+
+api.changeCardDeleteLikeStatus();
+if (Card.dislikeCard()) {
+  dislikeCard(Card.getID())
+    .then((response) => {
+      Card.setIsLiked(response.isLiked);
+    })
+    .catch((error) => {
+      console.error("Error disliking card:", error);
+    });
+}
+
+api.setUserAvatar();
+
+//} else {
+
 //});
 
 //show loading
@@ -368,14 +396,3 @@ const card = new Card(
 //     api.finally()
 //     //hide loading
 //   });
-
-//   api.getUserInfo().then(userData => {
-//   userInfo.setUserInfo({
-//   userName: userData.name,
-//   userDescription: userData.about
-//   }).catch((error) => {
-//   console.error('Error getting user info:', error);
-//   });
-// });
-
-api.getUserInfo();
