@@ -1,22 +1,28 @@
 class Api {
-  constructor({ baseUrl, headers }, authorization) {
+  constructor({ baseUrl, headers }) {
     this._baseUrl = baseUrl;
     this._headers = headers;
-    this._authorization = "eeb6862d-8337-45ca-b804-a54d677deb3a";
+    //this._authorization = "eeb6862d-8337-45ca-b804-a54d677deb3a";
   }
 
+  // getInitialCards() {
+  //   return fetch(
+  //     //"https://around-api.en.tripleten-services.com/v1/cards",
+  //     `${this._baseUrl}/cards`,
+  //     { headers: this._headers },
+  //     { authorization: "eeb6862d-8337-45ca-b804-a54d677deb3a" }
+  //   ).then((res) => {
+  //     if (res.ok) {
+  //       return res.json();
+  //     }
+  //     return Promise.reject(`Error: ${res.status}`);
+  //   });
+  // }
+
   getInitialCards() {
-    return fetch(
-      "https://around-api.en.tripleten-services.com/v1/cards",
-      `${this._baseUrl}/cards`,
-      { headers: this._headers },
-      { authorization: "eeb6862d-8337-45ca-b804-a54d677deb3a" }
-    ).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Error: ${res.status}`);
-    });
+    return fetch(`${this._baseUrl}/cards`, { headers: this._headers }).then(
+      (res) => (res.ok ? res.json() : Promise.reject(`Error:${res.status}`))
+    );
   }
 
   //methods for working with the API
@@ -59,19 +65,21 @@ class Api {
   }
 
   //PATCH https://around-api.en.tripleten-services.com/v1/users/me
-  setUserInfo() {
+  setUserInfo({ name, about }) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
       headers: {
         headers: this._headers,
-        authorization: "c56e30dc-2883-4270-a59e-b2f7bae969c6",
+        authorization: "eeb6862d-8337-45ca-b804-a54d677deb3a",
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
         name: "Parth Sonanitwala",
         about: "State-Trooper",
       }),
-    });
+    }).then((res) =>
+      res.ok ? res.json() : Promise.reject(`Error:${res.status}`)
+    );
   }
 
   //POST https://around-api.en.tripleten-services.com/v1/cards
@@ -80,7 +88,7 @@ class Api {
       method: "POST",
       headers: {
         headers: this._headers,
-        authorization: "c56e30dc-2883-4270-a59e-b2f7bae969c6",
+        authorization: "eeb6862d-8337-45ca-b804-a54d677deb3a",
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -104,7 +112,7 @@ class Api {
       method: "DELETE",
       headers: {
         headers: this._headers,
-        authorization: "c56e30dc-2883-4270-a59e-b2f7bae969c6",
+        authorization: "eeb6862d-8337-45ca-b804-a54d677deb3a",
         "Content-Type": "application/json",
       },
     })
@@ -131,7 +139,7 @@ class Api {
     return fetch(`${this._baseUrl}/cards/like/${cardID}`, {
       method: like ? "PUT" : headers,
       this: _headers,
-      authorization: "c56e30dc-2883-4270-a59e-b2f7bae969c6",
+      authorization: "eeb6862d-8337-45ca-b804-a54d677deb3a",
     }).then(this._handleServerResponse);
   }
 
@@ -140,7 +148,7 @@ class Api {
     return fetch(`${this._baseUrl}/cards/like/${cardID}`, {
       method: like ? "DELETE" : headers,
       this: _headers,
-      authorization: "c56e30dc-2883-4270-a59e-b2f7bae969c6",
+      authorization: "eeb6862d-8337-45ca-b804-a54d677deb3a",
     }).then(this._handleServerResponse);
   }
 

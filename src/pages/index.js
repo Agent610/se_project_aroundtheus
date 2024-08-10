@@ -283,11 +283,17 @@ api
     console.error(err);
   });
 
-api.getUserInfo().then((userData) => {
-  userInfo.catch((error) => {
+api
+  .getUserInfo()
+  .then((userData) => {
+    api.setUserInfo({
+      userName: userData.name,
+      userDescription: userData.about,
+    });
+  })
+  .catch((error) => {
     console.error("Error getting user info:", error);
   });
-});
 
 const card = new Card(
   {
@@ -310,48 +316,29 @@ const card = new Card(
   cardSelect
 );
 
-api.getCardList().then(res);
-if (Array.isArray(res)) {
-  const sectionRenderer = new Section(
-    {
-      items: res,
-      renderer: (cardData) => {
-        renderCard(cardData);
-      },
-    },
-    selectors.cardsList
-  );
-  sectionRenderer.renderItems();
-  {
-    console.error("Error received data is not an array:", error);
-  }
-}
+api
+  .getCardList()
+  .then((res) => {
+    console.log(res);
+    if (Array.isArray(res)) {
+      const sectionRenderer = new Section(
+        {
+          items: res,
+          renderer: (cardData) => {
+            renderCard(cardData);
+          },
+        },
+        selectors.cardsList
+      );
 
-const sectionRenderer = new Section(
-  {
-    items: res,
-    renderer: (cardData) => {
-      renderCard(cardData);
-    },
-  },
-  selectors.cardsList
-);
-
-sectionRenderer.renderItems().catch((error) => {
-  console.error("Error fetching card list:", error);
-});
-
-cardList.renderItems(card).catch((error) => {
-  console.error("Error getting card list:", error);
-});
-
-// const cardList = new cardList{ renderer, items }, (cardData) =>
-// {
-// items: res,
-// renderer: (cardData) => {
-// renderCard(cardData);
-// };
-// }
+      sectionRenderer.renderItems();
+    } else {
+      console.error("Error received data is not an array:", res);
+    }
+  })
+  .catch((error) => {
+    console.error("Error fetching card list:", error);
+  });
 
 api.setUserInfo({
   userName: userData.name,
