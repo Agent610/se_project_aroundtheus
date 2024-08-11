@@ -41,23 +41,14 @@ class Api {
 
   //GET https://around-api.en.tripleten-services.com/v1/cards
   getCardList() {
-    return (
-      fetch(`${this._baseUrl}/cards`, {
-        headers: this._headers,
-        authorization: "eeb6862d-8337-45ca-b804-a54d677deb3a",
-      })
-        .then(this._handleServerResponse)
-        //})
-        .then((response) => response.json())
-        .then((result) => {
-          console.log(result);
-          //Debugging check
-          return result;
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-    );
+    return fetch(`${this._baseUrl}/cards`, {
+      headers: this._headers,
+      authorization: "eeb6862d-8337-45ca-b804-a54d677deb3a",
+    })
+      .then(this._handleServerResponse)
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   getAppInfo() {
@@ -128,10 +119,6 @@ class Api {
 
   _handleServerResponse(res) {
     return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Error: ${res.status}`);
   }
 
   //PUT https://around-api.en.tripleten-services.com/v1/cards/cardId/likes

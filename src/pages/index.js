@@ -280,7 +280,7 @@ api
     return Promise.reject(`Error: ${res.status}`);
   })
   .catch((err) => {
-    console.error(err);
+    //console.error(err);
   });
 
 api
@@ -292,7 +292,7 @@ api
     });
   })
   .catch((error) => {
-    console.error("Error getting user info:", error);
+    //console.error("Error getting user info:", error);
   });
 
 const card = new Card(
@@ -319,6 +319,7 @@ const card = new Card(
 api
   .getCardList()
   .then((res) => {
+    console.log(12313123);
     console.log(res);
     if (Array.isArray(res)) {
       const sectionRenderer = new Section(
@@ -340,38 +341,38 @@ api
     console.error("Error fetching card list:", error);
   });
 
-api.setUserInfo({
-  userName: userData.name,
-  userDescription: userData.about,
-});
+// api.setUserInfo({
+//   userName: userData.name,
+//   userDescription: userData.about,
+// });
 
-api.addCard();
+// api.addCard();
 
-api.removeCard();
+// api.removeCard();
 
-api.changeCardLikeStatus();
-if (Card.isLiked()) {
-  likeCard(Card.getID())
-    .then((response) => {
-      Card.setIsLiked(response.isLiked);
-    })
-    .catch((error) => {
-      console.error("Error liking card:", error);
-    });
-}
+// api.changeCardLikeStatus();
+// if (Card.isLiked()) {
+//   likeCard(Card.getID())
+//     .then((response) => {
+//       Card.setIsLiked(response.isLiked);
+//     })
+//     .catch((error) => {
+//       console.error("Error liking card:", error);
+//     });
+// }
 
-api.changeCardDeleteLikeStatus();
-if (Card.dislikeCard()) {
-  dislikeCard(Card.getID())
-    .then((response) => {
-      Card.setIsLiked(response.isLiked);
-    })
-    .catch((error) => {
-      console.error("Error disliking card:", error);
-    });
-}
+// api.changeCardDeleteLikeStatus();
+// if (Card.dislikeCard()) {
+//   dislikeCard(Card.getID())
+//     .then((response) => {
+//       Card.setIsLiked(response.isLiked);
+//     })
+//     .catch((error) => {
+//       console.error("Error disliking card:", error);
+//     });
+// }
 
-api.setUserAvatar();
+// api.setUserAvatar();
 
 //} else {
 
