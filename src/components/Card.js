@@ -6,7 +6,7 @@ class Card {
     this._handleImageClick = handleImageClick;
     //setIsLiked(isLiked);
     //this._id = data.id;
-    //this._handleDeleteButton = handleDeleteButton;
+    this._handleDeleteButton = handleDeleteButton;
   }
 
   getID() {

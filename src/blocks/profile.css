@@ -77,6 +77,7 @@
   object-fit: cover;
   background-position: center;
   margin-right: 25.75px;
+  background: transparent ("../images/Edit-Button.svg") center no-repeat;
 }
 
 @media screen and (max-width: 768px) {

@@ -118,9 +118,22 @@ function handleDeleteCardFormSubmit() {
   deleteCardPopup.close();
 }
 
+const modalProfilePicture = "#modal-profile-picture";
 function handleProfilePictureFormSubmit() {
-  changePicturePopup.close();
+  modalProfilePicture.close();
 }
+//    renderLoading(modalProfilePicture, true);
+//    api.setUserAvatar(link);
+//    .then((info) => {
+// userInfo.setUserInfo(info);
+//    )})}
+//modalProfilePicture
+//example p.2 renderLoading(popupConfig.cardFormPopupSelector, true);
+//example //.then((info) => {
+//userInfo.setUserInfo(info);
+//changeAvatarPopup.close();
+//})
+//.t
 
 const cardSelect = "#card-template";
 
@@ -210,17 +223,17 @@ function createCard(cardData) {
 //Rendering Cards
 
 //Section
-const section = new Section(
-  {
-    items: [],
-    renderer: (cardData) => {
-      renderCard(cardData);
-    },
-  },
-  selectors.cardSelector
-);
+// const section = new Section(
+//   {
+//     items: [],
+//     renderer: (cardData) => {
+//       renderCard(cardData);
+//     },
+//   },
+//   selectors.cardSelector
+// );
 
-section.renderItems();
+// section.renderItems();
 
 //Popup
 
@@ -270,14 +283,22 @@ const api = new Api({
 });
 
 const fallbackItems = [];
+let section;
 
 api
   .getInitialCards()
-  .then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Error: ${res.status}`);
+  .then((cards) => {
+    section = new Section(
+      {
+        items: cards,
+        renderer: (cardData) => {
+          renderCard(cardData);
+        },
+      },
+      selectors.cardSelector
+    );
+
+    section.renderItems();
   })
   .catch((err) => {
     //console.error(err);
@@ -295,51 +316,51 @@ api
     //console.error("Error getting user info:", error);
   });
 
-const card = new Card(
-  {
-    Card,
-    handleImageClick: () => {
-      PopupWithImage.open({ popupSelector });
-    },
-    handleDeleteButton: () => {
-      const id = card.getID();
-      api
-        .removeCard(id)
-        .then((res) => {
-          card._handleDeleteButton();
-        })
-        .catch((error) => {
-          console.error("Error removing card:", error);
-        });
-    },
-  },
-  cardSelect
-);
+// const card = new Card(
+//   {
+//     Card,
+//     handleImageClick: () => {
+//       PopupWithImage.open({ popupSelector });
+//     },
+//     handleDeleteButton: () => {
+//       const id = card.getID();
+//       api
+//         .removeCard(id)
+//         .then((res) => {
+//           card._handleDeleteButton();
+//         })
+//         .catch((error) => {
+//           console.error("Error removing card:", error);
+//         });
+//     },
+//   },
+//   cardSelect
+// );
 
-api
-  .getCardList()
-  .then((res) => {
-    console.log(12313123);
-    console.log(res);
-    if (Array.isArray(res)) {
-      const sectionRenderer = new Section(
-        {
-          items: res,
-          renderer: (cardData) => {
-            renderCard(cardData);
-          },
-        },
-        selectors.cardsList
-      );
+// api
+//   .getCardList()
+//   .then((res) => {
+//     console.log(12313123);
+//     console.log(res);
+//     if (Array.isArray(res)) {
+//       const sectionRenderer = new Section(
+//         {
+//           items: res,
+//           renderer: (cardData) => {
+//             renderCard(cardData);
+//           },
+//         },
+//         selectors.cardsList
+//       );
 
-      sectionRenderer.renderItems();
-    } else {
-      console.error("Error received data is not an array:", res);
-    }
-  })
-  .catch((error) => {
-    console.error("Error fetching card list:", error);
-  });
+//       sectionRenderer.renderItems();
+//     } else {
+//       console.error("Error received data is not an array:", res);
+//     }
+//   })
+//   .catch((error) => {
+//     console.error("Error fetching card list:", error);
+//   });
 
 // api.setUserInfo({
 //   userName: userData.name,
