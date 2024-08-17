@@ -310,7 +310,8 @@ api
   })
   .catch((err) => {
     //console.error(err);
-  });
+  })
+  .finally();
 
 api
   .getUserInfo()
