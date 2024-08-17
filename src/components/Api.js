@@ -20,11 +20,20 @@ class Api {
   // }
 
   getInitialCards() {
-    return fetch(`${this._baseUrl}/cards`, { headers: this._headers }).then(
-      (res) => (res.ok ? res.json() : Promise.reject(`Error:${res.status}`))
+    return fetch(
+      `${this._baseUrl}/cards`,
+      { headers: this._headers },
+      { authorization: "eeb6862d-8337-45ca-b804-a54d677deb3a" }
+    ).then((res) =>
+      res.ok ? res.json() : Promise.reject(`Error:${res.status}`)
     );
   }
 
+  // getInitialCards() {
+  //   return fetch(
+  //     `${this._baseUrl}/cards`, {headers: this._headers}, {authorization}
+  //   )
+  // }
   //methods for working with the API
 
   //GET https://around-api.en.tripleten-services.com/v1/users/me

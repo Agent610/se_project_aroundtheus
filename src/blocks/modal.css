@@ -40,7 +40,7 @@
   padding: 0;
 }
 
-.modal__container-delete {
+/*.modal__container-delete {
   height: 181px;
   border-radius: 10px;
 }
@@ -50,7 +50,7 @@
   border: 1px;
   background-image: url("../images/Edit-Button.svg");
 }
-
+*/
 .modal__caption {
   position: absolute;
   font-family: Inter;

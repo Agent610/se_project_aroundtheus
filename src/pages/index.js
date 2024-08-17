@@ -20,8 +20,8 @@ export const selectors = {
 //Wrappers
 const cardsWrap = document.querySelector(".cards__list");
 const editProfileModal = document.querySelector("#edit-modal");
-const addCardModal = document.querySelector("#add-card-modal");
 const profileFormElement = editProfileModal.querySelector(".modal__form");
+const addCardModal = document.querySelector("#add-card-modal");
 const addCardFormElement = addCardModal.querySelector(".modal__form");
 const previewModal = document.querySelector("#preview-modal");
 const deleteModal = document.querySelector("#modal-delete");
@@ -92,13 +92,15 @@ function closeModal(modal) {
 }
 
 function renderCard(cardData) {
-  const card = createCard(cardData);
-  section.addItem(card);
-  //wrapper.prepend();
-  //Section.renderItems(item);
+  console.log(createCard(cardData));
+  return createCard(cardData);
 }
 
 function handleImagePreview(cardData) {
+  popupImage.open(cardData);
+}
+
+function handleDeleteButton(cardData) {
   popupImage.open(cardData);
 }
 
@@ -216,7 +218,14 @@ const pictureWithForm = new PopupWithForm("#modal-profile-picture");
 pictureWithForm.close(changeProfilePictureModal);
 
 function createCard(cardData) {
-  const card = new Card(cardData, selectors.cardTemplate, handleImagePreview);
+  const card = new Card(
+    cardData,
+    selectors.cardTemplate,
+    handleImagePreview,
+    handleDeleteButton
+  );
+
+  console.log(2);
   return card.getView();
 }
 
@@ -288,12 +297,11 @@ let section;
 api
   .getInitialCards()
   .then((cards) => {
+    console.log(cards);
     section = new Section(
       {
         items: cards,
-        renderer: (cardData) => {
-          renderCard(cardData);
-        },
+        renderer: renderCard,
       },
       selectors.cardSelector
     );

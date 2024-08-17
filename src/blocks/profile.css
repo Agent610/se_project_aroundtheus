@@ -77,9 +77,12 @@
   object-fit: cover;
   background-position: center;
   margin-right: 25.75px;
-  background: transparent ("../images/Edit-Button.svg") center no-repeat;
+  /*background-image: transparent ("../images/Edit-Button.svg") */
 }
 
+.profile__change-button {
+  background-image: transparent ("../images/Edit-Button.svg");
+}
 @media screen and (max-width: 768px) {
   .profile {
     background-color: black;

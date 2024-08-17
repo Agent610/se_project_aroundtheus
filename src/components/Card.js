@@ -1,12 +1,16 @@
 class Card {
-  constructor({ name, link }, cardSelector, handleImageClick) {
+  constructor(
+    { name, link },
+    cardSelector,
+    handleImageClick,
+    handleDeleteButton
+  ) {
     this._name = name;
     this._link = link;
     this._cardSelector = cardSelector;
     this._handleImageClick = handleImageClick;
-    //setIsLiked(isLiked);
-    //this._id = data.id;
     this._handleDeleteButton = handleDeleteButton;
+    console.log("fghjk");
   }
 
   getID() {
@@ -61,42 +65,6 @@ class Card {
     this._cardTitle.textContent = this._name;
     this._setEventListeners();
     return this._element;
-  }
-
-  //API
-  _updatedLikesView() {
-    this._element.querySelector(".card__like-count").textContent =
-      this._likes.length;
-
-    setIsLiked(isLiked);
-    {
-      this._element.querySelector(".card__like-button");
-      this._isLiked = isLiked;
-      this._renderLikes();
-    }
-
-    isLiked();
-    {
-      return this._isLiked;
-    }
-
-    _renderLikes();
-    {
-      if (this._isLiked) {
-        this._element
-          .querySelector(".card__like-button")
-          .classList.add(".card__like-button_active");
-      } else {
-        this._element
-          .querySelector(".card__like-button")
-          .classList.remove(".card__like-button_active");
-      }
-    }
-
-    createCard();
-    {
-      this._renderLikes();
-    }
   }
 }
 

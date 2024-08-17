@@ -36,6 +36,11 @@
             id="profile-add-button"
             type="button"
           ></button>
+          <button
+            class="profile__change-button"
+            id="profile-change-button"
+            type="button"
+          ></button>
         </section>
         <section class="cards page__section">
           <ul class="cards__list"></ul>
@@ -151,7 +156,7 @@
 
     <!--Modal Delete-->
     <div class="modal" id="modal-delete">
-      <div class="modal__container modal__container-delete">
+      <div class="modal__container">
         <button class="modal__close" type="button"></button>
         <p class="modal__heading">Are you sure?</p>
         <form class="modal__form" id="modal-delete-form">
@@ -168,7 +173,7 @@
 
     <!--Modal Profile Picture-->
     <div class="modal" id="modal-profile-picture">
-      <div class="modal__container modal__container-profile-picture">
+      <div class="modal__container">
         <button class="modal__close" type="button"></button>
         <p class="modal__heading">Change profile picture</p>
         <form class="modal__form" id="modal-change-picture">
@@ -181,6 +186,9 @@
             required
             url
           />
+          <span class="modal__error" id="add-picture-url-error"
+            >Please add a valid URL</span
+          >
           <button
             class="modal__button modal__button_disabled"
             type="submit"
@@ -191,6 +199,7 @@
         </form>
       </div>
     </div>
+
     <!-- <script src="./scripts/validation.js" defer></script> -->
   </body>
 </html>
