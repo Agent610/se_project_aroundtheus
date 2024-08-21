@@ -48,6 +48,9 @@
   height: 26px;
   width: 26px;
   border: currentColor;
+  position: absolute;
+  border-top: -10px;
+  border-left: -10px;
 }
 
 .profile__change-image-button:hover {
