@@ -10,7 +10,6 @@ class Card {
     this._cardSelector = cardSelector;
     this._handleImageClick = handleImageClick;
     this._handleDeleteButton = handleDeleteButton;
-    console.log("fghjk");
   }
 
   getID() {

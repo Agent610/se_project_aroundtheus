@@ -21,6 +21,10 @@
             src="<%=require('./images/jacques-cousteau.jpg')%>"
             alt="jacques-cousteau"
             class="profile__image"
+            img
+            src="<%=require('./images/Edit-button.svg')%>"
+            alt="change-profile-picture"
+            class="profile__change-image-button"
           />
           <div class="profile__info">
             <h1 class="profile__title">Jacques Cousteau</h1>
@@ -37,7 +41,7 @@
             type="button"
           ></button>
           <button
-            class="profile__change-button"
+            class="profile__change-image-button"
             id="profile-change-button"
             type="button"
           ></button>
@@ -156,7 +160,7 @@
 
     <!--Modal Delete-->
     <div class="modal" id="modal-delete">
-      <div class="modal__container">
+      <div class="modal__container modal__container-delete">
         <button class="modal__close" type="button"></button>
         <p class="modal__heading">Are you sure?</p>
         <form class="modal__form" id="modal-delete-form">
@@ -173,7 +177,7 @@
 
     <!--Modal Profile Picture-->
     <div class="modal" id="modal-profile-picture">
-      <div class="modal__container">
+      <div class="modal__container modal__container-profile-picture">
         <button class="modal__close" type="button"></button>
         <p class="modal__heading">Change profile picture</p>
         <form class="modal__form" id="modal-change-picture">

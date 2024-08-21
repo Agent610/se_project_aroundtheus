@@ -7,14 +7,12 @@ class Section {
 
   renderItems() {
     this._items.forEach((item) => {
-      console.log(this._renderer(item));
+      //console.log(this._renderer(item));
       this.addItem(this._renderer(item));
     });
   }
 
   addItem(element) {
-    console.log(123);
-    console.log(element);
     this._container.prepend(element);
   }
 }

@@ -43,6 +43,18 @@
   cursor: pointer;
 }
 
+.profile__change-image-button {
+  background: url(../images/Edit-Button.svg) center no-repeat;
+  height: 26px;
+  width: 26px;
+  border: currentColor;
+}
+
+.profile__change-image-button:hover {
+  opacity: 0.6;
+  cursor: pointer;
+}
+
 .profile__title {
   font-weight: 500;
   grid-area: title;
@@ -80,9 +92,6 @@
   /*background-image: transparent ("../images/Edit-Button.svg") */
 }
 
-.profile__change-button {
-  background-image: transparent ("../images/Edit-Button.svg");
-}
 @media screen and (max-width: 768px) {
   .profile {
     background-color: black;

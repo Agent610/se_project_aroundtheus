@@ -1,39 +1,24 @@
 class Api {
-  constructor({ baseUrl, headers }) {
+  constructor({ baseUrl, headers, authorization }) {
     this._baseUrl = baseUrl;
     this._headers = headers;
-    //this._authorization = "eeb6862d-8337-45ca-b804-a54d677deb3a";
+    (this._authorization = authorization),
+      "eeb6862d-8337-45ca-b804-a54d677deb3a";
   }
-
-  // getInitialCards() {
-  //   return fetch(
-  //     //"https://around-api.en.tripleten-services.com/v1/cards",
-  //     `${this._baseUrl}/cards`,
-  //     { headers: this._headers },
-  //     { authorization: "eeb6862d-8337-45ca-b804-a54d677deb3a" }
-  //   ).then((res) => {
-  //     if (res.ok) {
-  //       return res.json();
-  //     }
-  //     return Promise.reject(`Error: ${res.status}`);
-  //   });
-  // }
 
   getInitialCards() {
     return fetch(
       `${this._baseUrl}/cards`,
       { headers: this._headers },
       { authorization: "eeb6862d-8337-45ca-b804-a54d677deb3a" }
-    ).then((res) =>
-      res.ok ? res.json() : Promise.reject(`Error:${res.status}`)
-    );
+    ).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Error:${res.status}`);
+    });
   }
 
-  // getInitialCards() {
-  //   return fetch(
-  //     `${this._baseUrl}/cards`, {headers: this._headers}, {authorization}
-  //   )
-  // }
   //methods for working with the API
 
   //GET https://around-api.en.tripleten-services.com/v1/users/me
@@ -74,8 +59,8 @@ class Api {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        name: "Parth Sonanitwala",
-        about: "State-Trooper",
+        name,
+        about,
       }),
     }).then((res) =>
       res.ok ? res.json() : Promise.reject(`Error:${res.status}`)
@@ -99,10 +84,10 @@ class Api {
       .then((res) => {
         res.ok
           ? res.json()
-          : Promise.reject(`Error: ${this._handleServerResponse}`); //(Like in line 34)
+          : Promise.reject(`Error: ${this._handleServerResponse}`);
       })
       .catch((err) => {
-        console.log(err); //log error to console
+        console.log(err);
       });
   }
 

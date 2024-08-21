@@ -92,7 +92,7 @@ function closeModal(modal) {
 }
 
 function renderCard(cardData) {
-  console.log(createCard(cardData));
+  //console.log(createCard(cardData));
   return createCard(cardData);
 }
 
@@ -191,7 +191,11 @@ profileEditButton.addEventListener("click", () => {
   editProfilePopup.open(editProfileModal);
 });
 
-const editPopupWithForm = new PopupWithForm("#edit-modal");
+const editPopupWithForm = new PopupWithForm("#edit-modal", (data) => {
+  console.log("EDIT SUBMITTED");
+  console.log(data);
+});
+editPopupWithForm.setEventListeners();
 editPopupWithForm.close(editProfileModal);
 
 addCardButton.addEventListener("click", () => {
@@ -225,7 +229,7 @@ function createCard(cardData) {
     handleDeleteButton
   );
 
-  console.log(2);
+  //console.log(2);
   return card.getView();
 }
 
@@ -260,7 +264,7 @@ const editProfilePopup = new PopupWithForm(
 editProfilePopup.setEventListeners();
 
 const addProfilePopup = new PopupWithForm(
-  "#add-card-modal",
+  "#add-card-modal ",
   handleAddCardFormSubmit
 );
 addProfilePopup.setEventListeners();
@@ -305,11 +309,11 @@ api
       },
       selectors.cardSelector
     );
-
     section.renderItems();
+    //closeModal(cards);
   })
   .catch((err) => {
-    //console.error(err);
+    console.error(err);
   })
   .finally();
 
@@ -322,8 +326,98 @@ api
     });
   })
   .catch((error) => {
-    //console.error("Error getting user info:", error);
+    console.error("Error getting user info:", error);
+  })
+  .finally();
+
+api
+  .getCardList()
+  .then((res) => {
+    if (Array.isArray(res)) {
+      const sectionRenderer = new Section(
+        {
+          items: res,
+          renderer: (cardData) => {
+            renderCard(cardData);
+          },
+        },
+        selectors.cardsList
+      );
+      sectionRenderer.renderItems();
+    } else {
+      console.error("Error received data is not an array:", res);
+    }
+  })
+  .catch((error) => {
+    console.error("Error fetching card list:", error);
+  })
+  .finally();
+
+api
+  .addCard(addProfilePopup)
+  .then((res) => {
+    handleAddCardFormSubmit(res);
+  })
+  .catch((error) => {
+    console.error("Error adding card:", error);
+  })
+  .finally();
+
+api
+  .removeCard(id)
+  .then((res) => {
+    Card._handleDeleteButton(res);
+  })
+  .catch((error) => {
+    console.error("Error removing card:", error);
   });
+cardSelect.finally();
+
+api.changeCardLikeStatus();
+if (Card.isLiked()) {
+  likeCard(Card.getID())
+    .then((response) => {
+      Card.setIsLiked(response.isLiked);
+    })
+    .catch((error) => {
+      console.error("Error liking card:", error);
+    })
+    .finally();
+}
+
+api.changeCardDeleteLikeStatus();
+if (Card.dislikeCard()) {
+  dislikeCard(Card.getID())
+    .then((response) => {
+      Card.setIsLiked(response.isLiked);
+    })
+    .catch((error) => {
+      console.error("Error disliking card:", error);
+    })
+    .finally();
+}
+
+api
+  .setUserAvatar(link)
+  .then((info) => {
+    changeAvatarPopup.close(info);
+  })
+  .catch((error) => {
+    console.error("Error changing picture", error);
+  })
+  .finally();
+
+// api.setUserAvatar(link);
+//   .then((info) => {
+//     userInfo.setUserInfo(info)
+//     changeAvatarPopup.close();
+//   )})}
+//modalProfilePicture
+//example p.2 renderLoading(popupConfig.cardFormPopupSelector, true);
+//example //.then((info) => {
+//userInfo.setUserInfo(info);
+//})
+//.t
 
 // const card = new Card(
 //   {
@@ -333,76 +427,6 @@ api
 //     },
 //     handleDeleteButton: () => {
 //       const id = card.getID();
-//       api
-//         .removeCard(id)
-//         .then((res) => {
-//           card._handleDeleteButton();
-//         })
-//         .catch((error) => {
-//           console.error("Error removing card:", error);
-//         });
-//     },
-//   },
-//   cardSelect
-// );
-
-// api
-//   .getCardList()
-//   .then((res) => {
-//     console.log(12313123);
-//     console.log(res);
-//     if (Array.isArray(res)) {
-//       const sectionRenderer = new Section(
-//         {
-//           items: res,
-//           renderer: (cardData) => {
-//             renderCard(cardData);
-//           },
-//         },
-//         selectors.cardsList
-//       );
-
-//       sectionRenderer.renderItems();
-//     } else {
-//       console.error("Error received data is not an array:", res);
-//     }
-//   })
-//   .catch((error) => {
-//     console.error("Error fetching card list:", error);
-//   });
-
-// api.setUserInfo({
-//   userName: userData.name,
-//   userDescription: userData.about,
-// });
-
-// api.addCard();
-
-// api.removeCard();
-
-// api.changeCardLikeStatus();
-// if (Card.isLiked()) {
-//   likeCard(Card.getID())
-//     .then((response) => {
-//       Card.setIsLiked(response.isLiked);
-//     })
-//     .catch((error) => {
-//       console.error("Error liking card:", error);
-//     });
-// }
-
-// api.changeCardDeleteLikeStatus();
-// if (Card.dislikeCard()) {
-//   dislikeCard(Card.getID())
-//     .then((response) => {
-//       Card.setIsLiked(response.isLiked);
-//     })
-//     .catch((error) => {
-//       console.error("Error disliking card:", error);
-//     });
-// }
-
-// api.setUserAvatar();
 
 //} else {
 
