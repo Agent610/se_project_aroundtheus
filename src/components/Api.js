@@ -2,8 +2,8 @@ class Api {
   constructor({ baseUrl, headers, authorization }) {
     this._baseUrl = baseUrl;
     this._headers = headers;
-    (this._authorization = authorization),
-      "eeb6862d-8337-45ca-b804-a54d677deb3a";
+    this._authorization = authorization;
+    //"eeb6862d-8337-45ca-b804-a54d677deb3a";
   }
 
   getInitialCards() {
@@ -118,17 +118,25 @@ class Api {
   //PUT https://around-api.en.tripleten-services.com/v1/cards/cardId/likes
   changeCardLikeStatus(cardID, like) {
     return fetch(`${this._baseUrl}/cards/like/${cardID}`, {
-      method: like ? "PUT" : headers,
-      this: _headers,
+      method: like ? "PUT" : this._headers,
       authorization: "eeb6862d-8337-45ca-b804-a54d677deb3a",
     }).then(this._handleServerResponse);
   }
+  // changeCardLikeStatus(cardID, like) {
+  //   return fetch(`${this._baseUrl}/cards/like/${cardID}`, {
+  //     method: "PUT",
+  //     headers: this._headers,
+  //     authorization: "eeb6862d-8337-45ca-b804-a54d677deb3a",
+  //     body: {
+
+  //     }
+  //   }).then(this._handleServerResponse);
+  // }
 
   //DELETE https://around-api.en.tripleten-services.com/v1/cards/cardId/likes
   changeCardDeleteLikeStatus(cardID, like) {
     return fetch(`${this._baseUrl}/cards/like/${cardID}`, {
-      method: like ? "DELETE" : headers,
-      this: _headers,
+      method: like ? "DELETE" : this._headers,
       authorization: "eeb6862d-8337-45ca-b804-a54d677deb3a",
     }).then(this._handleServerResponse);
   }
@@ -137,12 +145,6 @@ class Api {
   setUserAvatar({ avatar }) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: "PATCH",
-      headers: {
-        this: _headers,
-        body: JSON.stringify({
-          avatar,
-        }),
-      },
     }).then(this._handleServerResponse);
   }
 }

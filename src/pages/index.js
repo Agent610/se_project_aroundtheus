@@ -353,37 +353,51 @@ api
   })
   .finally();
 
-api
-  .addCard(addProfilePopup)
-  .then((res) => {
-    handleAddCardFormSubmit(res);
-  })
-  .catch((error) => {
-    console.error("Error adding card:", error);
-  })
-  .finally();
+// api
+//   .addCard(addProfilePopup)
+//   .then((res) => {
+//     handleAddCardFormSubmit(res);
+//   })
+//   .catch((error) => {
+//     console.error("Error adding card:", error);
+//   })
+//   .finally();
 
-api
-  .removeCard(id)
-  .then((res) => {
-    Card._handleDeleteButton(res);
-  })
-  .catch((error) => {
-    console.error("Error removing card:", error);
-  });
-cardSelect.finally();
+// api
+//   .removeCard(id)
+//   .then((res) => {
+//     Card._handleDeleteButton(res);
+//   })
+//   .catch((error) => {
+//     console.error("Error removing card:", error);
+//   });
+//cardSelect.finally();
 
-api.changeCardLikeStatus();
-if (Card.isLiked()) {
-  likeCard(Card.getID())
-    .then((response) => {
-      Card.setIsLiked(response.isLiked);
-    })
-    .catch((error) => {
-      console.error("Error liking card:", error);
-    })
-    .finally();
-}
+// api.changeCardLikeStatus();
+// if (Card.isLiked()) {
+//   likeCard(Card.getID())
+//     .then((response) => {
+//       Card.setIsLiked(response.isLiked);
+//     })
+//     .catch((error) => {
+//       console.error("Error liking card:", error);
+//     })
+//     .finally();
+// }
+
+const someFunctionThatChangesLikeStatus = () => {
+  api.changeCardDeleteLikeStatus();
+  if (Card.dislikeCard()) {
+    dislikeCard(Card.getID())
+      .then((response) => {
+        Card.setIsLiked(response.isLiked);
+      })
+      .catch((error) => {
+        console.error("Error disliking card:", error);
+      })
+      .finally();
+  }
+};
 
 api.changeCardDeleteLikeStatus();
 if (Card.dislikeCard()) {
