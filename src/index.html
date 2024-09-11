@@ -24,7 +24,7 @@
             img
             src="<%=require('./images/Edit-button.svg')%>"
             alt="change-profile-picture"
-            class="profile__change-image-button"
+            class="profile__change-button"
           />
           <div class="profile__info">
             <h1 class="profile__title">Jacques Cousteau</h1>
@@ -38,11 +38,6 @@
           <button
             class="profile__add-button"
             id="profile-add-button"
-            type="button"
-          ></button>
-          <button
-            class="profile__change-image-button"
-            id="profile-change-button"
             type="button"
           ></button>
         </section>
@@ -158,40 +153,34 @@
       </li>
     </template>
 
-    <!--Modal Delete-->
-    <div class="modal" id="modal-delete">
-      <div class="modal__container modal__container-delete">
+    <!--Delete-Modal-->
+    <div class="modal" id="delete-modal">
+      <div class="modal__container modal__container_delete">
         <button class="modal__close" type="button"></button>
-        <p class="modal__heading">Are you sure?</p>
-        <form class="modal__form" id="modal-delete-form">
-          <button
-            class="modal__button modal__button_disabled"
-            type="submit"
-            disabled
-          >
-            Yes
-          </button>
+        <p class="modal__heading">Are you sure ?</p>
+        <form class="modal__form" id="delete-modal-form">
+          <button class="modal__button" type="submit">Yes</button>
         </form>
       </div>
     </div>
 
-    <!--Modal Profile Picture-->
-    <div class="modal" id="modal-profile-picture">
-      <div class="modal__container modal__container-profile-picture">
+    <!--Profile-Picture-->
+    <div class="modal" id="picture-modal">
+      <div class="modal__container modal__container_picture">
         <button class="modal__close" type="button"></button>
-        <p class="modal__heading">Change profile picture</p>
-        <form class="modal__form" id="modal-change-picture">
+        <p class="modal__heading">Change Profile Picture</p>
+        <form class="modal__form" id="change-picture-form">
           <input
-            class="modal__input modal__input_type_title"
-            name="URL"
-            id="change-profile-picture"
+            class="modal__input modal__input_type_url"
+            name="link"
+            id="add-picture-input"
             placeholder="Picture URL"
             type="URL"
             required
             url
           />
-          <span class="modal__error" id="add-picture-url-error"
-            >Please add a valid URL</span
+          <span class="modal__error" id="add-picture-input-error"
+            >Please add a valid picture URL</span
           >
           <button
             class="modal__button modal__button_disabled"

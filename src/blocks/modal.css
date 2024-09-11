@@ -40,13 +40,13 @@
   padding: 0;
 }
 
-.modal__container-delete {
+.modal__container_delete {
   height: 181px;
-  border-top: 270px;
-  border-left: 425px;
+  margin-top: 270px;
+  margin-left: 425px;
 }
 
-.modal__container-profile-picture {
+.modal__container_picture {
   height: 272px;
   border-top: 224px;
   border-left: 425px;

@@ -2,13 +2,13 @@ class Popup {
   constructor({ popupSelector }) {
     this._popupElement = document.querySelector(popupSelector);
     this._handleEscClose = this._handleEscClose.bind(this);
-    this._closeButton = this._popupElement.querySelector(".modal__close");
-    this._addEventListeners();
+    //this._closeButton = this._popupElement.querySelector(".modal__close");
+    //this._addEventListeners();
   }
 
-  _addEventListeners() {
-    this._closeButton.addEventListener("click", this.close.bind(this));
-  }
+  // _addEventListeners() {
+  //   this._closeButton.addEventListener("click", this.close.bind(this));
+  // }
 
   open() {
     this._popupElement.classList.add("modal_opened");
