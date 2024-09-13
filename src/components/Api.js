@@ -1,21 +1,123 @@
-class Api {}
+//import { code } from "esutils";
 
-//methods for working with the API
+class Api {
+  constructor({ baseUrl, headers }) {
+    this._baseUrl = baseUrl;
+    this._headers = headers;
+  }
 
-//GET https://around-api.en.tripleten-services.com/v1/users/me
+  _handleServerResponse(res) {
+    return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
+  }
 
-//GET https://around-api.en.tripleten-services.com/v1/cards
+  //methods for working with the API
 
-//PATCH https://around-api.en.tripleten-services.com/v1/users/me
+  //Loading user information from the server
+  //GET https://around-api.en.tripleten-services.com/v1/users/me
+  getUserInfo() {
+    return fetch(`${this._baseUrl}/users/me`, {
+      headers: this._headers,
+    })
+      .then(this._handleServerResponse)
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
-//POST https://around-api.en.tripleten-services.com/v1/cards
+  //Loading cards from the server
+  //GET https://around-api.en.tripleten-services.com/v1/cards
+  getCardList() {
+    return fetch(`${this._baseUrl}/cards`, {
+      headers: this._headers,
+    })
+      .then(this._handleServerResponse)
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
-//DELETE https://around-api.en.tripleten-services.com/v1/cards/cardId
+  //Editing the profile
+  //PATCH https://around-api.en.tripleten-services.com/v1/users/me
+  setUserInfo({ name, about }) {
+    console.log({ name, about });
+    return fetch(`${this._baseUrl}/users/me`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify({
+        name,
+        about,
+      }),
+    }).then((res) =>
+      res.ok ? res.json() : Promise.reject(`Error:${res.status}`)
+    );
+  }
 
-//PUT https://around-api.en.tripleten-services.com/v1/cards/cardId/likes
+  //Adding a new card
+  //POST https://around-api.en.tripleten-services.com/v1/cards
+  addCard({ name, link }) {
+    return fetch(`${this._baseUrl}/cards`, {
+      method: "POST",
+      headers: this._headers,
+      body: JSON.stringify({
+        name,
+        link,
+      }),
+    })
+      .then((res) => {
+        res.ok
+          ? res.json()
+          : Promise.reject(`Error: ${this._handleServerResponse}`);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
-//DELETE https://around-api.en.tripleten-services.com/v1/cards/cardId/likes
+  //Deleting a card
+  //DELETE https://around-api.en.tripleten-services.com/v1/cards/cardId
+  removeCard(cardID) {
+    return fetch(`${this._baseUrl}/cards/${cardID}`, {
+      method: "DELETE",
+      headers: this._headers,
+    })
+      .then((res) => {
+        res.ok
+          ? res.json()
+          : Promise.reject(`Error: ${this._handleServerResponse}`);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
-//PATCH https://around-api.en.tripleten-services.com/v1/users/me/avatar
+  //Adding likes
+  //PUT https://around-api.en.tripleten-services.com/v1/cards/cardId/likes
+  changeCardLikeStatus(cardID, like) {
+    return fetch(`${this._baseUrl}/cards/like/${cardID}`, {
+      method: "PUT",
+      headers: this._headers,
+    }).then(this._handleServerResponse);
+  }
+
+  //Deleting likes
+  //DELETE https://around-api.en.tripleten-services.com/v1/cards/cardId/likes
+  changeCardDeleteLikeStatus(cardID, like) {
+    return fetch(`${this._baseUrl}/cards/like/${cardID}`, {
+      method: "DELETE",
+      headers: this._headers,
+    }).then(this._handleServerResponse);
+  }
+
+  //Updating Profile Picture
+  //PATCH https://around-api.en.tripleten-services.com/v1/users/me/avatar
+  setUserAvatar({ link }) {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
+      method: "PATCH",
+      headers: this._headers,
+    }).then(this._handleServerResponse);
+  }
+
+  //Improving UX of all forms
+}
 
 export default Api;

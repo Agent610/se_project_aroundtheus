@@ -62,6 +62,11 @@ const pictureFormElement = pictureModal.querySelector(".modal__form");
 
 //Button Information
 const profileEditButton = document.querySelector(".profile__edit-button");
+
+//profile image
+
+const profileImage = document.querySelector(".profile__image");
+
 const profileModalCloseButton = editProfileModal.querySelector(".modal__close");
 const addCardModalCloseButton = addCardModal.querySelector(".modal__close");
 const previewImageModalCloseButton =
@@ -76,7 +81,7 @@ const deleteCardButton = document.querySelector(".card__delete-button");
 const deleteCardModalCloseButton =
   deleteCardModal.querySelector(".modal__close");
 const deleteCardForm = document.querySelector("#delete-modal-form");
-const changeProfileButton = document.querySelector("#profile__change-button");
+const changeProfileButton = document.querySelector(".profile__change-button");
 const changeProfileCloseButton = pictureModal.querySelector(".modal__close");
 const changeProfileForm = document.querySelector("#change-picture-form");
 
@@ -147,7 +152,10 @@ function handleDeleteCardFormSubmit() {
   deleteCardPopup.close();
 }
 
-function handlePictureFormSubmit() {
+function handlePictureFormSubmit({ link }) {
+  console.log(link);
+  profileImage.src = link;
+  // set your profile image css url to the incoming link
   pictureFormPopup.close();
   changeProfileForm.reset();
 }
@@ -223,23 +231,23 @@ addPopupWithForm.close(addCardModal);
 // const deletePopupWithForm = new PopupWithConfirm("#delete-modal");
 // deletePopupWithForm.close(deleteCardModal);
 
-// changeProfileButton.addEventListener("click", () => {
-//   pictureFormPopup.open(pictureModal);
-// });
+changeProfileButton.addEventListener("click", () => {
+  pictureFormPopup.open(pictureModal);
+});
 
 const changePopupWithForm = new PopupWithForm("#picture-modal");
 changePopupWithForm.close(pictureModal);
 
-// function handleConfirmDelete() {
-//   deleteCardPopup.open();
-// }
+function handleConfirmDelete() {
+  deleteCardPopup.open();
+}
 
 function createCard(cardData) {
   const card = new Card(
     cardData,
     selectors.cardTemplate,
-    handleImagePreview
-    //handleConfirmDelete
+    handleImagePreview,
+    handleConfirmDelete
   );
 
   return card.getView();
@@ -283,6 +291,8 @@ const pictureFormPopup = new PopupWithForm(
   handlePictureFormSubmit
 );
 
+pictureFormPopup.setEventListeners();
+
 //PopupWithConfirm
 const deleteCardPopup = new PopupWithConfirm(
   "#delete-modal",
@@ -302,3 +312,108 @@ const api = new Api({
     "Content-Type": "application/json",
   },
 });
+
+api
+  .getUserInfo()
+  .then((userData) => {
+    console.log("Here is our userData =>", userData);
+    console.log();
+    api.setUserInfo({
+      name: userData.name,
+      about: userData.about,
+    });
+  })
+  .catch((error) => {
+    console.error("Error getting user info:", error);
+  })
+  .finally();
+
+api
+  .getCardList()
+  .then((res) => {
+    console.log("Here is your card list res =>", res);
+    if (Array.isArray(res)) {
+      const sectionRenderer = new Section(
+        {
+          items: res,
+          renderer: (cardData) => {
+            renderCard(cardData);
+          },
+        },
+        selectors.cardsList
+      );
+      sectionRenderer.renderItems();
+    } else {
+      console.error("Error received data is not an array:", res);
+    }
+  })
+  .catch((error) => {
+    console.error("Error fetching card list:", error);
+  });
+
+//need to place api's in respected functions :
+// -> because fires when I say
+function handleAddCard() {
+  api
+    .addCard(addProfilePopup)
+    .then((res) => {
+      handleAddCardFormSubmit(res);
+    })
+    .catch((error) => {
+      console.error("Error adding card:", error);
+    })
+    .finally();
+}
+
+function handleCardDelete() {
+  api
+    .removeCard()
+    .then((res) => {
+      Card._handleDeleteButton(res);
+    })
+    .catch((error) => {
+      console.error("Error removing card:", error);
+    })
+    .finally();
+}
+
+function cardLikeStatus() {
+  api
+    .changeCardLikeStatus(card.getID()) //pass either true or false as the 2nd argument depending on whether or not you want to like or unlike the card
+    .then((response) => {
+      if (Card.setIsLiked()) {
+        likeCard(Card.getID());
+        Card.setIsLiked(response.isLiked);
+      }
+    })
+    .catch((error) => {
+      console.error("Error liking card:", error);
+    })
+    .finally();
+}
+
+function cardDeleteStatus() {
+  api.changeCardDeleteLikeStatus();
+  if (Card.dislikeCard()) {
+    dislikeCard(Card.getID())
+      .then((response) => {
+        Card.setIsLiked(response.isLiked);
+      })
+      .catch((error) => {
+        console.error("Error disliking card:", error);
+      })
+      .finally();
+  }
+}
+
+function userAvatar() {
+  api
+    .setUserAvatar(link)
+    .then((info) => {
+      changeAvatarPopup.close(info);
+    })
+    .catch((error) => {
+      console.error("Error changing picture", error);
+    })
+    .finally();
+}
