@@ -143,13 +143,31 @@ function handleProfileFormSubmit(inputValues) {
 }
 
 function handleAddCardFormSubmit({ name, link }) {
-  renderCard({ name, link }, cardsWrap);
-  addProfilePopup.close();
-  addCardForm.reset();
+  api
+    .addCard({ name, link })
+    .then((res) => {
+      console.log(res);
+      renderCard({ name, link }, cardsWrap);
+      addProfilePopup.close();
+      addCardForm.reset();
+    })
+    .catch((error) => {
+      console.error("Error adding card:", error);
+    })
+    .finally();
 }
 
-function handleDeleteCardFormSubmit() {
+function handleDeleteCardFormSubmit(res) {
   deleteCardPopup.close();
+  api
+    .removeCard()
+    .then((res) => {
+      Card._handleDeleteButton(res);
+    })
+    .catch((error) => {
+      console.error("Error removing card:", error);
+    })
+    .finally();
 }
 
 function handlePictureFormSubmit({ link }) {
@@ -158,6 +176,15 @@ function handlePictureFormSubmit({ link }) {
   // set your profile image css url to the incoming link
   pictureFormPopup.close();
   changeProfileForm.reset();
+  api
+    .setUserAvatar(link)
+    .then((info) => {
+      changeAvatarPopup.close(info);
+    })
+    .catch((error) => {
+      console.error("Error changing picture", error);
+    })
+    .finally();
 }
 
 const cardSelect = "#card-template";
@@ -351,59 +378,29 @@ api
     console.error("Error fetching card list:", error);
   });
 
-//need to place api's in respected functions :
-// -> because fires when I say
-function handleAddCard() {
-  api
-    .addCard(addProfilePopup)
-    .then((res) => {
-      handleAddCardFormSubmit(res);
-    })
-    .catch((error) => {
-      console.error("Error adding card:", error);
-    })
-    .finally();
-}
+api
+  .changeCardLikeStatus(Card.getID()) //pass either true or false as the 2nd argument depending on whether or not you want to like or unlike the card
+  .then((response) => {
+    if (Card.setIsLiked()) {
+      likeCard(Card.getID());
+      Card.setIsLiked(response.isLiked);
+    }
+  })
+  .catch((error) => {
+    console.error("Error liking card:", error);
+  })
+  .finally();
 
-function handleCardDelete() {
-  api
-    .removeCard()
-    .then((res) => {
-      Card._handleDeleteButton(res);
-    })
-    .catch((error) => {
-      console.error("Error removing card:", error);
-    })
-    .finally();
-}
-
-function cardLikeStatus() {
-  api
-    .changeCardLikeStatus(card.getID()) //pass either true or false as the 2nd argument depending on whether or not you want to like or unlike the card
+api.changeCardDeleteLikeStatus();
+if (Card.dislikeCard()) {
+  dislikeCard(Card.getID())
     .then((response) => {
-      if (Card.setIsLiked()) {
-        likeCard(Card.getID());
-        Card.setIsLiked(response.isLiked);
-      }
+      Card.setIsLiked(response.isLiked);
     })
     .catch((error) => {
-      console.error("Error liking card:", error);
+      console.error("Error disliking card:", error);
     })
     .finally();
-}
-
-function cardDeleteStatus() {
-  api.changeCardDeleteLikeStatus();
-  if (Card.dislikeCard()) {
-    dislikeCard(Card.getID())
-      .then((response) => {
-        Card.setIsLiked(response.isLiked);
-      })
-      .catch((error) => {
-        console.error("Error disliking card:", error);
-      })
-      .finally();
-  }
 }
 
 function userAvatar() {

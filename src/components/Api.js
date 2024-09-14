@@ -63,11 +63,7 @@ class Api {
         link,
       }),
     })
-      .then((res) => {
-        res.ok
-          ? res.json()
-          : Promise.reject(`Error: ${this._handleServerResponse}`);
-      })
+      .then(this._handleServerResponse)
       .catch((err) => {
         console.log(err);
       });
