@@ -378,39 +378,32 @@ api
     console.error("Error fetching card list:", error);
   });
 
-api
-  .changeCardLikeStatus(Card.getID()) //pass either true or false as the 2nd argument depending on whether or not you want to like or unlike the card
-  .then((response) => {
-    if (Card.setIsLiked()) {
-      likeCard(Card.getID());
-      Card.setIsLiked(response.isLiked);
-    }
-  })
-  .catch((error) => {
-    console.error("Error liking card:", error);
-  })
-  .finally();
-
-api.changeCardDeleteLikeStatus();
-if (Card.dislikeCard()) {
-  dislikeCard(Card.getID())
+// replace Card class usage with the card instance usage
+function cardIsLiked(card) {
+  api
+    .changeCardLikeStatus(card.getID(cardData)) //pass either true or false as the 2nd argument depending on whether or not you want to like or unlike the card
     .then((response) => {
-      Card.setIsLiked(response.isLiked);
+      if (card.setIsLiked()) {
+        likeCard(card.getID());
+        card.setIsLiked(response.isLiked);
+      }
     })
     .catch((error) => {
-      console.error("Error disliking card:", error);
+      console.error("Error liking card:", error);
     })
     .finally();
 }
 
-function userAvatar() {
-  api
-    .setUserAvatar(link)
-    .then((info) => {
-      changeAvatarPopup.close(info);
-    })
-    .catch((error) => {
-      console.error("Error changing picture", error);
-    })
-    .finally();
+function cardDisLike(card) {
+  api.changeCardDeleteLikeStatus();
+  if (card.dislikeCard()) {
+    dislikeCard(card.getID())
+      .then((response) => {
+        card.setIsLiked(response.isLiked);
+      })
+      .catch((error) => {
+        console.error("Error disliking card:", error);
+      })
+      .finally();
+  }
 }

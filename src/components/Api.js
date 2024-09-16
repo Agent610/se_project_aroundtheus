@@ -107,7 +107,7 @@ class Api {
   //Updating Profile Picture
   //PATCH https://around-api.en.tripleten-services.com/v1/users/me/avatar
   setUserAvatar({ link }) {
-    return fetch(`${this._baseUrl}/users/me/avatar`, {
+    return fetch(`${(this._baseUrl, link)}/users/me/avatar`, {
       method: "PATCH",
       headers: this._headers,
     }).then(this._handleServerResponse);
