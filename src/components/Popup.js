@@ -4,6 +4,7 @@ class Popup {
     this._handleEscClose = this._handleEscClose.bind(this);
     this._closeButton = this._popupElement.querySelector(".modal__close");
     this._addEventListeners();
+    console.log(popupSelector);
   }
 
   _addEventListeners() {
@@ -29,6 +30,7 @@ class Popup {
 
   setEventListeners() {
     this._popupElement.addEventListener("click", (evt) => {
+      console.log(123);
       if (
         evt.target.classList.contains("modal") ||
         evt.target.classList.contains(".modal__close")

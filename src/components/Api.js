@@ -55,7 +55,7 @@ class Api {
   //Adding a new card
   //POST https://around-api.en.tripleten-services.com/v1/cards
   addCard({ name, link }) {
-    return fetch(`${this._baseUrl}/cards`, {
+    return fetch(`${link}/cards`, {
       method: "POST",
       headers: this._headers,
       body: JSON.stringify({
@@ -89,7 +89,7 @@ class Api {
   //Adding likes
   //PUT https://around-api.en.tripleten-services.com/v1/cards/cardId/likes
   changeCardLikeStatus(cardID, like) {
-    return fetch(`${this._baseUrl}/cards/like/${cardID}`, {
+    return fetch(`${this._baseUrl}/cards/like/${cardID}/${like}`, {
       method: "PUT",
       headers: this._headers,
     }).then(this._handleServerResponse);
@@ -106,10 +106,14 @@ class Api {
 
   //Updating Profile Picture
   //PATCH https://around-api.en.tripleten-services.com/v1/users/me/avatar
-  setUserAvatar({ link }) {
-    return fetch(`${(this._baseUrl, link)}/users/me/avatar`, {
+  setUserAvatar(link) {
+    console.log(link);
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: "PATCH",
       headers: this._headers,
+      body: JSON.stringify({
+        avatar: link,
+      }),
     }).then(this._handleServerResponse);
   }
 

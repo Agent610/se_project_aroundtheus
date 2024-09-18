@@ -171,7 +171,7 @@ function handleDeleteCardFormSubmit(res) {
 }
 
 function handlePictureFormSubmit({ link }) {
-  console.log(link);
+  console.log("handlePictureFormSubmit", link);
   profileImage.src = link;
   // set your profile image css url to the incoming link
   pictureFormPopup.close();
@@ -179,7 +179,7 @@ function handlePictureFormSubmit({ link }) {
   api
     .setUserAvatar(link)
     .then((info) => {
-      changeAvatarPopup.close(info);
+      pictureFormPopup.close(info);
     })
     .catch((error) => {
       console.error("Error changing picture", error);
@@ -238,18 +238,30 @@ profileEditButton.addEventListener("click", () => {
   editProfilePopup.open(editProfileModal);
 });
 
-const editPopupWithForm = new PopupWithForm("#edit-modal");
-//editPopupWithForm.setEventListeners();
-editPopupWithForm.close(editProfileModal);
+// const editPopupWithForm = new PopupWithForm("#edit-modal");
+// editPopupWithForm.setEventListeners();4
+
+// Edit profile popup
+const editProfilePopup = new PopupWithForm(
+  "#edit-modal",
+  handleProfileFormSubmit
+);
+editProfilePopup.setEventListeners();
+
+const addCardPopup = new PopupWithForm(
+  "#add-card-modal",
+  handleAddCardFormSubmit
+);
+addCardPopup.setEventListeners();
 
 addCardButton.addEventListener("click", () => {
   //  addCardValidator.hideInputError(cardTitleInput);
   //  addCardValidator.hideInputError(cardURLInput);
-  addProfilePopup.open(addCardModal);
+  addCardPopup.open();
 });
 
-const addPopupWithForm = new PopupWithForm("#add-card-modal");
-addPopupWithForm.close(addCardModal);
+// const addPopupWithForm = new PopupWithForm("#add-card-modal");
+// addPopupWithForm.setEventListeners();
 
 // deleteCardButton.addEventListener("click", () => {
 //   deleteCardPopup.open(deleteCardModal);
@@ -263,7 +275,7 @@ changeProfileButton.addEventListener("click", () => {
 });
 
 const changePopupWithForm = new PopupWithForm("#picture-modal");
-changePopupWithForm.close(pictureModal);
+changePopupWithForm.setEventListeners();
 
 function handleConfirmDelete() {
   deleteCardPopup.open();
@@ -274,7 +286,9 @@ function createCard(cardData) {
     cardData,
     selectors.cardTemplate,
     handleImagePreview,
-    handleConfirmDelete
+    handleConfirmDelete,
+    cardIsLiked,
+    cardDisLike
   );
 
   return card.getView();
@@ -300,19 +314,6 @@ section.renderItems();
 const popupImage = new PopupWithImage({ popupSelector: "#preview-modal" });
 popupImage.setEventListeners();
 
-// PopupWithForm
-const editProfilePopup = new PopupWithForm(
-  "#edit-modal",
-  handleProfileFormSubmit
-);
-editProfilePopup.setEventListeners();
-
-const addProfilePopup = new PopupWithForm(
-  "#add-card-modal ",
-  handleAddCardFormSubmit
-);
-addProfilePopup.setEventListeners();
-
 const pictureFormPopup = new PopupWithForm(
   "#picture-modal",
   handlePictureFormSubmit
@@ -325,6 +326,7 @@ const deleteCardPopup = new PopupWithConfirm(
   "#delete-modal",
   handleDeleteCardFormSubmit
 );
+deleteCardPopup.setEventListeners();
 
 // UserInfo
 const nameSelector = ".profile__title";
@@ -348,6 +350,7 @@ api
     api.setUserInfo({
       name: userData.name,
       about: userData.about,
+      //avatar: setUserAvatar.avatar,
     });
   })
   .catch((error) => {
@@ -378,7 +381,6 @@ api
     console.error("Error fetching card list:", error);
   });
 
-// replace Card class usage with the card instance usage
 function cardIsLiked(card) {
   api
     .changeCardLikeStatus(card.getID(cardData)) //pass either true or false as the 2nd argument depending on whether or not you want to like or unlike the card
