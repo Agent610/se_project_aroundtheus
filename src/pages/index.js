@@ -10,33 +10,34 @@ import Styles from "./index.css";
 //import {initialCards, selectors}
 import Api from "../components/Api.js";
 import Utils from "../utils/utils.js";
+import { forEach } from "lodash";
 
-const initialCards = [
-  {
-    name: "Yosemite-Valley",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
-  },
-  {
-    name: "Lake-Louise",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lake-louise.jpg",
-  },
-  {
-    name: "Bald-Mountains",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/bald-mountains.jpg",
-  },
-  {
-    name: "Latemar",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/latemar.jpg",
-  },
-  {
-    name: "Vanoise-National-Park",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/vanoise.jpg",
-  },
-  {
-    name: "Lago-di-Braies",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lago.jpg ",
-  },
-];
+// const initialCards = [
+//   {
+//     name: "Yosemite-Valley",
+//     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
+//   },
+//   {
+//     name: "Lake-Louise",
+//     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lake-louise.jpg",
+//   },
+//   {
+//     name: "Bald-Mountains",
+//     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/bald-mountains.jpg",
+//   },
+//   {
+//     name: "Latemar",
+//     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/latemar.jpg",
+//   },
+//   {
+//     name: "Vanoise-National-Park",
+//     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/vanoise.jpg",
+//   },
+//   {
+//     name: "Lago-di-Braies",
+//     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lago.jpg ",
+//   },
+// ];
 
 const cardTemplate = document
   .querySelector("#card-template")
@@ -148,7 +149,7 @@ function handleAddCardFormSubmit({ name, link }) {
     .then((res) => {
       console.log(res);
       renderCard({ name, link }, cardsWrap);
-      addProfilePopup.close();
+      addCardPopup.close();
       addCardForm.reset();
     })
     .catch((error) => {
@@ -158,16 +159,16 @@ function handleAddCardFormSubmit({ name, link }) {
 }
 
 function handleDeleteCardFormSubmit(res) {
-  deleteCardPopup.close();
-  api
-    .removeCard()
-    .then((res) => {
-      Card._handleDeleteButton(res);
-    })
-    .catch((error) => {
-      console.error("Error removing card:", error);
-    })
-    .finally();
+  // deleteCardPopup.close();
+  // api
+  //   .removeCard()
+  //   .then((res) => {
+  //     card._handleDeleteButton(res);
+  //   })
+  //   .catch((error) => {
+  //     console.error("Error removing card:", error);
+  //   })
+  //   .finally();
 }
 
 function handlePictureFormSubmit({ link }) {
@@ -248,6 +249,7 @@ const editProfilePopup = new PopupWithForm(
 );
 editProfilePopup.setEventListeners();
 
+// Add Profile Popup
 const addCardPopup = new PopupWithForm(
   "#add-card-modal",
   handleAddCardFormSubmit
@@ -270,15 +272,28 @@ addCardButton.addEventListener("click", () => {
 // const deletePopupWithForm = new PopupWithConfirm("#delete-modal");
 // deletePopupWithForm.close(deleteCardModal);
 
+// Change Profile Picture
 changeProfileButton.addEventListener("click", () => {
   pictureFormPopup.open(pictureModal);
 });
 
-const changePopupWithForm = new PopupWithForm("#picture-modal");
-changePopupWithForm.setEventListeners();
+// const changePopupWithForm = new PopupWithForm("#picture-modal");
+// changePopupWithForm.setEventListeners();
 
-function handleConfirmDelete() {
+function handleConfirmDelete(card) {
   deleteCardPopup.open();
+
+  deleteCardPopup.setSubmitFunction(() => {
+    api
+      .removeCard(card._id)
+      .then((res) => {
+        card._handleDeleteButton();
+      })
+      .catch((error) => {
+        console.error("Error removing card:", error);
+      })
+      .finally(() => deleteCardPopup.close());
+  });
 }
 
 function createCard(cardData) {
@@ -299,7 +314,7 @@ function createCard(cardData) {
 //Section
 const section = new Section(
   {
-    items: initialCards,
+    items: [],
     renderer: (cardData) => {
       renderCard(cardData);
     },
@@ -363,16 +378,18 @@ api
   .then((res) => {
     console.log("Here is your card list res =>", res);
     if (Array.isArray(res)) {
-      const sectionRenderer = new Section(
-        {
-          items: res,
-          renderer: (cardData) => {
-            renderCard(cardData);
-          },
-        },
-        selectors.cardsList
-      );
-      sectionRenderer.renderItems();
+      // const sectionRenderer = new Section(
+      //   {
+      //     items: res,
+      //     renderer: (cardData) => {
+      //       renderCard(cardData);
+      //     },
+      //   },
+      //   selectors.cardsList
+      // );
+      res.forEach((cardData) => {
+        renderCard(cardData);
+      });
     } else {
       console.error("Error received data is not an array:", res);
     }
@@ -382,13 +399,13 @@ api
   });
 
 function cardIsLiked(card) {
+  console.log(card);
   api
-    .changeCardLikeStatus(card.getID(cardData)) //pass either true or false as the 2nd argument depending on whether or not you want to like or unlike the card
+    .changeCardLikeStatus(card._id) //pass either true or false as the 2nd argument depending on whether or not you want to like or unlike the card
     .then((response) => {
-      if (card.setIsLiked()) {
-        likeCard(card.getID());
-        card.setIsLiked(response.isLiked);
-      }
+      console.log(response);
+      card._isLiked = response.isLiked;
+      // card._updateLikesView();
     })
     .catch((error) => {
       console.error("Error liking card:", error);
@@ -397,15 +414,19 @@ function cardIsLiked(card) {
 }
 
 function cardDisLike(card) {
-  api.changeCardDeleteLikeStatus();
-  if (card.dislikeCard()) {
-    dislikeCard(card.getID())
-      .then((response) => {
-        card.setIsLiked(response.isLiked);
-      })
-      .catch((error) => {
-        console.error("Error disliking card:", error);
-      })
-      .finally();
-  }
+  // api.changeCardDeleteLikeStatus();
+  // if (card.dislikeCard()) {
+  // console.log(test);
+  api
+    .changeCardDeleteLikeStatus(card._id)
+    .then((response) => {
+      console.log(response);
+      card._isLiked = response.isLiked;
+      // card._updateLikesView();
+    })
+    .catch((error) => {
+      console.error("Error disliking card:", error);
+    })
+    .finally();
+  // }
 }

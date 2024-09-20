@@ -7,6 +7,7 @@ class Card {
     handleCardLike,
     handleCardDisLike
   ) {
+    console.log({ _id, name, link, isLiked });
     this._id = _id;
     this._name = name;
     this._link = link;
@@ -20,13 +21,18 @@ class Card {
 
   _setEventListeners() {
     //".card__like-button"
+    console.log(this._id);
     this._element
       .querySelector(".card__like-button")
-      .addEventListener("click", () => {
+      .addEventListener("click", (e) => {
+        e.preventDefault();
+        console.log("is this firing");
         if (this._isLiked) {
           this._handleCardDisLike(this);
+          this._likeButton.classList.remove("card__like-button_active");
         } else {
           this._handleCardLike(this);
+          this._likeButton.classList.add("card__like-button_active");
         }
       });
 
@@ -57,13 +63,27 @@ class Card {
     this._element.remove();
   }
 
-  _updateLikesView() {
-    if (this._isLiked) {
-      this._likeButton.classList.add("card__like-button_active");
-    } else {
-      this._likeButton.classList.remove("card__like-button_active");
-    }
-  }
+  // handleCardLike() {
+  //   this._id;
+  //   const cardId = this._id;
+  //   this._handleCardLike;
+  // }
+
+  // handleCardDisLike() {
+  //   this._id;
+  //   const cardId = this._id;
+  //   this._handleCardDisLike;
+  // }
+
+  // _updateLikesView(e) {
+  //   e.preventDefault();
+  //   console.log(this._isLiked);
+  //   if (this._isLiked) {
+  //     this._likeButton.classList.add("card__like-button_active");
+  //   } else {
+  //     this._likeButton.classList.remove("card__like-button_active");
+  //   }
+  // }
 
   _getTemplate() {
     return document
@@ -76,7 +96,7 @@ class Card {
     this._element = this._getTemplate();
     this._cardImage = this._element.querySelector(".card__image");
     const cardTitle = this._element.querySelector(".card__title");
-    const likeButton = this._element.querySelector(".card__like-button");
+    this._likeButton = this._element.querySelector(".card__like-button");
     this._deleteButton = this._element.querySelector(".card__delete-button");
     this._cardImage.src = this._link;
     this._cardImage.alt = this._name;

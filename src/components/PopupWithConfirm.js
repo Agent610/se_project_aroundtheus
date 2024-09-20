@@ -13,6 +13,10 @@ class PopupWithConfirm extends Popup {
     });
   }
 
+  setSubmitFunction(submitFunction) {
+    this._handleConfirmDelete = submitFunction;
+  }
+
   open() {
     super.open();
   }

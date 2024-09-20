@@ -55,7 +55,7 @@ class Api {
   //Adding a new card
   //POST https://around-api.en.tripleten-services.com/v1/cards
   addCard({ name, link }) {
-    return fetch(`${link}/cards`, {
+    return fetch(`${this._baseUrl}/cards`, {
       method: "POST",
       headers: this._headers,
       body: JSON.stringify({
@@ -88,17 +88,30 @@ class Api {
 
   //Adding likes
   //PUT https://around-api.en.tripleten-services.com/v1/cards/cardId/likes
-  changeCardLikeStatus(cardID, like) {
-    return fetch(`${this._baseUrl}/cards/like/${cardID}/${like}`, {
+  changeCardLikeStatus(cardId) {
+    if (!cardId) {
+      console.error("Invalid card Id");
+      return;
+      Promise.reject("Invalid card Id");
+    }
+    //console.log(cardId);
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "PUT",
       headers: this._headers,
-    }).then(this._handleServerResponse);
+    })
+      .then((res) =>
+        res.ok ? res.json() : Promise.reject(`Error: ${res.status}`)
+      )
+      .catch((err) => {
+        console.error("API Error:", err);
+      });
   }
 
   //Deleting likes
   //DELETE https://around-api.en.tripleten-services.com/v1/cards/cardId/likes
-  changeCardDeleteLikeStatus(cardID, like) {
-    return fetch(`${this._baseUrl}/cards/like/${cardID}`, {
+  changeCardDeleteLikeStatus(cardId) {
+    console.log(cardId);
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "DELETE",
       headers: this._headers,
     }).then(this._handleServerResponse);
