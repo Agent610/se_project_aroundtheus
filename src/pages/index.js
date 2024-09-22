@@ -100,32 +100,32 @@ const pictureURLInput = pictureFormElement.querySelector(
   ".modal__input_type_url"
 );
 
-function closeWithEsc(event) {
-  if (event.key === "Escape") {
-    const modal = document.querySelector(".modal_opened");
-    closeModal(modal);
-  }
-}
+// function closeWithEsc(event) {
+//   if (event.key === "Escape") {
+//     const modal = document.querySelector(".modal_opened");
+//     closeModal(modal);
+//   }
+// }
 
-function closeModalOnRemoteClick(event) {
-  if (event.target === event.currentTarget) {
-    closeModal(event.currentTarget);
-  }
-}
+// function closeModalOnRemoteClick(event) {
+//   if (event.target === event.currentTarget) {
+//     closeModal(event.currentTarget);
+//   }
+// }
 
-function openModal(modal) {
-  // add class to modal
-  document.addEventListener("keydown", closeWithEsc);
-  modal.addEventListener("mousedown", closeModalOnRemoteClick);
-  modal.classList.add("modal_opened");
-}
+// function openModal(modal) {
+//   // add class to modal
+//   document.addEventListener("keydown", closeWithEsc);
+//   modal.addEventListener("mousedown", closeModalOnRemoteClick);
+//   modal.classList.add("modal_opened");
+// }
 
-function closeModal(modal) {
-  //remove class from modal
-  document.removeEventListener("keydown", closeWithEsc);
-  modal.removeEventListener("mousedown", closeModalOnRemoteClick);
-  modal.classList.remove("modal_opened");
-}
+// function closeModal(modal) {
+//   //remove class from modal
+//   document.removeEventListener("keydown", closeWithEsc);
+//   modal.removeEventListener("mousedown", closeModalOnRemoteClick);
+//   modal.classList.remove("modal_opened");
+// }
 
 function renderCard(cardData) {
   const card = createCard(cardData);
@@ -147,8 +147,7 @@ function handleAddCardFormSubmit({ name, link }) {
   api
     .addCard({ name, link })
     .then((res) => {
-      console.log(res);
-      renderCard({ name, link }, cardsWrap);
+      renderCard(res, cardsWrap);
       addCardPopup.close();
       addCardForm.reset();
     })
@@ -172,7 +171,7 @@ function handleDeleteCardFormSubmit(res) {
 }
 
 function handlePictureFormSubmit({ link }) {
-  console.log("handlePictureFormSubmit", link);
+  // console.log("handlePictureFormSubmit", link);
   profileImage.src = link;
   // set your profile image css url to the incoming link
   pictureFormPopup.close();
@@ -284,6 +283,8 @@ function handleConfirmDelete(card) {
   deleteCardPopup.open();
 
   deleteCardPopup.setSubmitFunction(() => {
+    console.log(999);
+    console.log(card._id);
     api
       .removeCard(card._id)
       .then((res) => {
@@ -398,13 +399,12 @@ api
     console.error("Error fetching card list:", error);
   });
 
-function cardIsLiked(card) {
-  console.log(card);
+function cardIsLiked(cardID) {
   api
-    .changeCardLikeStatus(card._id) //pass either true or false as the 2nd argument depending on whether or not you want to like or unlike the card
+    .changeCardLikeStatus(cardID)
     .then((response) => {
       console.log(response);
-      card._isLiked = response.isLiked;
+      card.setIsLiked(response.isLiked);
       // card._updateLikesView();
     })
     .catch((error) => {
@@ -421,7 +421,7 @@ function cardDisLike(card) {
     .changeCardDeleteLikeStatus(card._id)
     .then((response) => {
       console.log(response);
-      card._isLiked = response.isLiked;
+      card.setIsLiked(response.isLiked);
       // card._updateLikesView();
     })
     .catch((error) => {

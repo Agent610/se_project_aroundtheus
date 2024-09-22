@@ -7,7 +7,6 @@ class Card {
     handleCardLike,
     handleCardDisLike
   ) {
-    console.log({ _id, name, link, isLiked });
     this._id = _id;
     this._name = name;
     this._link = link;
@@ -21,17 +20,17 @@ class Card {
 
   _setEventListeners() {
     //".card__like-button"
-    console.log(this._id);
+    // console.log(this._id);
     this._element
       .querySelector(".card__like-button")
       .addEventListener("click", (e) => {
         e.preventDefault();
-        console.log("is this firing");
+        // console.log("is this firing");
         if (this._isLiked) {
-          this._handleCardDisLike(this);
+          this._handleCardDisLike(this._id);
           this._likeButton.classList.remove("card__like-button_active");
         } else {
-          this._handleCardLike(this);
+          this._handleCardLike(this._id);
           this._likeButton.classList.add("card__like-button_active");
         }
       });
@@ -63,6 +62,22 @@ class Card {
     this._element.remove();
   }
 
+  setIsLiked(isLiked) {
+    this._isLiked = isLiked;
+    this._renderLikes();
+  }
+
+  _renderLikes() {
+    if (this._isLiked) {
+      this._element
+        .querySelector(".card__like-button")
+        .classList.add("card__like-button_active");
+    } else {
+      this._element
+        .querySelector(".card__like-button")
+        .classList.remove("card__like-button_active");
+    }
+  }
   // handleCardLike() {
   //   this._id;
   //   const cardId = this._id;
@@ -102,6 +117,7 @@ class Card {
     this._cardImage.alt = this._name;
     this._isLiked = this._isLiked;
     cardTitle.textContent = this._name;
+    this._renderLikes();
     this._setEventListeners();
     return this._element;
   }

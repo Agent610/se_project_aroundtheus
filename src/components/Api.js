@@ -39,7 +39,7 @@ class Api {
   //Editing the profile
   //PATCH https://around-api.en.tripleten-services.com/v1/users/me
   setUserInfo({ name, about }) {
-    console.log({ name, about });
+    // console.log({ name, about });
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
       headers: this._headers,
@@ -71,8 +71,8 @@ class Api {
 
   //Deleting a card
   //DELETE https://around-api.en.tripleten-services.com/v1/cards/cardId
-  removeCard(cardID) {
-    return fetch(`${this._baseUrl}/cards/${cardID}`, {
+  removeCard(cardId) {
+    return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: "DELETE",
       headers: this._headers,
     })
@@ -90,7 +90,7 @@ class Api {
   //PUT https://around-api.en.tripleten-services.com/v1/cards/cardId/likes
   changeCardLikeStatus(cardId) {
     if (!cardId) {
-      console.error("Invalid card Id");
+      //console.error("Invalid card Id");
       return;
       Promise.reject("Invalid card Id");
     }
@@ -110,7 +110,7 @@ class Api {
   //Deleting likes
   //DELETE https://around-api.en.tripleten-services.com/v1/cards/cardId/likes
   changeCardDeleteLikeStatus(cardId) {
-    console.log(cardId);
+    // console.log(cardId);
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "DELETE",
       headers: this._headers,
@@ -120,7 +120,7 @@ class Api {
   //Updating Profile Picture
   //PATCH https://around-api.en.tripleten-services.com/v1/users/me/avatar
   setUserAvatar(link) {
-    console.log(link);
+    // console.log(link);
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: "PATCH",
       headers: this._headers,

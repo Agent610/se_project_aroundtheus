@@ -44,13 +44,13 @@
 }
 
 .profile__change-button {
-  background: url(../images/Edit-Button.svg) center no repeat;
+  background: url(../images/Edit-Button.svg) center no-repeat;
   height: 26px;
   width: 26px;
   border: currentColor;
   position: absolute;
-  border-top: -10px;
-  border-left: -10px;
+  border-top: 206px;
+  border-left: 247px;
 }
 
 .profile__change-button:hover {
