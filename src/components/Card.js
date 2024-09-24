@@ -27,10 +27,10 @@ class Card {
         e.preventDefault();
         // console.log("is this firing");
         if (this._isLiked) {
-          this._handleCardDisLike(this._id);
+          this._handleCardDisLike(this);
           this._likeButton.classList.remove("card__like-button_active");
         } else {
-          this._handleCardLike(this._id);
+          this._handleCardLike(this);
           this._likeButton.classList.add("card__like-button_active");
         }
       });

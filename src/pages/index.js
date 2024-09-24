@@ -283,8 +283,8 @@ function handleConfirmDelete(card) {
   deleteCardPopup.open();
 
   deleteCardPopup.setSubmitFunction(() => {
-    console.log(999);
-    console.log(card._id);
+    //console.log(999);
+    //console.log(card._id);
     api
       .removeCard(card._id)
       .then((res) => {
@@ -353,21 +353,31 @@ const userInfo = new UserInfo({ nameSelector, aboutMeSelector });
 const api = new Api({
   baseUrl: "https://around-api.en.tripleten-services.com/v1",
   headers: {
-    authorization: "e8b97a08-d6fd-41c9-b787-2c46b2b6891e", //(New)
+    authorization: "e8b97a08-d6fd-41c9-b787-2c46b2b6891e",
     "Content-Type": "application/json",
   },
 });
 
+// api
+//   .getUserInfo()
+//   .then((userData) => {
+//     console.log("Here is our userData =>", userData);
+//     console.log();
+//     api.setUserInfo({
+//       name: userData.name,
+//       about: userData.about,
+//       //avatar: setUserAvatar.avatar,
+//     });
+//   })
+//   .catch((error) => {
+//     console.error("Error getting user info:", error);
+//   })
+//   .finally();
+
 api
   .getUserInfo()
   .then((userData) => {
-    console.log("Here is our userData =>", userData);
-    console.log();
-    api.setUserInfo({
-      name: userData.name,
-      about: userData.about,
-      //avatar: setUserAvatar.avatar,
-    });
+    userInfo.setUserInfo(userData);
   })
   .catch((error) => {
     console.error("Error getting user info:", error);
@@ -399,9 +409,9 @@ api
     console.error("Error fetching card list:", error);
   });
 
-function cardIsLiked(cardID) {
+function cardIsLiked(card) {
   api
-    .changeCardLikeStatus(cardID)
+    .changeCardLikeStatus(card)
     .then((response) => {
       console.log(response);
       card.setIsLiked(response.isLiked);
@@ -418,7 +428,7 @@ function cardDisLike(card) {
   // if (card.dislikeCard()) {
   // console.log(test);
   api
-    .changeCardDeleteLikeStatus(card._id)
+    .changeCardDeleteLikeStatus(card)
     .then((response) => {
       console.log(response);
       card.setIsLiked(response.isLiked);

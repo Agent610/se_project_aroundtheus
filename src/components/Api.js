@@ -103,7 +103,7 @@ class Api {
         res.ok ? res.json() : Promise.reject(`Error: ${res.status}`)
       )
       .catch((err) => {
-        console.error("API Error:", err);
+        console.error("Error liking the card:", err);
       });
   }
 
@@ -114,7 +114,11 @@ class Api {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "DELETE",
       headers: this._headers,
-    }).then(this._handleServerResponse);
+    })
+      .then(this._handleServerResponse)
+      .catch((err) => {
+        console.error("Error disliking the card:", err);
+      });
   }
 
   //Updating Profile Picture
