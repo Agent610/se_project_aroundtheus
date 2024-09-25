@@ -141,9 +141,14 @@ function handleProfileFormSubmit(inputValues) {
   userInfo.setUserInfo(inputValues);
   editProfilePopup.close();
   editProfileForm.reset();
+  //editFormValidator.disableButton();
 }
 
 function handleAddCardFormSubmit({ name, link }) {
+  //before API find button for save => Saving
+  // evt.preventDefault();
+  // const submitBtn = evt.submitter;
+  // submitBtn.textContent = "Saving...";
   api
     .addCard({ name, link })
     .then((res) => {
@@ -155,6 +160,9 @@ function handleAddCardFormSubmit({ name, link }) {
       console.error("Error adding card:", error);
     })
     .finally();
+  // .finally(() => {
+  //   submitBtn.textContent = "Save";
+  // });
 }
 
 function handleDeleteCardFormSubmit(res) {
@@ -411,9 +419,8 @@ api
 
 function cardIsLiked(card) {
   api
-    .changeCardLikeStatus(card)
+    .changeCardLikeStatus(card._id)
     .then((response) => {
-      console.log(response);
       card.setIsLiked(response.isLiked);
       // card._updateLikesView();
     })
@@ -428,7 +435,7 @@ function cardDisLike(card) {
   // if (card.dislikeCard()) {
   // console.log(test);
   api
-    .changeCardDeleteLikeStatus(card)
+    .changeCardDeleteLikeStatus(card._id)
     .then((response) => {
       console.log(response);
       card.setIsLiked(response.isLiked);
@@ -440,3 +447,5 @@ function cardDisLike(card) {
     .finally();
   // }
 }
+
+//TESTING

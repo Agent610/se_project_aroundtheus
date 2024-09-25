@@ -31,6 +31,11 @@ class FormValidator {
     }
   }
 
+  // disableButton = (buttonEl, config) => {
+  //   buttonEl.disabled = true;
+  //   buttonEl.classList.add(config.inactiveButtonClass);
+  // };
+
   toggleButtonState() {
     if (this._hasInvalidInput()) {
       this._submitButton.classList.add(this._inactiveButtonClass);

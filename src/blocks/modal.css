@@ -41,7 +41,15 @@
 }
 
 .modal__container_delete {
+  width: 430px;
   height: 181px;
+}
+
+.modal__button_delete {
+  width: 358px;
+  height: 50px;
+  border-top: 365px;
+  border-left: 461px;
 }
 
 .modal__container_picture {
