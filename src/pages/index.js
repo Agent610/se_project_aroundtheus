@@ -10,34 +10,51 @@ import Styles from "./index.css";
 //import {initialCards, selectors}
 import Api from "../components/Api.js";
 import Utils from "../utils/utils.js";
-import { forEach } from "lodash";
+import { forEach, set } from "lodash";
 
-// const initialCards = [
-//   {
-//     name: "Yosemite-Valley",
-//     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
-//   },
-//   {
-//     name: "Lake-Louise",
-//     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lake-louise.jpg",
-//   },
-//   {
-//     name: "Bald-Mountains",
-//     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/bald-mountains.jpg",
-//   },
-//   {
-//     name: "Latemar",
-//     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/latemar.jpg",
-//   },
-//   {
-//     name: "Vanoise-National-Park",
-//     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/vanoise.jpg",
-//   },
-//   {
-//     name: "Lago-di-Braies",
-//     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lago.jpg ",
-//   },
-// ];
+//API
+const api = new Api({
+  baseUrl: "https://around-api.en.tripleten-services.com/v1",
+  headers: {
+    authorization: "e8b97a08-d6fd-41c9-b787-2c46b2b6891e",
+    "Content-Type": "application/json",
+  },
+});
+
+api
+  .getUserInfo()
+  .then((userData) => {
+    userInfo.setUserInfo(userData);
+  })
+  .catch((error) => {
+    console.error("Error getting user info:", error);
+  })
+  .finally();
+
+api
+  .getCardList()
+  .then((res) => {
+    console.log("Here is your card list res =>", res);
+    if (Array.isArray(res)) {
+      // const sectionRenderer = new Section(
+      //   {
+      //     items: res,
+      //     renderer: (cardData) => {
+      //       renderCard(cardData);
+      //     },
+      //   },
+      //   selectors.cardsList
+      // );
+      res.forEach((cardData) => {
+        renderCard(cardData);
+      });
+    } else {
+      console.error("Error received data is not an array:", res);
+    }
+  })
+  .catch((error) => {
+    console.error("Error fetching card list:", error);
+  });
 
 const cardTemplate = document
   .querySelector("#card-template")
@@ -137,45 +154,61 @@ function handleImagePreview(cardData) {
   popupImage.open(cardData);
 }
 
+function handleSubmit(request, popupInstance, form, loadingText = "Saving...") {
+  // here we change the button text
+  popupInstance.renderLoading(true, loadingText);
+  // setTimeout(() => {
+  request()
+    .then(() => {
+      // We need to close only in `then`
+      popupInstance.close();
+    })
+    // we need to catch possible errors
+    // console.error is used to handle errors if you don’t have any other ways for that
+    .catch(console.error)
+    // in `finally` we need to return the initial button text back in any case
+    .finally(() => {
+      popupInstance.renderLoading(false);
+      if (form) {
+        form.reset();
+      }
+    });
+  // }, 1000);
+}
+
 function handleProfileFormSubmit(inputValues) {
-  userInfo.setUserInfo(inputValues);
-  editProfilePopup.close();
-  editProfileForm.reset();
+  // we create a function that returns a promise
+  function makeRequest() {
+    // `return` lets us use a promise chain `then, catch, finally` inside `handleSubmit`
+    return api.setUserInfo(inputValues).then((userData) => {
+      userInfo.setUserInfo(userData);
+    });
+  }
+  // Here we call the function passing the request, popup instance and if we need some other loading text we can pass it as the 3rd argument
+  handleSubmit(makeRequest, editProfilePopup, editFormValidator);
   //editFormValidator.disableButton();
 }
 
 function handleAddCardFormSubmit({ name, link }) {
-  //before API find button for save => Saving
-  // evt.preventDefault();
-  // const submitBtn = evt.submitter;
-  // submitBtn.textContent = "Saving...";
-  api
-    .addCard({ name, link })
-    .then((res) => {
+  function makeRequest() {
+    return api.addCard({ name, link }).then((res) => {
       renderCard(res, cardsWrap);
-      addCardPopup.close();
-      addCardForm.reset();
-    })
-    .catch((error) => {
-      console.error("Error adding card:", error);
-    })
-    .finally();
-  // .finally(() => {
-  //   submitBtn.textContent = "Save";
-  // });
+    });
+  }
+
+  handleSubmit(makeRequest, addCardPopup, addCardValidator);
 }
 
-function handleDeleteCardFormSubmit(res) {
-  // deleteCardPopup.close();
-  // api
-  //   .removeCard()
-  //   .then((res) => {
-  //     card._handleDeleteButton(res);
-  //   })
-  //   .catch((error) => {
-  //     console.error("Error removing card:", error);
-  //   })
-  //   .finally();
+function handleDeleteCardFormSubmit(card) {
+  api
+    .removeCard(card._id)
+    .then((res) => {
+      card._handleDeleteButton();
+    })
+    .catch((error) => {
+      console.error("Error removing card:", error);
+    })
+    .finally(() => deleteCardPopup.close());
 }
 
 function handlePictureFormSubmit({ link }) {
@@ -184,15 +217,13 @@ function handlePictureFormSubmit({ link }) {
   // set your profile image css url to the incoming link
   pictureFormPopup.close();
   changeProfileForm.reset();
-  api
-    .setUserAvatar(link)
-    .then((info) => {
+  function makeRequest() {
+    return api.setUserAvatar(link).then((info) => {
       pictureFormPopup.close(info);
-    })
-    .catch((error) => {
-      console.error("Error changing picture", error);
-    })
-    .finally();
+    });
+  }
+
+  handleSubmit(makeRequest, pictureFormPopup);
 }
 
 const cardSelect = "#card-template";
@@ -237,6 +268,7 @@ pictureFormValidator.enableValidation();
 
 const aboutEl = document.querySelector("#profile-description-input");
 const nameEl = document.querySelector("#profile-name-input");
+
 profileEditButton.addEventListener("click", () => {
   const userData = userInfo.getUserInfo();
   nameEl.value = userData.name;
@@ -288,21 +320,7 @@ changeProfileButton.addEventListener("click", () => {
 // changePopupWithForm.setEventListeners();
 
 function handleConfirmDelete(card) {
-  deleteCardPopup.open();
-
-  deleteCardPopup.setSubmitFunction(() => {
-    //console.log(999);
-    //console.log(card._id);
-    api
-      .removeCard(card._id)
-      .then((res) => {
-        card._handleDeleteButton();
-      })
-      .catch((error) => {
-        console.error("Error removing card:", error);
-      })
-      .finally(() => deleteCardPopup.close());
-  });
+  deleteCardPopup.open(card);
 }
 
 function createCard(cardData) {
@@ -355,16 +373,8 @@ deleteCardPopup.setEventListeners();
 // UserInfo
 const nameSelector = ".profile__title";
 const aboutMeSelector = ".profile__description";
-const userInfo = new UserInfo({ nameSelector, aboutMeSelector });
-
-//API
-const api = new Api({
-  baseUrl: "https://around-api.en.tripleten-services.com/v1",
-  headers: {
-    authorization: "e8b97a08-d6fd-41c9-b787-2c46b2b6891e",
-    "Content-Type": "application/json",
-  },
-});
+const setUserAvatar = ".profile__image";
+const userInfo = new UserInfo({ nameSelector, aboutMeSelector, setUserAvatar });
 
 // api
 //   .getUserInfo()
@@ -381,41 +391,6 @@ const api = new Api({
 //     console.error("Error getting user info:", error);
 //   })
 //   .finally();
-
-api
-  .getUserInfo()
-  .then((userData) => {
-    userInfo.setUserInfo(userData);
-  })
-  .catch((error) => {
-    console.error("Error getting user info:", error);
-  })
-  .finally();
-
-api
-  .getCardList()
-  .then((res) => {
-    console.log("Here is your card list res =>", res);
-    if (Array.isArray(res)) {
-      // const sectionRenderer = new Section(
-      //   {
-      //     items: res,
-      //     renderer: (cardData) => {
-      //       renderCard(cardData);
-      //     },
-      //   },
-      //   selectors.cardsList
-      // );
-      res.forEach((cardData) => {
-        renderCard(cardData);
-      });
-    } else {
-      console.error("Error received data is not an array:", res);
-    }
-  })
-  .catch((error) => {
-    console.error("Error fetching card list:", error);
-  });
 
 function cardIsLiked(card) {
   api
@@ -447,5 +422,3 @@ function cardDisLike(card) {
     .finally();
   // }
 }
-
-//TESTING

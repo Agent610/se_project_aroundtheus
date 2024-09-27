@@ -4,21 +4,19 @@ class PopupWithConfirm extends Popup {
     super({ popupSelector });
     this._popupButton = this._popupElement.querySelector(".modal__button");
     this._handleConfirmDelete = handleConfirmDelete;
+    this._card;
   }
 
   setEventListeners() {
     super.setEventListeners();
     this._popupButton.addEventListener("click", (evt) => {
-      this._handleConfirmDelete();
+      this._handleConfirmDelete(this._card);
     });
   }
 
-  setSubmitFunction(submitFunction) {
-    this._handleConfirmDelete = submitFunction;
-  }
-
-  open() {
+  open(card) {
     super.open();
+    this._card = card;
   }
 
   close() {

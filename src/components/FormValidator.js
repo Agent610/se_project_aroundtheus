@@ -58,6 +58,8 @@ class FormValidator {
         this._checkInputValidity(inputEl);
         this.toggleButtonState();
       });
+      this._submitButton.classList.add(this._inactiveButtonClass);
+      this._submitButton.disabled = true;
     });
   }
 
@@ -66,6 +68,11 @@ class FormValidator {
       e.preventDefault();
     });
     this._setEventListeners();
+  }
+
+  reset() {
+    this._submitButton.classList.add(this._inactiveButtonClass);
+    this._submitButton.disabled = true;
   }
 }
 

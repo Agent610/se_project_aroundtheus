@@ -133,8 +133,6 @@ class Api {
       }),
     }).then(this._handleServerResponse);
   }
-
-  //Improving UX of all forms
 }
 
 export default Api;

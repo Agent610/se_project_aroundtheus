@@ -4,6 +4,7 @@ class PopupWithForm extends Popup {
     super({ popupSelector }); // { popupSelector: "#edit-modal"}
     this._form = this._popupElement.querySelector(".modal__form");
     this._popupForm = this._popupElement.querySelector(".modal__form");
+    this._submitButton = this._popupElement.querySelector(".modal__button");
     this._handleFormSubmit = handleFormSubmit;
   }
 
@@ -31,6 +32,15 @@ class PopupWithForm extends Popup {
   close() {
     this._popupForm.reset();
     super.close();
+  }
+
+  renderLoading(loading, loadingText) {
+    console.log("hey is this loading");
+    if (loading) {
+      this._submitButton.textContent = loadingText;
+    } else {
+      this._submitButton.textContent = "Submit";
+    }
   }
 }
 export default PopupWithForm;

@@ -40,23 +40,16 @@
   padding: 0;
 }
 
-.modal__container_delete {
-  width: 430px;
-  height: 181px;
-}
-
-.modal__button_delete {
-  width: 358px;
-  height: 50px;
-  border-top: 365px;
-  border-left: 461px;
-}
-
 .modal__container_picture {
   height: 272px;
   border-top: 224px;
   border-left: 425px;
   border: 1px;
+}
+
+.modal__container_delete {
+  width: 430px;
+  height: 181px;
 }
 
 .modal__caption {
@@ -129,6 +122,12 @@
 
 .modal__button_disabled:hover {
   opacity: 0.3;
+}
+
+.modal__button_delete {
+  border-top: 365px;
+  border-left: 461px;
+  width: 358px;
 }
 
 .modal__input {
