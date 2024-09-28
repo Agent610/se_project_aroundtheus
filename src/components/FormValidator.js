@@ -26,15 +26,9 @@ class FormValidator {
     if (inputEl.validity.valid) {
       return this._hideInputError(inputEl);
     } else {
-      //this._hideInputError();
       return this._showInputError(inputEl);
     }
   }
-
-  // disableButton = (buttonEl, config) => {
-  //   buttonEl.disabled = true;
-  //   buttonEl.classList.add(config.inactiveButtonClass);
-  // };
 
   toggleButtonState() {
     if (this._hasInvalidInput()) {

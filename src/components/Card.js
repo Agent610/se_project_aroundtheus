@@ -20,12 +20,11 @@ class Card {
 
   _setEventListeners() {
     //".card__like-button"
-    // console.log(this._id);
     this._element
       .querySelector(".card__like-button")
       .addEventListener("click", (e) => {
         e.preventDefault();
-        // console.log("is this firing");
+
         if (this._isLiked) {
           this._handleCardDisLike(this);
           this._likeButton.classList.remove("card__like-button_active");
@@ -39,7 +38,6 @@ class Card {
     this._element
       .querySelector(".card__delete-button")
       .addEventListener("click", () => {
-        // this._handleDeleteButton();
         this._handleConfirmDelete(this);
       });
 
@@ -78,27 +76,6 @@ class Card {
         .classList.remove("card__like-button_active");
     }
   }
-  // handleCardLike() {
-  //   this._id;
-  //   const cardId = this._id;
-  //   this._handleCardLike;
-  // }
-
-  // handleCardDisLike() {
-  //   this._id;
-  //   const cardId = this._id;
-  //   this._handleCardDisLike;
-  // }
-
-  // _updateLikesView(e) {
-  //   e.preventDefault();
-  //   console.log(this._isLiked);
-  //   if (this._isLiked) {
-  //     this._likeButton.classList.add("card__like-button_active");
-  //   } else {
-  //     this._likeButton.classList.remove("card__like-button_active");
-  //   }
-  // }
 
   _getTemplate() {
     return document

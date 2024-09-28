@@ -1,7 +1,7 @@
 import Popup from "./Popup.js";
 class PopupWithForm extends Popup {
   constructor(popupSelector, handleFormSubmit) {
-    super({ popupSelector }); // { popupSelector: "#edit-modal"}
+    super({ popupSelector });
     this._form = this._popupElement.querySelector(".modal__form");
     this._popupForm = this._popupElement.querySelector(".modal__form");
     this._submitButton = this._popupElement.querySelector(".modal__button");

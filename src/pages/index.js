@@ -36,15 +36,6 @@ api
   .then((res) => {
     console.log("Here is your card list res =>", res);
     if (Array.isArray(res)) {
-      // const sectionRenderer = new Section(
-      //   {
-      //     items: res,
-      //     renderer: (cardData) => {
-      //       renderCard(cardData);
-      //     },
-      //   },
-      //   selectors.cardsList
-      // );
       res.forEach((cardData) => {
         renderCard(cardData);
       });
@@ -117,37 +108,9 @@ const pictureURLInput = pictureFormElement.querySelector(
   ".modal__input_type_url"
 );
 
-// function closeWithEsc(event) {
-//   if (event.key === "Escape") {
-//     const modal = document.querySelector(".modal_opened");
-//     closeModal(modal);
-//   }
-// }
-
-// function closeModalOnRemoteClick(event) {
-//   if (event.target === event.currentTarget) {
-//     closeModal(event.currentTarget);
-//   }
-// }
-
-// function openModal(modal) {
-//   // add class to modal
-//   document.addEventListener("keydown", closeWithEsc);
-//   modal.addEventListener("mousedown", closeModalOnRemoteClick);
-//   modal.classList.add("modal_opened");
-// }
-
-// function closeModal(modal) {
-//   //remove class from modal
-//   document.removeEventListener("keydown", closeWithEsc);
-//   modal.removeEventListener("mousedown", closeModalOnRemoteClick);
-//   modal.classList.remove("modal_opened");
-// }
-
 function renderCard(cardData) {
   const card = createCard(cardData);
   section.addItem(card);
-  //return createCard(cardData);
 }
 
 function handleImagePreview(cardData) {
@@ -155,18 +118,13 @@ function handleImagePreview(cardData) {
 }
 
 function handleSubmit(request, popupInstance, form, loadingText = "Saving...") {
-  // here we change the button text
   popupInstance.renderLoading(true, loadingText);
   // setTimeout(() => {
   request()
     .then(() => {
-      // We need to close only in `then`
       popupInstance.close();
     })
-    // we need to catch possible errors
-    // console.error is used to handle errors if you don’t have any other ways for that
     .catch(console.error)
-    // in `finally` we need to return the initial button text back in any case
     .finally(() => {
       popupInstance.renderLoading(false);
       if (form) {
@@ -177,16 +135,12 @@ function handleSubmit(request, popupInstance, form, loadingText = "Saving...") {
 }
 
 function handleProfileFormSubmit(inputValues) {
-  // we create a function that returns a promise
   function makeRequest() {
-    // `return` lets us use a promise chain `then, catch, finally` inside `handleSubmit`
     return api.setUserInfo(inputValues).then((userData) => {
       userInfo.setUserInfo(userData);
     });
   }
-  // Here we call the function passing the request, popup instance and if we need some other loading text we can pass it as the 3rd argument
   handleSubmit(makeRequest, editProfilePopup, editFormValidator);
-  //editFormValidator.disableButton();
 }
 
 function handleAddCardFormSubmit({ name, link }) {
@@ -212,9 +166,7 @@ function handleDeleteCardFormSubmit(card) {
 }
 
 function handlePictureFormSubmit({ link }) {
-  // console.log("handlePictureFormSubmit", link);
   profileImage.src = link;
-  // set your profile image css url to the incoming link
   pictureFormPopup.close();
   changeProfileForm.reset();
   function makeRequest() {
@@ -273,13 +225,8 @@ profileEditButton.addEventListener("click", () => {
   const userData = userInfo.getUserInfo();
   nameEl.value = userData.name;
   aboutEl.value = userData.about;
-  // editFormValidator.hideInputError(nameInput);
-  // editFormValidator.hideInputError(jobInput);
   editProfilePopup.open(editProfileModal);
 });
-
-// const editPopupWithForm = new PopupWithForm("#edit-modal");
-// editPopupWithForm.setEventListeners();4
 
 // Edit profile popup
 const editProfilePopup = new PopupWithForm(
@@ -296,28 +243,13 @@ const addCardPopup = new PopupWithForm(
 addCardPopup.setEventListeners();
 
 addCardButton.addEventListener("click", () => {
-  //  addCardValidator.hideInputError(cardTitleInput);
-  //  addCardValidator.hideInputError(cardURLInput);
   addCardPopup.open();
 });
-
-// const addPopupWithForm = new PopupWithForm("#add-card-modal");
-// addPopupWithForm.setEventListeners();
-
-// deleteCardButton.addEventListener("click", () => {
-//   deleteCardPopup.open(deleteCardModal);
-// });
-
-// const deletePopupWithForm = new PopupWithConfirm("#delete-modal");
-// deletePopupWithForm.close(deleteCardModal);
 
 // Change Profile Picture
 changeProfileButton.addEventListener("click", () => {
   pictureFormPopup.open(pictureModal);
 });
-
-// const changePopupWithForm = new PopupWithForm("#picture-modal");
-// changePopupWithForm.setEventListeners();
 
 function handleConfirmDelete(card) {
   deleteCardPopup.open(card);
@@ -376,22 +308,6 @@ const aboutMeSelector = ".profile__description";
 const setUserAvatar = ".profile__image";
 const userInfo = new UserInfo({ nameSelector, aboutMeSelector, setUserAvatar });
 
-// api
-//   .getUserInfo()
-//   .then((userData) => {
-//     console.log("Here is our userData =>", userData);
-//     console.log();
-//     api.setUserInfo({
-//       name: userData.name,
-//       about: userData.about,
-//       //avatar: setUserAvatar.avatar,
-//     });
-//   })
-//   .catch((error) => {
-//     console.error("Error getting user info:", error);
-//   })
-//   .finally();
-
 function cardIsLiked(card) {
   api
     .changeCardLikeStatus(card._id)
@@ -406,9 +322,6 @@ function cardIsLiked(card) {
 }
 
 function cardDisLike(card) {
-  // api.changeCardDeleteLikeStatus();
-  // if (card.dislikeCard()) {
-  // console.log(test);
   api
     .changeCardDeleteLikeStatus(card._id)
     .then((response) => {
