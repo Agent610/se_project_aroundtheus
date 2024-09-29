@@ -17,11 +17,7 @@ class Api {
   getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers,
-    })
-      .then(this._handleServerResponse)
-      .catch((err) => {
-        console.log(err);
-      });
+    }).then(this._handleServerResponse);
   }
 
   //Loading cards from the server
@@ -29,11 +25,7 @@ class Api {
   getCardList() {
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers,
-    })
-      .then(this._handleServerResponse)
-      .catch((err) => {
-        console.log(err);
-      });
+    }).then(this._handleServerResponse);
   }
 
   //Editing the profile
@@ -47,9 +39,7 @@ class Api {
         name,
         about,
       }),
-    }).then((res) =>
-      res.ok ? res.json() : Promise.reject(`Error:${res.status}`)
-    );
+    }).then(this._handleServerResponse);
   }
 
   //Adding a new card
@@ -62,11 +52,7 @@ class Api {
         name,
         link,
       }),
-    })
-      .then(this._handleServerResponse)
-      .catch((err) => {
-        console.log(err);
-      });
+    }).then(this._handleServerResponse);
   }
 
   //Deleting a card
@@ -75,15 +61,7 @@ class Api {
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: "DELETE",
       headers: this._headers,
-    })
-      .then((res) => {
-        res.ok
-          ? res.json()
-          : Promise.reject(`Error: ${this._handleServerResponse}`);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    }).then(this._handleServerResponse);
   }
 
   //Adding likes
@@ -98,13 +76,7 @@ class Api {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "PUT",
       headers: this._headers,
-    })
-      .then((res) =>
-        res.ok ? res.json() : Promise.reject(`Error: ${res.status}`)
-      )
-      .catch((err) => {
-        console.error("Error liking the card:", err);
-      });
+    }).then(this._handleServerResponse);
   }
 
   //Deleting likes
@@ -114,11 +86,7 @@ class Api {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "DELETE",
       headers: this._headers,
-    })
-      .then(this._handleServerResponse)
-      .catch((err) => {
-        console.error("Error disliking the card:", err);
-      });
+    }).then(this._handleServerResponse);
   }
 
   //Updating Profile Picture

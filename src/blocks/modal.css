@@ -32,8 +32,8 @@
   padding: 34px 36px;
   border-radius: 10px;
   position: relative;
-  min-height: 330px;
   box-sizing: border-box;
+  min-height: 330px;
 }
 
 .modal__container_image {
@@ -50,6 +50,7 @@
 .modal__container_delete {
   width: 430px;
   height: 181px;
+  min-height: unset;
 }
 
 .modal__caption {

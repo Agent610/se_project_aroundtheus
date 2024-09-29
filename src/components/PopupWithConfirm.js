@@ -19,8 +19,8 @@ class PopupWithConfirm extends Popup {
     this._card = card;
   }
 
-  close() {
-    super.close();
-  }
+  //close() {
+  //super.close();
+  //}
 }
 export default PopupWithConfirm;

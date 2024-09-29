@@ -25,9 +25,9 @@ class PopupWithForm extends Popup {
     });
   }
 
-  open() {
-    super.open();
-  }
+  //open() {
+  //super.open();
+  //}
 
   close() {
     this._popupForm.reset();
@@ -35,7 +35,6 @@ class PopupWithForm extends Popup {
   }
 
   renderLoading(loading, loadingText) {
-    console.log("hey is this loading");
     if (loading) {
       this._submitButton.textContent = loadingText;
     } else {

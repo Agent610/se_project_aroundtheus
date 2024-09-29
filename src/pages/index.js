@@ -28,8 +28,7 @@ api
   })
   .catch((error) => {
     console.error("Error getting user info:", error);
-  })
-  .finally();
+  });
 
 api
   .getCardList()
@@ -123,13 +122,13 @@ function handleSubmit(request, popupInstance, form, loadingText = "Saving...") {
   request()
     .then(() => {
       popupInstance.close();
+      if (form) {
+        form.reset();
+      }
     })
     .catch(console.error)
     .finally(() => {
       popupInstance.renderLoading(false);
-      if (form) {
-        form.reset();
-      }
     });
   // }, 1000);
 }
@@ -145,9 +144,14 @@ function handleProfileFormSubmit(inputValues) {
 
 function handleAddCardFormSubmit({ name, link }) {
   function makeRequest() {
-    return api.addCard({ name, link }).then((res) => {
-      renderCard(res, cardsWrap);
-    });
+    return api
+      .addCard({ name, link })
+      .then((res) => {
+        renderCard(res, cardsWrap);
+      })
+      .catch((error) => {
+        console.error("Error adding card:", error);
+      });
   }
 
   handleSubmit(makeRequest, addCardPopup, addCardValidator);
@@ -166,16 +170,16 @@ function handleDeleteCardFormSubmit(card) {
 }
 
 function handlePictureFormSubmit({ link }) {
-  profileImage.src = link;
   pictureFormPopup.close();
   changeProfileForm.reset();
   function makeRequest() {
-    return api.setUserAvatar(link).then((info) => {
+    api.setUserAvatar(link).then((info) => {
       pictureFormPopup.close(info);
+      profileImage.src = link;
     });
   }
 
-  handleSubmit(makeRequest, pictureFormPopup);
+  handleSubmit(makeRequest, pictureFormPopup, pictureFormValidator);
 }
 
 const cardSelect = "#card-template";
@@ -225,7 +229,7 @@ profileEditButton.addEventListener("click", () => {
   const userData = userInfo.getUserInfo();
   nameEl.value = userData.name;
   aboutEl.value = userData.about;
-  editProfilePopup.open(editProfileModal);
+  editProfilePopup.open();
 });
 
 // Edit profile popup
@@ -248,7 +252,7 @@ addCardButton.addEventListener("click", () => {
 
 // Change Profile Picture
 changeProfileButton.addEventListener("click", () => {
-  pictureFormPopup.open(pictureModal);
+  pictureFormPopup.open();
 });
 
 function handleConfirmDelete(card) {
@@ -314,6 +318,10 @@ function cardIsLiked(card) {
     .then((response) => {
       card.setIsLiked(response.isLiked);
       // card._updateLikesView();
+      {
+        // this._handleCardLike(this);
+        //this._likeButton.classList.add("card__like-button_active");
+      }
     })
     .catch((error) => {
       console.error("Error liking card:", error);
@@ -328,10 +336,13 @@ function cardDisLike(card) {
       console.log(response);
       card.setIsLiked(response.isLiked);
       // card._updateLikesView();
+      {
+        //this._handleCardDisLike(this);
+        //this._likeButton.classList.remove("card__like-button_active");
+      }
     })
     .catch((error) => {
       console.error("Error disliking card:", error);
     })
     .finally();
-  // }
 }
