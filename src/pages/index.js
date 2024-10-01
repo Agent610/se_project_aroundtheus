@@ -319,14 +319,14 @@ function cardIsLiked(card) {
       card.setIsLiked(response.isLiked);
       // card._updateLikesView();
       {
-        // this._handleCardLike(this);
+        //this._handleCardLike(this);
         //this._likeButton.classList.add("card__like-button_active");
       }
     })
     .catch((error) => {
       console.error("Error liking card:", error);
-    })
-    .finally();
+    });
+  //.finally();
 }
 
 function cardDisLike(card) {
@@ -343,6 +343,6 @@ function cardDisLike(card) {
     })
     .catch((error) => {
       console.error("Error disliking card:", error);
-    })
-    .finally();
+    });
+  //.finally();
 }
