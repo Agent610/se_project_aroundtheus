@@ -170,10 +170,10 @@ function handleDeleteCardFormSubmit(card) {
 }
 
 function handlePictureFormSubmit({ link }) {
-  pictureFormPopup.close();
-  changeProfileForm.reset();
+  //pictureFormPopup.close();
+  //changeProfileForm.reset();
   function makeRequest() {
-    api.setUserAvatar(link).then((info) => {
+    return api.setUserAvatar(link).then((info) => {
       pictureFormPopup.close(info);
       profileImage.src = link;
     });
