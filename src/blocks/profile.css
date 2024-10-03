@@ -164,5 +164,10 @@
     margin-right: 72.75px;
     margin-top: 38.25px;
     margin-bottom: 26.25px;
+    margin: 0;
+  }
+
+  .profile__change-button {
+    margin-right: 0;
   }
 }

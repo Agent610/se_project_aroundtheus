@@ -3,11 +3,7 @@ class Popup {
     this._popupElement = document.querySelector(popupSelector);
     this._handleEscClose = this._handleEscClose.bind(this);
     this._closeButton = this._popupElement.querySelector(".modal__close");
-    //this._addEventListeners();
   }
-
-  //_addEventListeners() {
-  //}
 
   open() {
     this._popupElement.classList.add("modal_opened");
@@ -27,10 +23,7 @@ class Popup {
 
   setEventListeners() {
     this._popupElement.addEventListener("click", (evt) => {
-      if (
-        evt.target.classList.contains("modal") ||
-        evt.target.classList.contains(".modal__close")
-      ) {
+      if (evt.target.classList.contains("modal")) {
         this.close();
       }
     });

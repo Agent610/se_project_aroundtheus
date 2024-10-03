@@ -9,6 +9,7 @@ class UserInfo {
     return {
       name: this._nameElement.textContent,
       about: this._aboutMeElement.textContent,
+      avatar: this._setUserAvatar.src,
     };
   }
 

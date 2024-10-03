@@ -33,14 +33,8 @@ api
 api
   .getCardList()
   .then((res) => {
-    console.log("Here is your card list res =>", res);
-    if (Array.isArray(res)) {
-      res.forEach((cardData) => {
-        renderCard(cardData);
-      });
-    } else {
-      console.error("Error received data is not an array:", res);
-    }
+    section.setItems(res);
+    section.renderItems();
   })
   .catch((error) => {
     console.error("Error fetching card list:", error);
@@ -64,7 +58,7 @@ const addCardFormElement = addCardModal.querySelector(".modal__form");
 const previewModal = document.querySelector("#preview-modal");
 
 const deleteCardModal = document.querySelector("#delete-modal");
-const deleteCardElement = deleteCardModal.querySelector(".modal__form");
+const deleteFormElement = deleteCardModal.querySelector(".modal__form");
 const pictureModal = document.querySelector("#picture-modal");
 const pictureFormElement = pictureModal.querySelector(".modal__form");
 
@@ -122,9 +116,6 @@ function handleSubmit(request, popupInstance, form, loadingText = "Saving...") {
   request()
     .then(() => {
       popupInstance.close();
-      if (form) {
-        form.reset();
-      }
     })
     .catch(console.error)
     .finally(() => {
@@ -139,43 +130,37 @@ function handleProfileFormSubmit(inputValues) {
       userInfo.setUserInfo(userData);
     });
   }
-  handleSubmit(makeRequest, editProfilePopup, editFormValidator);
+  handleSubmit(makeRequest, editProfilePopup, editProfilePopup.getForm());
 }
 
 function handleAddCardFormSubmit({ name, link }) {
   function makeRequest() {
-    return api
-      .addCard({ name, link })
-      .then((res) => {
-        renderCard(res, cardsWrap);
-      })
-      .catch((error) => {
-        console.error("Error adding card:", error);
-      });
+    return api.addCard({ name, link }).then((res) => {
+      renderCard(res, cardsWrap);
+    });
   }
 
-  handleSubmit(makeRequest, addCardPopup, addCardValidator);
+  handleSubmit(makeRequest, addCardPopup, addCardPopup.getForm());
 }
 
 function handleDeleteCardFormSubmit(card) {
   api
     .removeCard(card._id)
     .then((res) => {
-      card._handleDeleteButton();
+      card.handleDeleteButton();
+      deleteCardPopup.close();
     })
     .catch((error) => {
       console.error("Error removing card:", error);
-    })
-    .finally(() => deleteCardPopup.close());
+    });
 }
 
 function handlePictureFormSubmit({ link }) {
-  //pictureFormPopup.close();
-  //changeProfileForm.reset();
   function makeRequest() {
     return api.setUserAvatar(link).then((info) => {
       pictureFormPopup.close(info);
       profileImage.src = link;
+      userInfo.setUserInfo(info);
     });
   }
 
@@ -194,29 +179,26 @@ const validationSettings = {
   errorClass: "modal__error_visible",
 };
 
-const editFormElement = editProfileModal.querySelector(".modal__form");
-const addCardElement = addCardModal.querySelector(".modal__form");
 const editFormValidator = new FormValidator(
   validationSettings,
-  editFormElement
+  profileFormElement
 );
 editFormValidator.enableValidation();
-const addCardValidator = new FormValidator(validationSettings, addCardElement);
+const addCardValidator = new FormValidator(
+  validationSettings,
+  addCardFormElement
+);
 addCardValidator.enableValidation();
 
-const deleteFormElement = deleteCardModal.querySelector(".modal__form");
-const changePictureFormElement = pictureModal.querySelector(".modal__form");
 const deleteFormValidator = new FormValidator(
   validationSettings,
   deleteFormElement
 );
 deleteFormValidator.enableValidation();
 
-const changeProfilePictureFormElement =
-  pictureModal.querySelector(".modal__form");
 const pictureFormValidator = new FormValidator(
   validationSettings,
-  changeProfilePictureFormElement
+  pictureFormElement
 );
 pictureFormValidator.enableValidation();
 
@@ -229,6 +211,7 @@ profileEditButton.addEventListener("click", () => {
   const userData = userInfo.getUserInfo();
   nameEl.value = userData.name;
   aboutEl.value = userData.about;
+  editFormValidator.disableButton();
   editProfilePopup.open();
 });
 
@@ -247,6 +230,7 @@ const addCardPopup = new PopupWithForm(
 addCardPopup.setEventListeners();
 
 addCardButton.addEventListener("click", () => {
+  addCardValidator.disableButton();
   addCardPopup.open();
 });
 
@@ -284,7 +268,7 @@ const section = new Section(
   },
   selectors.cardSelector
 );
-section.renderItems();
+
 //Popup
 // Class Instances
 
@@ -317,16 +301,10 @@ function cardIsLiked(card) {
     .changeCardLikeStatus(card._id)
     .then((response) => {
       card.setIsLiked(response.isLiked);
-      // card._updateLikesView();
-      {
-        //this._handleCardLike(this);
-        //this._likeButton.classList.add("card__like-button_active");
-      }
     })
     .catch((error) => {
       console.error("Error liking card:", error);
     });
-  //.finally();
 }
 
 function cardDisLike(card) {
@@ -335,14 +313,8 @@ function cardDisLike(card) {
     .then((response) => {
       console.log(response);
       card.setIsLiked(response.isLiked);
-      // card._updateLikesView();
-      {
-        //this._handleCardDisLike(this);
-        //this._likeButton.classList.remove("card__like-button_active");
-      }
     })
     .catch((error) => {
       console.error("Error disliking card:", error);
     });
-  //.finally();
 }
