@@ -133,18 +133,17 @@ function handleProfileFormSubmit(inputValues) {
       userInfo.setUserInfo(userData);
     });
   }
-  handleSubmit(makeRequest, editProfilePopup, editProfilePopup.getForm());
+  handleSubmit(makeRequest, editProfilePopup, editFormValidator);
 }
 
 function handleAddCardFormSubmit({ name, link }) {
   function makeRequest() {
     return api.addCard({ name, link }).then((res) => {
       renderCard(res, cardsWrap);
-      addCardValidator.disableButton();
     });
   }
 
-  handleSubmit(makeRequest, addCardPopup, addCardPopup.getForm());
+  handleSubmit(makeRequest, addCardPopup, addCardValidator);
 }
 
 function handleDeleteCardFormSubmit(card) {
