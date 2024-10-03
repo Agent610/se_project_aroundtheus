@@ -1,0 +1,31 @@
+.avatar__image {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  background-position: center;
+  margin-right: 25.75px;
+}
+
+.avatar__change-button {
+  background: url(../images/Edit-Button.svg) center no-repeat;
+  height: 26px;
+  width: 26px;
+  position: absolute;
+  border-top: 206px;
+  border-left: 247px;
+}
+
+.avatar__change-button:hover {
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+  .avatar__image {
+    margin-left: 78.5px;
+    margin-right: 72.75px;
+    margin-top: 38.25px;
+    margin-bottom: 26.25px;
+  }
+}

@@ -10,13 +10,12 @@
   display: flex;
   visibility: hidden;
   opacity: 0;
-  transition: visibility 0.5, opacity 0.5s linear;
+  transition: all 0.5s linear;
 }
 
 .modal_opened {
   visibility: visible;
   opacity: 1;
-  transition: visibility 0s, opacity 0.5s linear;
 }
 
 .modal__image {
@@ -32,12 +31,26 @@
   padding: 34px 36px;
   border-radius: 10px;
   position: relative;
-  min-height: 330px;
   box-sizing: border-box;
+  min-height: 330px;
 }
 
 .modal__container_image {
   padding: 0;
+}
+
+.modal__container_picture {
+  height: 272px;
+  border-top: 224px;
+  border-left: 425px;
+  border: 1px;
+  width: 430px;
+}
+
+.modal__container_delete {
+  width: 430px;
+  height: 181px;
+  min-height: unset;
 }
 
 .modal__caption {
@@ -69,12 +82,7 @@
   opacity: 0.6;
 }
 
-.modal__form {
-  width: 430px;
-}
-
 .modal__heading {
-  width: 330px;
   height: 23px;
   margin: 0;
   margin-right: 64px;
@@ -110,6 +118,13 @@
 
 .modal__button_disabled:hover {
   opacity: 0.3;
+}
+
+.modal__button_delete {
+  border-top: 365px;
+  border-left: 461px;
+  width: 358px;
+  margin: 0;
 }
 
 .modal__input {
@@ -151,7 +166,7 @@
   border-bottom: red;
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 670px) {
   .modal__close {
     width: 26px;
     height: 26px;
@@ -163,7 +178,9 @@
     margin-bottom: 13.62px;
     flex-shrink: 0;
   }
+}
 
+@media screen and (max-width: 320px) {
   .modal__heading {
     width: 238px;
     height: 22px;
