@@ -116,6 +116,9 @@ function handleSubmit(request, popupInstance, form, loadingText = "Saving...") {
   request()
     .then(() => {
       popupInstance.close();
+      if (form) {
+        form.disableButton();
+      }
     })
     .catch(console.error)
     .finally(() => {
@@ -137,6 +140,7 @@ function handleAddCardFormSubmit({ name, link }) {
   function makeRequest() {
     return api.addCard({ name, link }).then((res) => {
       renderCard(res, cardsWrap);
+      addCardValidator.disableButton();
     });
   }
 
@@ -158,8 +162,6 @@ function handleDeleteCardFormSubmit(card) {
 function handlePictureFormSubmit({ link }) {
   function makeRequest() {
     return api.setUserAvatar(link).then((info) => {
-      pictureFormPopup.close(info);
-      profileImage.src = link;
       userInfo.setUserInfo(info);
     });
   }
@@ -230,7 +232,6 @@ const addCardPopup = new PopupWithForm(
 addCardPopup.setEventListeners();
 
 addCardButton.addEventListener("click", () => {
-  addCardValidator.disableButton();
   addCardPopup.open();
 });
 
